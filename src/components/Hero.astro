@@ -78,7 +78,7 @@ const stars = Array.from({ length: 70 }, () => ({ x: rnd() * 100, y: rnd() * 62,
 </script>
 
 <style>
-  .hero { position: relative; min-height: max(100svh, 700px); display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; color: #f1e8d4; isolation: isolate;
+  .hero { position: relative; min-height: max(100svh, calc(700px + var(--bnr))); display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; color: #f1e8d4; isolation: isolate;
     background: linear-gradient(180deg, #080a13 0%, #131730 38%, #2c2a48 62%, #6a4141 82%, #b8703f 100%); }
   .sky { position: absolute; inset: 0; z-index: -1; }
   .stars { position: absolute; inset: 0; }
@@ -87,7 +87,7 @@ const stars = Array.from({ length: 70 }, () => ({ x: rnd() * 100, y: rnd() * 62,
   .moon { position: absolute; top: 14%; right: 11%; width: clamp(70px, 9vw, 130px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 38% 36%, #fffaf0, #e9dcc0 60%, #cdbd9d); box-shadow: 0 0 80px 20px rgb(255 240 210 / .18), 0 0 220px 80px rgb(255 240 210 / .08); }
   .moon::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 62% 30%, rgb(120 100 70 / .22) 0 9%, transparent 10%), radial-gradient(circle at 30% 64%, rgb(120 100 70 / .18) 0 12%, transparent 13%), radial-gradient(circle at 70% 70%, rgb(120 100 70 / .14) 0 7%, transparent 8%); }
   .hills { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 34%; }
-  .content { padding-top: clamp(6.5rem, 14vh, 9rem); position: relative; z-index: 2; }
+  .content { padding-top: calc(clamp(6.5rem, 14vh, 9rem) + var(--bnr)); position: relative; z-index: 2; }
   .copy { max-width: 40rem; }
   h1 { font-size: clamp(2.6rem, 1.2rem + 4.2vw, 5rem); }
   .copy h1 { color: #fbf3df; text-shadow: 0 2px 30px rgb(0 0 0 / .4); margin-bottom: .3em; }
@@ -113,8 +113,8 @@ const stars = Array.from({ length: 70 }, () => ({ x: rnd() * 100, y: rnd() * 62,
   .branch { width: 100%; height: clamp(54px, 9vw, 130px); margin-top: calc(-1 * clamp(0px, 1vw, 12px)); }
   @media (max-width: 760px) {
     .branch-wrap :global(.perch) { width: 118%; margin-left: -10%; margin-right: 0; }
-    .moon { top: 78px; right: 16px; width: 52px; }
-    .content { padding-top: 8.2rem; }
+    .moon { top: calc(78px + var(--bnr)); right: 16px; width: 52px; }
+    .content { padding-top: calc(8.2rem + var(--bnr)); }
     .hills { height: 22%; }
   }
   @media (prefers-reduced-motion: reduce) { .stars circle { animation: none; } }

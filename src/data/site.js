@@ -32,7 +32,7 @@ export const links = {
   portfolio: 'https://iairu.com',
   linkedin: 'https://www.linkedin.com/in/iairu',
   email: 'spanik11@gmail.com',
-  docs: 'https://st-016-ondrej-spanik.vercel.app/',
+  docs: 'https://knifes.nightjar.gift',
   repo: 'https://github.com/iairu/ST-016-SMVIT',
   pcbRepo: 'https://github.com/iairu/ST-016-MOTHERBOARD',
   fiit: 'https://www.fiit.stuba.sk',

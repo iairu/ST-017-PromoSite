@@ -15,7 +15,7 @@ npm run build      # astro build, heading anchors, Pagefind index -> dist/
 npm run preview    # serve dist/ with full-text search
 ```
 
-Needs Node 20+. Optional build variables: `SITE_URL` (absolute canonical/OG URLs) and `BASE_PATH` (deploy under a sub-path).
+Needs Node 20+. Deployed at <https://nightjar.gift>; documentation (KNIFES) lives at <https://knifes.nightjar.gift>. Optional build variables: `SITE_URL` (canonical/OG URLs, default nightjar.gift) and `BASE_PATH` (deploy under a sub-path).
 `dist/` is plain static files and can go to any host (Vercel, Netlify, GitHub Pages, nginx).
 
 ## Where things live
