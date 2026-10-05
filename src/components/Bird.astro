@@ -1,0 +1,30 @@
+---
+// Inline nightjar silhouette traced from the real CNC model (scripts/silhouette.py).
+import raw from '../assets/nightjar-silhouette.svg?raw';
+const d = raw.match(/ d="([^"]+)"/)[1];
+const [, , W, H] = raw.match(/viewBox="([^"]+)"/)[1].split(' ').map(Number);
+const { class: cls = '', eye = false, wave = false } = Astro.props;
+---
+<svg class={`bird ${cls}`} viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Silhouette of the LELEK nightjar, seen from the side" preserveAspectRatio="xMidYMax meet">
+  <path d={d} fill="currentColor" />
+  {eye && <circle class="eye" cx={W * 0.934} cy={H * 0.215} r="2.1" />}
+  {wave && (
+    <g class="waves" fill="none" stroke-width="0.9" transform={`translate(${W * 0.78} ${H * 0.5})`}>
+      <circle r="6" /><circle r="6" /><circle r="6" />
+    </g>
+  )}
+</svg>
+<style>
+  .eye { fill: #e8a559; filter: drop-shadow(0 0 3px #e8a559); }
+  .waves circle { stroke: #e8a559; opacity: 0; transform-box: fill-box; }
+  :global([data-singing='true']) .waves circle { animation: ring 1.5s ease-out infinite; }
+  :global([data-singing='true']) .waves circle:nth-child(2) { animation-delay: .5s; }
+  :global([data-singing='true']) .waves circle:nth-child(3) { animation-delay: 1s; }
+  @keyframes ring { 0% { opacity: .9; r: 6; } 100% { opacity: 0; r: 60; } }
+  :global([data-singing='true']) .eye { animation: glint .16s ease-in-out infinite alternate; }
+  @keyframes glint { from { opacity: .55; } to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) {
+    :global([data-singing='true']) .waves circle, :global([data-singing='true']) .eye { animation: none; }
+    :global([data-singing='true']) .waves circle:first-child { opacity: .8; r: 24; }
+  }
+</style>

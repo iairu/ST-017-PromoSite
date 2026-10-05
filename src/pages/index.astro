@@ -1,0 +1,277 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Icon from '../components/Icon.astro';
+import Fig from '../components/Fig.astro';
+import ModelViewer from '../components/ModelViewer.astro';
+import Bird from '../components/Bird.astro';
+import { site, highlights, stats, flow, fieldNotes, milestones, student, url, links, PREORDER_OPEN } from '../data/site.js';
+const tabs = [
+  { id: 'bb', label: 'Breadboard', src: 'breadboard-v7', w: 1800, h: 1790, alt: 'Breadboard view of the v7 circuit: DFPlayer Pro, 470 microfarad capacitor, two 10 ohm resistors, push button, LiPo cell, TP4056 charger and speaker', cap: '<b>Breadboard.</b> The whole circuit on a half breadboard in Fritzing, simulated with the button pressed. The orange wire takes the amplifier output to the resistors; the speaker hangs off the purple wires.' },
+  { id: 'sch', label: 'Schematic', src: 'schematic-v7', w: 1800, h: 690, alt: 'Schematic of board v7: battery through the push button to the DFPlayer Pro, 470 microfarad capacitor across the battery, two 10 ohm resistors in parallel in series with the speaker', cap: '<b>Schematic.</b> The button is the only thing between the battery and the player. Two 10 Ω resistors in parallel limit the speaker current.' },
+  { id: 'pcb', label: 'PCB', src: 'pcb-v7', w: 1800, h: 556, alt: 'Printed circuit board layout of v7, 89.4 by 27.9 millimetres, two layers', cap: '<b>PCB v7.</b> 89.4 x 27.9 mm, two layers, hand-checked Gerbers: all 6 of 6 nets match the schematic, minimum copper gap 14.3 mil.' },
+];
+const done = milestones.filter((m) => m.done).length;
+---
+<Base title={site.name} description={site.description}>
+  <Hero />
+
+  <section class="strip" aria-label="LELEK at a glance">
+    <div class="wrap stats">
+      {stats.map((s) => (
+        <div class="stat reveal">
+          <p class="num"><span>{s.value}</span><small>{s.unit}</small></p>
+          <p class="lab">{s.label}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="block" id="highlights">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Highlights</p>
+        <h2>One object, one gesture, one sound.</h2>
+        <p>Most singing gadgets are plastic, plugged in and forgotten within a month. LELEK is a piece of carved wood that does one thing well, built so it can be repaired and understood.</p>
+      </div>
+      <div class="grid g3">
+        {highlights.map((h) => (
+          <article class="card hl reveal">
+            <span class="ico"><Icon name={h.icon} size={30} /></span>
+            <h3>{h.title}</h3>
+            <p>{h.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="block tint" id="how">
+    <div class="wrap split">
+      <div>
+        <div class="sec-head reveal">
+          <p class="eyebrow">How it sings</p>
+          <h2>Press, power, sing, sleep.</h2>
+          <p>There is no microcontroller to boot and no firmware to crash. The button simply connects the battery to a sound module, and that module is happy to start playing the moment it wakes up.</p>
+        </div>
+        <ol class="flow">
+          {flow.map((f) => (
+            <li class="reveal"><span class="n">{f.n}</span><div><h3>{f.title}</h3><p>{f.text}</p></div></li>
+          ))}
+        </ol>
+      </div>
+      <div class="reveal">
+        <Fig src="schematic-v7" w={1800} h={690} alt="Schematic of board v7" caption="<b>Board v7 in one picture.</b> Battery, button, player, speaker. The capacitor and resistors only protect the small cell and the small speaker." />
+        <p style="margin-top:1.4rem"><a class="btn ghost" href={url('/electronics/')}>See the electronics <Icon name="arrow" size={16} /></a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block night" id="model">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Turn it around</p>
+        <h2>The carving, from the model that drives the CNC.</h2>
+        <p>This is the actual enclosure model, generated from a parametric script: two mirrored halves, pockets for the board, battery, charger and speaker cut from the seam, and an outside with no undercuts so a ball-nose cutter can reach all of it.</p>
+      </div>
+      <div class="reveal"><ModelViewer /></div>
+      <p class="fine-print">Stylised, not a scan. About 1.2x the size of a real nightjar so the chest can hold a 40 mm speaker. Switch to Blueprint to see the edges. <a href={url('/bird/')}>Dimensions, pockets and machining →</a></p>
+    </div>
+  </section>
+
+  <section class="block" id="gallery">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Breadboard, schematic, PCB</p>
+        <h2>The same circuit, three ways.</h2>
+        <p>Version 7 of the board, as drawn in Fritzing. Every part carries a simulation model, so the breadboard runs in the simulator, speaker sound included.</p>
+      </div>
+      <div class="tabs" data-tabs>
+        <div class="tablist" role="tablist" aria-label="Board views">
+          {tabs.map((t, i) => <button role="tab" type="button" id={`tab-${t.id}`} aria-controls={`panel-${t.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{t.label}</button>)}
+        </div>
+        {tabs.map((t, i) => (
+          <div role="tabpanel" id={`panel-${t.id}`} aria-labelledby={`tab-${t.id}`} class="panel" hidden={i !== 0 ? true : undefined} tabindex="0">
+            <figure>
+              <button type="button" class="plate zoom" data-zoom aria-label={`Enlarge: ${t.label}`}>
+                <img src={url(`/img/${t.src}.webp`)} alt={t.alt} width={t.w} height={t.h} loading="lazy" decoding="async" style={t.id === 'bb' ? 'max-height:640px;width:auto' : ''} />
+              </button>
+              <figcaption set:html={t.cap} />
+            </figure>
+          </div>
+        ))}
+      </div>
+      <p class="reveal" style="margin-top:2rem"><a class="btn ghost" href={url('/electronics/#evolution')}>See all eight board versions <Icon name="arrow" size={16} /></a></p>
+    </div>
+  </section>
+
+  <section class="block tint" id="field-notes">
+    <div class="wrap split">
+      <div class="notes-art reveal" aria-hidden="true">
+        <Bird class="big" />
+        <p class="latin cap">{site.latin}</p>
+      </div>
+      <div>
+        <div class="sec-head reveal">
+          <p class="eyebrow">Field notes</p>
+          <h2>A bird known by its voice.</h2>
+        </div>
+        <dl class="notes">
+          {fieldNotes.map(([k, v]) => (<div class="reveal"><dt>{k}</dt><dd>{v}</dd></div>))}
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="timeline">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Roadmap</p>
+        <h2>Honest status: designed and ordered, not yet carved.</h2>
+        <p>{done} of {milestones.length} milestones reached. The electronics are designed, simulated and ordered; the wood is chosen; the first cuts come next.</p>
+      </div>
+      <ol class="rail">
+        {milestones.map((m) => (
+          <li class:list={['reveal', { done: m.done }]}>
+            <span class="dot" aria-hidden="true">{m.done ? <Icon name="check" size={14} /> : ''}</span>
+            <p class="mono when">{m.id} · <time datetime={m.iso}>{m.date}</time></p>
+            <h3>{m.title}</h3>
+            <p>{m.text}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="reveal" style="margin-top:2rem"><a class="btn ghost" href={url('/roadmap/')}>Full status <Icon name="arrow" size={16} /></a></p>
+    </div>
+  </section>
+
+  <section class="block night band" id="preorder-band">
+    <div class="wrap band-in">
+      <div class="reveal">
+        <p class="eyebrow">Pre-order</p>
+        <h2>Want one on your shelf?</h2>
+        <p class="lead" style="color:#cfc6b2">Each bird will be made to order. Pre-orders are not open yet: the first prototype has to be carved, and a target price of EUR 89 to 129 has to survive contact with the workshop.</p>
+      </div>
+      <div class="reveal actions">
+        <a class="btn primary" href={url('/preorder/')}>{PREORDER_OPEN ? 'Pre-order a LELEK' : 'See the pre-order page'}</a>
+        <a class="btn ghost" href={`mailto:${links.email}?subject=LELEK%20pre-order%20interest`}>Tell me you are interested</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="student">
+    <div class="wrap split">
+      <div class="reveal">
+        <p class="eyebrow">The maker</p>
+        <h2>Built by a software student who wanted to hold something.</h2>
+        <p>{student.bio[0]}</p>
+        <p><a class="btn ghost" href={url('/about/')}>About {student.name} <Icon name="arrow" size={16} /></a></p>
+      </div>
+      <ul class="who reveal">
+        <li><Icon name="gh" size={20} /><a href={links.github} target="_blank" rel="noopener noreferrer">github.com/iairu</a></li>
+        <li><Icon name="web" size={20} /><a href={links.portfolio} target="_blank" rel="noopener noreferrer">iairu.com</a></li>
+        <li><Icon name="book" size={20} /><a href={links.docs} target="_blank" rel="noopener noreferrer">Project documentation (KNIFES)</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <dialog id="zoom" class="zoomdlg" aria-label="Enlarged image"><button type="button" class="x" data-close aria-label="Close"><Icon name="close" size={22} /></button><div class="plate"><img alt="" /></div><p></p></dialog>
+
+  <script>
+    // tabs
+    document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((root) => {
+      const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role=tab]')];
+      const show = (t: HTMLButtonElement, focus = false) => {
+        tabs.forEach((x) => {
+          const on = x === t;
+          x.setAttribute('aria-selected', String(on)); x.tabIndex = on ? 0 : -1;
+          (document.getElementById(x.getAttribute('aria-controls')!) as HTMLElement).hidden = !on;
+        });
+        if (focus) t.focus();
+      };
+      tabs.forEach((t, i) => {
+        t.addEventListener('click', () => show(t));
+        t.addEventListener('keydown', (e) => {
+          const k = e.key;
+          if (k === 'ArrowRight' || k === 'ArrowLeft' || k === 'Home' || k === 'End') {
+            e.preventDefault();
+            const n = k === 'Home' ? 0 : k === 'End' ? tabs.length - 1 : (i + (k === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+            show(tabs[n], true);
+          }
+        });
+      });
+    });
+    // zoom (lightbox)
+    const dlg = document.getElementById('zoom') as HTMLDialogElement;
+    const zi = dlg.querySelector('img')!;
+    const zc = dlg.querySelector('p')!;
+    document.querySelectorAll<HTMLElement>('[data-zoom]').forEach((b) => b.addEventListener('click', () => {
+      const im = b.querySelector('img')!;
+      zi.src = im.currentSrc || im.src; zi.alt = im.alt;
+      zc.textContent = im.alt;
+      dlg.showModal();
+    }));
+    dlg.addEventListener('click', (e) => { if (e.target === dlg || (e.target as HTMLElement).closest('[data-close]')) dlg.close(); });
+  </script>
+</Base>
+
+<style>
+  .strip { background: var(--paper-2); border-bottom: 1px solid var(--rule); }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  .stat { padding: 2rem 1.2rem; border-left: 1px solid var(--rule); }
+  .stat:first-child { border-left: 0; }
+  .num { margin: 0; font: 500 clamp(2.4rem, 2rem + 2vw, 3.6rem)/1 var(--font-display); letter-spacing: -.03em; display: flex; align-items: baseline; gap: .35em; }
+  .num small { font: 500 .78rem var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--bark); }
+  .lab { margin: .5rem 0 0; color: var(--ink-soft); font-size: .98rem; }
+  @media (max-width: 640px) { .stat:nth-child(odd) { border-left: 0; } .stat { padding: 1.4rem .8rem; } }
+
+  .hl { transition: transform .25s, box-shadow .25s; }
+  .hl:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .ico { display: inline-grid; place-items: center; width: 54px; height: 54px; border-radius: 14px; background: var(--paper); border: 1px solid var(--rule); color: var(--rust); margin-bottom: 1.1rem; }
+
+  .flow { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.6rem; counter-reset: s; }
+  .flow li { display: grid; grid-template-columns: 3.4rem 1fr; gap: 1rem; }
+  .flow .n { font: 500 .85rem var(--font-mono); color: var(--rust); border: 1px solid currentColor; width: 2.6rem; height: 2.6rem; border-radius: 50%; display: grid; place-items: center; margin-top: .2rem; }
+  .flow h3 { margin-bottom: .15em; } .flow p { margin: 0; color: var(--ink-soft); }
+
+  .fine-print { margin-top: 1.4rem; font: 400 .82rem/1.7 var(--font-mono); color: #b9b1a0; max-width: 70ch; }
+  .fine-print a { color: #f0a070; }
+
+  .tablist { display: inline-flex; gap: 3px; padding: 4px; border: 1px solid var(--rule); background: var(--paper-2); border-radius: 999px; margin-bottom: 1.6rem; }
+  .tablist button { font: 500 .8rem var(--font-mono); letter-spacing: .05em; background: none; border: 0; color: var(--ink-soft); padding: .7em 1.4em; border-radius: 999px; cursor: pointer; min-height: 40px; }
+  .tablist button[aria-selected='true'] { background: var(--ink); color: var(--paper); }
+  .panel[hidden] { display: none; }
+  .zoom { display: block; width: 100%; cursor: zoom-in; font: inherit; }
+  .zoom img { margin-inline: auto; }
+
+  .notes-art { background: var(--dusk); border-radius: 18px; padding: 2.4rem 1.6rem 1.4rem; color: #05060c; position: relative; overflow: hidden; background-image: radial-gradient(80% 70% at 70% 100%, rgb(232 165 89 / .45), transparent 70%); }
+  .notes-art :global(.big) { width: 100%; filter: drop-shadow(0 0 1px rgb(241 190 120 / .6)); }
+  .notes-art .cap { color: #d7b98d; text-align: center; margin: 1.2rem 0 0; font-size: 1.05rem; }
+  .notes { margin: 0; display: grid; gap: 1.1rem; }
+  .notes div { border-top: 1px solid var(--rule); padding-top: 1rem; display: grid; grid-template-columns: 9rem 1fr; gap: 1rem; }
+  .notes dt { font: 500 .74rem var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--bark); padding-top: .35rem; }
+  .notes dd { margin: 0; }
+  @media (max-width: 560px) { .notes div { grid-template-columns: 1fr; gap: .2rem; } }
+
+  .rail { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.6rem 1.4rem; position: relative; counter-reset: m; }
+  .rail li { position: relative; padding-top: 2.4rem; border-top: 1px solid var(--rule); }
+  .rail .dot { position: absolute; top: -9px; left: 0; width: 17px; height: 17px; border-radius: 50%; background: var(--paper); border: 2px solid var(--rule); display: grid; place-items: center; color: #fff; }
+  .rail li.done .dot { background: var(--moss); border-color: var(--moss); }
+  .rail .when { margin: 0 0 .4rem; font-size: .74rem; letter-spacing: .08em; color: var(--bark); text-transform: uppercase; }
+  .rail h3 { font-size: 1.15rem; margin-bottom: .3em; } .rail p:last-child { color: var(--ink-soft); font-size: .96rem; margin: 0; }
+
+  .band { overflow: hidden; background: linear-gradient(120deg, #151932, #2a2644 60%, #5a3a3e); }
+  .band-in { display: grid; gap: 2rem 4rem; grid-template-columns: 1.4fr 1fr; align-items: center; }
+  .actions { display: flex; flex-direction: column; gap: .8rem; align-items: stretch; }
+  @media (max-width: 820px) { .band-in { grid-template-columns: 1fr; } }
+
+  .who { list-style: none; margin: 0; padding: 0; display: grid; gap: .8rem; }
+  .who li { display: flex; align-items: center; gap: .9rem; padding: 1rem 1.2rem; border: 1px solid var(--rule); border-radius: 12px; background: var(--paper-2); }
+  .who :global(svg) { color: var(--bark); flex: none; }
+
+  .zoomdlg { border: 0; padding: 1rem; background: transparent; max-width: min(1400px, 96vw); max-height: 94dvh; width: 100%; color: #f1e8d4; overflow: visible; }
+  .zoomdlg::backdrop { background: rgb(8 10 18 / .85); backdrop-filter: blur(4px); }
+  .zoomdlg .plate { max-height: 82dvh; overflow: auto; }
+  .zoomdlg .plate img { max-height: 78dvh; width: auto; margin-inline: auto; }
+  .zoomdlg p { margin: .8rem 0 0; font: 400 .8rem var(--font-mono); text-align: center; }
+  .zoomdlg .x { position: absolute; top: -4px; right: 4px; z-index: 2; background: #f1e8d4; color: #181b29; border: 0; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: grid; place-items: center; }
+</style>

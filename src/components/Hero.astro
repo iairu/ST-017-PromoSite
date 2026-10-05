@@ -1,0 +1,121 @@
+---
+import Bird from './Bird.astro';
+import Icon from './Icon.astro';
+import { site, url } from '../data/site.js';
+
+// deterministic star field (no layout shift, no randomness between builds)
+let s = 17;
+const rnd = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+const stars = Array.from({ length: 70 }, () => ({ x: rnd() * 100, y: rnd() * 62, r: 0.5 + rnd() * 1.3, d: rnd() * 6, o: 0.35 + rnd() * 0.6 }));
+---
+<section class="hero" data-singing="false" id="hero">
+  <div class="sky" aria-hidden="true">
+    <svg class="stars" width="100%" height="100%" preserveAspectRatio="none">
+      {stars.map((st) => <circle cx={st.x + '%'} cy={st.y + '%'} r={st.r} fill="#f1e8d4" opacity={st.o} style={`animation-delay:-${st.d}s`} />)}
+    </svg>
+    <div class="moon"></div>
+    <svg class="hills" viewBox="0 0 1440 220" preserveAspectRatio="none"><path d="M0 130 C160 70 300 150 470 110 S800 40 980 110 1250 160 1440 90 V220 H0Z" fill="#10121c" opacity=".55"/><path d="M0 170 C220 120 380 190 600 150 S1000 100 1200 160 1380 170 1440 150 V220 H0Z" fill="#0b0d15"/></svg>
+  </div>
+
+  <div class="wrap content">
+    <div class="copy">
+      <p class="eyebrow"><span class="latin">{site.latin}</span> · lelek lesný</p>
+      <h1>The bird you hear <em>before</em> you see.</h1>
+      <p class="lead">LELEK is a wooden nightjar, carved on a CNC from two halves of beech. Hold the button on its back and it sings its churring night call. Let go, and it sleeps.</p>
+      <div class="cta">
+        <button class="btn primary sing" type="button" id="sing" aria-pressed="false">
+          <Icon name="sound" size={18} /> <span class="lbl">Hold to hear it</span>
+        </button>
+        <a class="btn ghost" href={url('/preorder/')}>Pre-order · opening soon</a>
+        <a class="btn ghost" href={url('/electronics/')}>How it works <Icon name="arrow" size={16} /></a>
+      </div>
+      <p class="fine"><span class="pill wip">Prototype in progress</span> Electronics designed and ordered, wood next. The sample is a synthesised churr, not yet the final recording.</p>
+    </div>
+  </div>
+
+  <div class="scene" aria-hidden="false">
+    <div class="branch-wrap">
+      <Bird class="perch" eye wave />
+      <svg class="branch" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M-10 52 C200 36 420 58 640 46 S1000 28 1210 40 L1210 74 C1000 66 820 84 620 80 S200 86 -10 76Z" fill="#05060b"/>
+        <path d="M880 44 C920 20 960 10 1010 4 M300 62 C270 86 250 100 214 116 M1040 50 C1070 66 1100 70 1140 92" stroke="#05060b" stroke-width="7" stroke-linecap="round" fill="none"/>
+      </svg>
+    </div>
+  </div>
+  <audio id="churr" preload="none" loop src={url('/audio/lelek_churr.mp3')}></audio>
+</section>
+
+<script>
+  const hero = document.getElementById('hero')!;
+  const btn = document.getElementById('sing') as HTMLButtonElement;
+  const audio = document.getElementById('churr') as HTMLAudioElement;
+  const lbl = btn.querySelector('.lbl')!;
+  let on = false;
+  function start() {
+    if (on) return;
+    on = true;
+    hero.dataset.singing = 'true';
+    btn.setAttribute('aria-pressed', 'true');
+    lbl.textContent = 'Singing…';
+    audio.currentTime = 0;
+    audio.play().catch(() => stop());
+  }
+  function stop() {
+    if (!on) return;
+    on = false;
+    hero.dataset.singing = 'false';
+    btn.setAttribute('aria-pressed', 'false');
+    lbl.textContent = 'Hold to hear it';
+    audio.pause();
+  }
+  btn.addEventListener('pointerdown', (e) => { btn.setPointerCapture?.(e.pointerId); start(); });
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach((t) => btn.addEventListener(t, stop));
+  btn.addEventListener('keydown', (e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); if (!e.repeat) start(); } });
+  btn.addEventListener('keyup', (e) => { if (e.key === ' ' || e.key === 'Enter') stop(); });
+  btn.addEventListener('blur', stop);
+  btn.addEventListener('contextmenu', (e) => e.preventDefault());
+  document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); });
+</script>
+
+<style>
+  .hero { position: relative; min-height: max(100svh, 700px); display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; color: #f1e8d4; isolation: isolate;
+    background: linear-gradient(180deg, #080a13 0%, #131730 38%, #2c2a48 62%, #6a4141 82%, #b8703f 100%); }
+  .sky { position: absolute; inset: 0; z-index: -1; }
+  .stars { position: absolute; inset: 0; }
+  .stars circle { animation: tw 5s ease-in-out infinite; }
+  @keyframes tw { 50% { opacity: .15; } }
+  .moon { position: absolute; top: 14%; right: 11%; width: clamp(70px, 9vw, 130px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 38% 36%, #fffaf0, #e9dcc0 60%, #cdbd9d); box-shadow: 0 0 80px 20px rgb(255 240 210 / .18), 0 0 220px 80px rgb(255 240 210 / .08); }
+  .moon::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 62% 30%, rgb(120 100 70 / .22) 0 9%, transparent 10%), radial-gradient(circle at 30% 64%, rgb(120 100 70 / .18) 0 12%, transparent 13%), radial-gradient(circle at 70% 70%, rgb(120 100 70 / .14) 0 7%, transparent 8%); }
+  .hills { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 34%; }
+  .content { padding-top: clamp(6.5rem, 14vh, 9rem); position: relative; z-index: 2; }
+  .copy { max-width: 40rem; }
+  h1 { font-size: clamp(2.6rem, 1.2rem + 4.2vw, 5rem); }
+  .copy h1 { color: #fbf3df; text-shadow: 0 2px 30px rgb(0 0 0 / .4); margin-bottom: .3em; }
+  .copy h1 em { color: #f3b878; font-weight: 400; }
+  .eyebrow { color: #e0c79a; } .eyebrow .latin { text-transform: none; letter-spacing: .02em; font-size: 1.05rem; }
+  .lead { color: #dcd2bc; max-width: 36rem; }
+  .cta { display: flex; flex-wrap: wrap; gap: .7rem; margin: 2rem 0 1.4rem; }
+  .cta .ghost { --fg: #f1e8d4; --bd: rgb(241 232 212 / .35); backdrop-filter: blur(6px); }
+  .cta .ghost:hover { --bd: #f1e8d4; }
+  .sing { touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; min-width: 12.5rem; }
+  .sing[aria-pressed='true'] { transform: scale(.97); box-shadow: 0 0 0 6px rgb(232 165 89 / .3), 0 0 40px rgb(232 165 89 / .5); }
+  .fine { font: 400 .8rem/1.7 var(--font-mono); color: #c8bda4; max-width: 44rem; }
+  .fine .pill { margin-right: .6em; color: #f1c27a; }
+  .scene { position: relative; z-index: 1; width: 100%; margin-top: 1rem; }
+  @media (min-width: 960px) and (min-height: 640px) {
+    .scene { position: absolute; left: 0; right: 0; bottom: 0; margin: 0; }
+    .branch-wrap { padding-top: 0; }
+    .branch-wrap :global(.perch) { width: min(52%, 760px) !important; margin-right: 7% !important; }
+    .hero { justify-content: flex-start; }
+  }
+  .branch-wrap { position: relative; width: min(100%, 1500px); margin-inline: auto; padding-top: clamp(2rem, 8vh, 6rem); }
+  .branch-wrap :global(.perch) { position: relative; z-index: 2; color: #04050a; width: min(78%, 960px); margin-left: auto; margin-right: 8%; filter: drop-shadow(0 0 1px rgb(241 190 120 / .55)); margin-bottom: -3.4%; }
+  .branch { width: 100%; height: clamp(54px, 9vw, 130px); margin-top: calc(-1 * clamp(0px, 1vw, 12px)); }
+  @media (max-width: 760px) {
+    .branch-wrap :global(.perch) { width: 118%; margin-left: -10%; margin-right: 0; }
+    .moon { top: 78px; right: 16px; width: 52px; }
+    .content { padding-top: 8.2rem; }
+    .hills { height: 22%; }
+  }
+  @media (prefers-reduced-motion: reduce) { .stars circle { animation: none; } }
+</style>

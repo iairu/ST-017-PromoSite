@@ -1,0 +1,14 @@
+---
+import Bird from './Bird.astro';
+import { url } from '../data/site.js';
+const { eyebrow, title, lead, crumb } = Astro.props;
+---
+<header class="page-hero">
+  <div class="sil" aria-hidden="true"><Bird /></div>
+  <div class="wrap">
+    <p class="crumbs"><a href={url('/')}>LELEK</a> / {crumb}</p>
+    <p class="eyebrow" style="color:#e0c79a">{eyebrow}</p>
+    <h1 set:html={title} />
+    <p class="lead">{lead}</p>
+  </div>
+</header>

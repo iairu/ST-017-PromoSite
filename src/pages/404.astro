@@ -1,0 +1,9 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { url } from '../data/site.js';
+---
+<Base title="Not found" noindex>
+  <PageHero crumb="404" eyebrow="Lost in the heath" title="Nothing here <em>but the night.</em>" lead="That page does not exist. Try the search (Ctrl+K) or go back to the start." />
+  <section class="block"><div class="wrap"><a class="btn primary" href={url('/')}>Back to the bird</a></div></section>
+</Base>

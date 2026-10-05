@@ -1,0 +1,10 @@
+---
+import { url } from '../data/site.js';
+const { src, alt, caption, w, h, plate = true, eager = false } = Astro.props;
+---
+<figure class="reveal">
+  <div class:list={[{ plate }]}>
+    <img src={url(`/img/${src}.webp`)} alt={alt} width={w} height={h} loading={eager ? 'eager' : 'lazy'} decoding="async" />
+  </div>
+  {caption && <figcaption set:html={caption} />}
+</figure>

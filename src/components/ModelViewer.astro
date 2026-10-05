@@ -1,0 +1,143 @@
+---
+import { url } from '../data/site.js';
+const { height = 'clamp(300px, 46vw, 520px)' } = Astro.props;
+---
+<div class="viewer" data-viewer data-model={url('/models/nightjar.stl')} data-button={url('/models/nightjar_button.stl')} style={`--h:${height}`}>
+  <canvas aria-label="Interactive 3D model of the carved nightjar. Drag to rotate, scroll or pinch to zoom." role="img"></canvas>
+  <noscript><img src={url('/img/wire-assembled.webp')} alt="Wireframe of the assembled bird" width="1438" height="627" /></noscript>
+  <div class="loading" data-loading><span>Loading the carving…</span></div>
+  <div class="ctl" role="group" aria-label="Model display">
+    <button type="button" class="on" data-mode="wood" aria-pressed="true">Wood</button>
+    <button type="button" data-mode="blueprint" aria-pressed="false">Blueprint</button>
+    <button type="button" data-spin aria-pressed="true">Spin</button>
+  </div>
+  <p class="tip">Drag to turn · scroll to zoom</p>
+</div>
+
+<script>
+  // three.js (~700 kB) is imported lazily, only when a viewer scrolls near the viewport
+  type Three = typeof import('three');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function webgl() {
+    try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch { return false; }
+  }
+
+  async function boot(root: HTMLElement) {
+    const [THREE, { STLLoader }, { OrbitControls }, { mergeVertices }] = await Promise.all([
+      import('three'),
+      import('three/examples/jsm/loaders/STLLoader.js'),
+      import('three/examples/jsm/controls/OrbitControls.js'),
+      import('three/examples/jsm/utils/BufferGeometryUtils.js'),
+    ]);
+    const canvas = root.querySelector('canvas')!;
+    const loading = root.querySelector('[data-loading]') as HTMLElement;
+    if (!webgl()) { loading.innerHTML = '<span>3D view needs WebGL. See the wireframes below instead.</span>'; return; }
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(32, 1, 1, 3000);
+    camera.position.set(-330, 150, 420);
+
+    scene.add(new THREE.HemisphereLight(0xfff1dc, 0x3a2c22, 1.25));
+    const key = new THREE.DirectionalLight(0xffe2b8, 2.4); key.position.set(200, 320, 260); scene.add(key);
+    const rim = new THREE.DirectionalLight(0x8fa4ff, 1.1); rim.position.set(-260, 120, -240); scene.add(rim);
+
+    const controls = new OrbitControls(camera, canvas);
+    controls.enableDamping = true; controls.dampingFactor = 0.08;
+    controls.minDistance = 220; controls.maxDistance = 900; controls.enablePan = false;
+    controls.autoRotate = !reduce; controls.autoRotateSpeed = 1.1;
+
+    const loader = new STLLoader();
+    const [g1, g2] = await Promise.all([loader.loadAsync(root.dataset.model!), loader.loadAsync(root.dataset.button!)]);
+    const prep = (g: import('three').BufferGeometry) => {
+      g.deleteAttribute('normal');
+      const m = mergeVertices(g, 0.05);
+      m.computeVertexNormals();
+      // STL: x forward, y left, z up  ->  three: y up
+      m.rotateX(-Math.PI / 2);
+      return m;
+    };
+    const body = prep(g1), btn = prep(g2);
+    body.computeBoundingBox();
+    const c = new THREE.Vector3(); body.boundingBox!.getCenter(c);
+    const group = new THREE.Group();
+
+    const woodMat = new THREE.MeshStandardMaterial({ color: 0xc9a074, roughness: 0.62, metalness: 0.0 });
+    const btnMat = new THREE.MeshStandardMaterial({ color: 0x8a5a32, roughness: 0.5 });
+    const bpMat = new THREE.MeshBasicMaterial({ color: 0x1e4a82, transparent: true, opacity: 0.55, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 });
+    const edgeMat = new THREE.LineBasicMaterial({ color: 0xa9d0ff, transparent: true, opacity: 0.85 });
+    const btnEdgeMat = new THREE.LineBasicMaterial({ color: 0xffb066 });
+
+    const bodyMesh = new THREE.Mesh(body, woodMat);
+    const btnMesh = new THREE.Mesh(btn, btnMat);
+    const bodyEdges = new THREE.LineSegments(new THREE.EdgesGeometry(body, 22), edgeMat);
+    const btnEdges = new THREE.LineSegments(new THREE.EdgesGeometry(btn, 22), btnEdgeMat);
+    bodyEdges.visible = btnEdges.visible = false;
+    group.add(bodyMesh, btnMesh, bodyEdges, btnEdges);
+    group.position.sub(c);
+    scene.add(group);
+
+    // soft contact shadow
+    const sh = document.createElement('canvas'); sh.width = sh.height = 128;
+    const sx = sh.getContext('2d')!; const gr = sx.createRadialGradient(64, 64, 4, 64, 64, 64);
+    gr.addColorStop(0, 'rgba(0,0,0,.45)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); sx.fillStyle = gr; sx.fillRect(0, 0, 128, 128);
+    const shadow = new THREE.Mesh(new THREE.PlaneGeometry(420, 150), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(sh), transparent: true, depthWrite: false }));
+    shadow.rotation.x = -Math.PI / 2; shadow.position.y = -(body.boundingBox!.max.y - body.boundingBox!.min.y) / 2 - 6;
+    scene.add(shadow);
+
+    let visible = false, raf = 0;
+    const resize = () => {
+      const w = root.clientWidth, h = root.clientHeight;
+      renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+    };
+    const tick = () => {
+      raf = 0;
+      if (!visible) return;
+      controls.update(); renderer.render(scene, camera);
+      raf = requestAnimationFrame(tick);
+    };
+    new ResizeObserver(resize).observe(root); resize();
+    new IntersectionObserver((es) => { visible = es[0].isIntersecting; if (visible && !raf) raf = requestAnimationFrame(tick); }).observe(root);
+    loading.hidden = true;
+
+    const modes = root.querySelectorAll<HTMLButtonElement>('[data-mode]');
+    modes.forEach((b) => b.addEventListener('click', () => {
+      const bp = b.dataset.mode === 'blueprint';
+      root.classList.toggle('blueprint', bp);
+      bodyMesh.material = bp ? bpMat : woodMat; btnMesh.material = bp ? bpMat : btnMat;
+      bodyEdges.visible = btnEdges.visible = bp;
+      modes.forEach((m) => { const on = m === b; m.classList.toggle('on', on); m.setAttribute('aria-pressed', String(on)); });
+    }));
+    const spin = root.querySelector<HTMLButtonElement>('[data-spin]')!;
+    const setSpin = (on: boolean) => { controls.autoRotate = on; spin.setAttribute('aria-pressed', String(on)); spin.classList.toggle('on', on); };
+    setSpin(!reduce);
+    spin.addEventListener('click', () => setSpin(!controls.autoRotate));
+    controls.addEventListener('start', () => { if (controls.autoRotate) setSpin(false); });
+  }
+
+  // only fetch the 3 MB model once the viewer approaches the viewport
+  document.querySelectorAll<HTMLElement>('[data-viewer]').forEach((el) => {
+    const io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { io.disconnect(); boot(el).catch((e) => { console.error(e); (el.querySelector('[data-loading]') as HTMLElement).innerHTML = '<span>Could not load the 3D model.</span>'; }); } }, { rootMargin: '300px' });
+    io.observe(el);
+  });
+</script>
+
+<style>
+  .viewer { position: relative; height: var(--h); border-radius: 18px; overflow: hidden; border: 1px solid var(--rule);
+    background: radial-gradient(80% 90% at 50% 40%, #fbf5e6, #e4d6b8 70%, #cdbb97); transition: background .5s; touch-action: pan-y; }
+  :global(:root[data-theme='dark']) .viewer { background: radial-gradient(80% 90% at 50% 40%, #3a3550, #1d2033 70%, #121420); }
+  .viewer.blueprint { background: #12315a; background-image: linear-gradient(rgb(160 200 255 / .12) 1px, transparent 1px), linear-gradient(90deg, rgb(160 200 255 / .12) 1px, transparent 1px); background-size: 28px 28px; }
+  canvas { width: 100%; height: 100%; display: block; cursor: grab; touch-action: pan-y; }
+  canvas:active { cursor: grabbing; }
+  .loading { position: absolute; inset: 0; display: grid; place-items: center; font: 400 .85rem var(--font-mono); color: #6b5a44; background: inherit; }
+  .loading[hidden] { display: none; }
+  .ctl { position: absolute; left: 14px; top: 14px; display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: rgb(24 27 41 / .78); backdrop-filter: blur(8px); }
+  .ctl button { font: 500 .72rem var(--font-mono); letter-spacing: .05em; color: #d9d0bb; background: none; border: 0; padding: .55em .95em; border-radius: 999px; cursor: pointer; min-height: 34px; }
+  .ctl button.on { background: #f1e8d4; color: #1b1209; }
+  .tip { position: absolute; right: 14px; bottom: 10px; margin: 0; font: 400 .72rem var(--font-mono); color: #6b5a44; opacity: .85; pointer-events: none; }
+  .blueprint .tip, .blueprint .loading { color: #a9d0ff; }
+  :global(:root[data-theme='dark']) .tip { color: #b7ad98; }
+</style>
