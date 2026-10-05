@@ -118,4 +118,24 @@ const stars = Array.from({ length: 70 }, () => ({ x: rnd() * 100, y: rnd() * 62,
     .hills { height: 22%; }
   }
   @media (prefers-reduced-motion: reduce) { .stars circle { animation: none; } }
+
+  /* light theme: a dawn instead of a night */
+  :global(:root[data-theme='light']) .hero { color: #2b2118;
+    background: linear-gradient(180deg, #cddde6 0%, #efe6cf 42%, #f6d3a0 72%, #eda86f 100%); }
+  :global(:root[data-theme='light']) .stars { display: none; }
+  :global(:root[data-theme='light']) .moon { background: radial-gradient(circle at 40% 38%, #fffbe3, #ffe29a 55%, #ffc25e); box-shadow: 0 0 90px 30px rgb(255 205 110 / .55), 0 0 240px 90px rgb(255 205 110 / .25); }
+  :global(:root[data-theme='light']) .moon::after { display: none; }
+  :global(:root[data-theme='light']) .hills path:first-child { fill: #b98e5f; opacity: .45; }
+  :global(:root[data-theme='light']) .hills path:last-child { fill: #6f5336; }
+  :global(:root[data-theme='light']) .copy h1 { color: #2b2118; text-shadow: none; }
+  :global(:root[data-theme='light']) .copy h1 em { color: #a0481f; }
+  :global(:root[data-theme='light']) .eyebrow { color: #6e5640; }
+  :global(:root[data-theme='light']) .lead { color: #4f4132; }
+  :global(:root[data-theme='light']) .cta .ghost { --fg: #2b2118; --bd: rgb(43 33 24 / .35); backdrop-filter: none; }
+  :global(:root[data-theme='light']) .cta .ghost:hover { --bd: #2b2118; }
+  :global(:root[data-theme='light']) .fine { color: #5b4c3c; }
+  :global(:root[data-theme='light']) .fine .pill { color: #8a5a10; }
+  :global(:root[data-theme='light']) .branch-wrap :global(.perch) { color: #21170e; filter: none; }
+  :global(:root[data-theme='light']) .branch path { fill: #2d2015; }
+  :global(:root[data-theme='light']) .branch path:last-child { stroke: #2d2015; }
 </style>

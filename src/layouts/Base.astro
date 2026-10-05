@@ -48,12 +48,27 @@ const og = Astro.site ? new URL(url(image), Astro.site).href : url(image);
     <Footer />
     <Search />
     <script>
-      // theme toggle
-      document.getElementById('theme-toggle')?.addEventListener('click', () => {
-        const d = document.documentElement;
-        const next = d.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        d.setAttribute('data-theme', next);
+      // theme toggle (icon and label show the mode you will switch to)
+      const tbtn = document.getElementById('theme-toggle');
+      const root = document.documentElement;
+      const meta = document.querySelector('meta[name=theme-color]');
+      const paint = () => {
+        const dark = root.getAttribute('data-theme') === 'dark';
+        tbtn?.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+        tbtn?.setAttribute('title', dark ? 'Light theme' : 'Dark theme');
+        meta?.setAttribute('content', dark ? '#0d0f18' : '#f4eee1');
+      };
+      paint();
+      tbtn?.addEventListener('click', () => {
+        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
         try { localStorage.setItem('lelek-theme', next); } catch {}
+        paint();
+      });
+      matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        let saved = null;
+        try { saved = localStorage.getItem('lelek-theme'); } catch {}
+        if (saved !== 'light' && saved !== 'dark') { root.setAttribute('data-theme', e.matches ? 'dark' : 'light'); paint(); }
       });
       // mobile menu
       const btn = document.querySelector('.menu-btn') as HTMLButtonElement | null;

@@ -55,7 +55,7 @@ const active = (href) => (href === '/' ? path === '/' : path.startsWith(href));
   .search-open { border-color: rgb(241 232 212 / .2); padding: 0 .7rem; }
   .hint { display: inline-flex; gap: .2rem; }
   .hint :global(.kbd) { background: transparent; color: #cfc6b2; border-color: rgb(241 232 212 / .3); }
-  :global(:root[data-theme='dark']) .ic-sun, :global(:root:not([data-theme='dark'])) .ic-moon { display: none; }
+  :global(:root[data-theme='dark']) .ic-moon, :global(:root:not([data-theme='dark'])) .ic-sun { display: none; }
   .menu-btn, .ic-close { display: none; }
   @media (max-width: 1040px) {
     .hint { display: none; }

@@ -33,6 +33,7 @@
   --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
   --maxw: 1180px;
   --gutter: clamp(16px, 4vw, 40px);
+  --nt: #cfc6b2; --nt-dim: #b9b1a0; --nt-accent: #f0a070; /* text on always-dark surfaces */
   color-scheme: light;
 }
 :root[data-theme='dark'] {
@@ -179,3 +180,49 @@ tfoot td { font-weight: 600; background: color-mix(in srgb, var(--paper-3) 40%, 
 .crumbs a { color: inherit; }
 svg.icon { display: inline-block; vertical-align: -.14em; flex: none; }
 .notes-art { display: flex; flex-direction: column; justify-content: center; min-height: 360px; }
+
+/* ---------------------------------------------------------------------------
+   Light theme for the surfaces that are dark by default (header, footer, heroes,
+   "night" sections): parchment and dawn instead of dusk. */
+:root[data-theme='light'] {
+  --nt: #5b4c3c; --nt-dim: #6b5b49; --nt-accent: #9c4f2a;
+  --hdr-bg: color-mix(in srgb, #f4eee1 86%, transparent);
+}
+:root[data-theme='light'] .night {
+  background: #e8dec8; color: #2b2118;
+  --ink: #2b2118; --ink-soft: #5b4c3c; --rule: #cbbda2; --bark: #6e5640; --rust: #9c4f2a; --paper-2: #f4eee1;
+}
+:root[data-theme='light'] .night h2, :root[data-theme='light'] .night h3 { color: #2b2118; }
+:root[data-theme='light'] .night .btn.ghost { --fg: #2b2118; --bd: #cbbda2; }
+:root[data-theme='light'] .night .btn.ghost:hover { --bd: #2b2118; }
+:root[data-theme='light'] .band { background: linear-gradient(120deg, #f1e2c6, #efcfa9 70%, #e9b98f); }
+
+:root[data-theme='light'] .hdr { background: var(--hdr-bg); border-bottom-color: var(--rule); color: var(--ink); }
+:root[data-theme='light'] .hdr nav a { color: var(--ink-soft); }
+:root[data-theme='light'] .hdr nav a:hover { color: var(--ink); background: rgb(43 33 24 / .07); }
+:root[data-theme='light'] .hdr nav a[aria-current='page'] { color: var(--ink); background: rgb(43 33 24 / .1); }
+:root[data-theme='light'] .hdr nav .pill { color: var(--rust); }
+:root[data-theme='light'] .hdr .icon-btn { color: var(--ink); }
+:root[data-theme='light'] .hdr .icon-btn:hover { background: rgb(43 33 24 / .08); }
+:root[data-theme='light'] .hdr .search-open { border-color: var(--rule); }
+:root[data-theme='light'] .hdr .hint .kbd { color: var(--ink-soft); border-color: var(--rule); }
+@media (max-width: 1040px) {
+  :root[data-theme='light'] .hdr nav { background: var(--paper); border-bottom-color: var(--rule); }
+}
+
+:root[data-theme='light'] .ftr { background: var(--paper-2); color: var(--ink-soft); border-top-color: var(--rule); }
+:root[data-theme='light'] .ftr .brand, :root[data-theme='light'] .ftr h3 a:hover { color: var(--ink); }
+:root[data-theme='light'] .ftr h3, :root[data-theme='light'] .ftr .latin { color: var(--bark); }
+:root[data-theme='light'] .ftr .col a { color: var(--ink-soft); }
+:root[data-theme='light'] .ftr .col a:hover { color: var(--ink); }
+:root[data-theme='light'] .ftr .bottom { border-top-color: var(--rule); color: var(--ink-soft); }
+:root[data-theme='light'] .ftr .bottom a { color: var(--rust); }
+:root[data-theme='light'] .ftr .ghost { --fg: var(--ink); --bd: var(--rule); }
+:root[data-theme='light'] .ftr .ghost .kbd { color: var(--ink-soft); border-color: var(--rule); }
+
+:root[data-theme='light'] .page-hero { background: linear-gradient(180deg, #e9eef0 0%, #f6ead2 55%, #f3d7ae 100%); color: var(--ink); --ink: #2b2118; --bark: #6e5640; --rust: #9c4f2a; --ink-soft: #5b4c3c; }
+:root[data-theme='light'] .page-hero::before { background: radial-gradient(60% 90% at 85% 125%, rgb(240 170 90 / .5), transparent 70%), radial-gradient(40% 60% at 10% -10%, rgb(255 255 255 / .7), transparent 70%); }
+:root[data-theme='light'] .page-hero .lead { color: var(--ink-soft); }
+:root[data-theme='light'] .page-hero .eyebrow, :root[data-theme='light'] .page-hero .crumbs { color: var(--bark) !important; }
+:root[data-theme='light'] .page-hero h1 em { color: #a0481f; }
+:root[data-theme='light'] .page-hero .sil { color: #2a1d12; filter: none; }

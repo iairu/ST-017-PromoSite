@@ -149,7 +149,7 @@ const done = milestones.filter((m) => m.done).length;
       <div class="reveal">
         <p class="eyebrow">Pre-order</p>
         <h2>Want one on your shelf?</h2>
-        <p class="lead" style="color:#cfc6b2">Each bird will be made to order. Pre-orders are not open yet: the first prototype has to be carved, and a target price of EUR 89 to 129 has to survive contact with the workshop.</p>
+        <p class="lead" >Each bird will be made to order. Pre-orders are not open yet: the first prototype has to be carved, and a target price of EUR 89 to 129 has to survive contact with the workshop.</p>
       </div>
       <div class="reveal actions">
         <a class="btn primary" href={url('/preorder/')}>{PREORDER_OPEN ? 'Pre-order a LELEK' : 'See the pre-order page'}</a>
@@ -233,8 +233,8 @@ const done = milestones.filter((m) => m.done).length;
   .flow .n { font: 500 .85rem var(--font-mono); color: var(--rust); border: 1px solid currentColor; width: 2.6rem; height: 2.6rem; border-radius: 50%; display: grid; place-items: center; margin-top: .2rem; }
   .flow h3 { margin-bottom: .15em; } .flow p { margin: 0; color: var(--ink-soft); }
 
-  .fine-print { margin-top: 1.4rem; font: 400 .82rem/1.7 var(--font-mono); color: #b9b1a0; max-width: 70ch; }
-  .fine-print a { color: #f0a070; }
+  .fine-print { margin-top: 1.4rem; font: 400 .82rem/1.7 var(--font-mono); color: var(--nt-dim); max-width: 70ch; }
+  .fine-print a { color: var(--nt-accent); }
 
   .tablist { display: inline-flex; gap: 3px; padding: 4px; border: 1px solid var(--rule); background: var(--paper-2); border-radius: 999px; margin-bottom: 1.6rem; }
   .tablist button { font: 500 .8rem var(--font-mono); letter-spacing: .05em; background: none; border: 0; color: var(--ink-soft); padding: .7em 1.4em; border-radius: 999px; cursor: pointer; min-height: 40px; }
@@ -259,6 +259,7 @@ const done = milestones.filter((m) => m.done).length;
   .rail .when { margin: 0 0 .4rem; font-size: .74rem; letter-spacing: .08em; color: var(--bark); text-transform: uppercase; }
   .rail h3 { font-size: 1.15rem; margin-bottom: .3em; } .rail p:last-child { color: var(--ink-soft); font-size: .96rem; margin: 0; }
 
+  .band .lead { color: var(--nt); }
   .band { overflow: hidden; background: linear-gradient(120deg, #151932, #2a2644 60%, #5a3a3e); }
   .band-in { display: grid; gap: 2rem 4rem; grid-template-columns: 1.4fr 1fr; align-items: center; }
   .actions { display: flex; flex-direction: column; gap: .8rem; align-items: stretch; }
