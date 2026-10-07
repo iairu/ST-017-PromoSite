@@ -38,7 +38,7 @@ def write_stl(path, tris):
     rec = np.zeros(n, dtype=np.dtype([('n', '<f4', 3), ('v', '<f4', (3, 3)), ('a', '<u2')]))
     rec['n'], rec['v'] = nm, tris
     with open(path, 'wb') as f:
-        f.write(b'LELEK nightjar, decimated for web'.ljust(80, b' '))
+        f.write(b'NightJar, decimated for web'.ljust(80, b' '))
         f.write(n.to_bytes(4, 'little'))
         f.write(rec.tobytes())
 

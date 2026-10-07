@@ -11,7 +11,7 @@ const year = new Date().getFullYear();
   <div class="wrap">
     <div class="top">
       <div class="about">
-        <a class="brand" href={href(lang)}><img src={url('/favicon.svg')} alt="" width="34" height="34" /><span>LELEK</span></a>
+        <a class="brand" href={href(lang)}><img src={url('/favicon.svg')} alt="" width="34" height="34" /><span>{site.brand}{site.brandTail && <span class="sub">{site.brandTail}</span>}{site.brandSub && <span class="sub"> {site.brandSub}</span>}</span></a>
         <p class="latin">{site.latin}</p>
         <p class="small">{f.about}</p>
         <p class="small"><span class="pill wip">{ui.pillWip}</span></p>
@@ -55,8 +55,9 @@ const year = new Date().getFullYear();
 <style>
   .ftr { background: var(--dusk); color: #cfc6b2; padding: clamp(3rem, 6vw, 5rem) 0 2rem; border-top: 1px solid #2a2f45; font-size: .95rem; }
   .top { display: grid; gap: 3rem; grid-template-columns: minmax(240px, 1fr) 3fr; }
-  .brand { display: inline-flex; align-items: center; gap: .7rem; color: #f1e8d4; text-decoration: none; font: 600 1.3rem var(--font-display); letter-spacing: .28em; margin-bottom: .3rem; }
-  .brand img { border-radius: 8px; }
+  .brand { display: inline-flex; align-items: center; gap: .7rem; color: #f1e8d4; text-decoration: none; font: 600 1.3rem var(--font-display); letter-spacing: .06em; margin-bottom: .3rem; }
+  .brand .sub { font-weight: 400; opacity: .8; }
+  .brand img { border-radius: 8px; flex: none; }
   .latin { color: #d7b98d; margin: 0 0 1rem; }
   .small { font-size: .92rem; max-width: 34ch; }
   .cols { display: grid; gap: 2rem 1.5rem; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }

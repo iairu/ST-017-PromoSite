@@ -207,7 +207,11 @@ svg.icon { display: inline-block; vertical-align: -.14em; flex: none; }
 :root[data-theme='light'] .hdr .icon-btn:hover { background: rgb(43 33 24 / .08); }
 :root[data-theme='light'] .hdr .search-open { border-color: var(--rule); }
 :root[data-theme='light'] .hdr .hint .kbd { color: var(--ink-soft); border-color: var(--rule); }
-@media (max-width: 1040px) {
+:root[data-theme='light'] .hdr .lang { border-color: var(--rule); }
+:root[data-theme='light'] .hdr .lang a { color: var(--ink-soft); }
+:root[data-theme='light'] .hdr .lang a:hover { color: var(--ink); background: rgb(43 33 24 / .07); }
+:root[data-theme='light'] .hdr .lang .cur { background: rgb(43 33 24 / .1); color: var(--ink); }
+@media (max-width: 1180px) {
   :root[data-theme='light'] .hdr nav { background: var(--paper); border-bottom-color: var(--rule); }
 }
 

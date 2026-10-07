@@ -1,4 +1,4 @@
-// Language-neutral data for the LELEK promo site: links, flags, numbers, prices, dates and
+// Language-neutral data for the NightJar.Gift promo site: links, flags, numbers, prices, dates and
 // the structure of lists. Everything a visitor reads lives in src/i18n/<lang>.js and is merged
 // with this file by content(lang) in src/i18n/index.js, so a price is only ever stored once.
 //
@@ -16,7 +16,6 @@ export const url = (p = '/') => (/^(https?:|mailto:|#)/.test(p) ? p : `${BASE}${
 export const PREORDER_OPEN = false; // flip to true to enable the pre-order form
 
 export const site = {
-  name: 'LELEK',
   latin: 'Caprimulgus europaeus',
   studentId: 'ST-017',
   year: '2026/2027',

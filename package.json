@@ -1,9 +1,9 @@
 {
-  "name": "lelek-promo-site",
+  "name": "nightjar-promo-site",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "LELEK: promo site for a CNC-carved wooden nightjar that sings on button press.",
+  "description": "NightJar.Gift: promo site for a CNC-carved wooden nightjar that sings on button press.",
   "scripts": {
     "dev": "astro dev",
     "build": "node scripts/check-i18n.mjs && astro build && node scripts/anchor-headings.mjs && pagefind --site dist --output-subdir _pagefind",

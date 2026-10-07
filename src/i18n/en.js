@@ -8,9 +8,13 @@ export default {
   numLocale: 'en-GB',
 
   site: {
+    name: 'NightJar.Gift', // brand in titles and metadata
+    brand: 'NightJar', // brand in the header, footer and breadcrumbs
+    brandTail: '.Gift', // light-weight, directly after the brand; hidden on phones
+    brandSub: '', // optional small second line under the brand; hidden on phones
     tagline: 'The bird you hear before you see.',
     description:
-      'LELEK is a CNC-carved wooden European nightjar with a button on its back. Hold it and the bird sings its churring night call; let go and it sleeps.',
+      'NightJar is a CNC-carved wooden European nightjar with a button on its back. Hold it and the bird sings its churring night call; let go and it sleeps.',
     course: 'Systems Thinking in IT and Digital Fabrication (STHDF)',
     updated: '5 October 2026',
   },
@@ -19,7 +23,7 @@ export default {
     skip: 'Skip to content',
     mainNav: 'Main',
     sitemap: 'Sitemap',
-    homeAria: 'LELEK, home',
+    homeAria: 'NightJar.Gift, home',
     searchOpen: 'Search the site (Ctrl+K)',
     theme: 'Toggle light and dark theme',
     toLight: 'Switch to light theme',
@@ -54,14 +58,14 @@ export default {
     hero: {
       eyebrowSuffix: 'lelek lesný',
       title: 'The bird you hear <em>before</em> you see.',
-      lead: 'LELEK is a wooden nightjar, carved on a CNC from two halves of beech. Hold the button on its back and it sings its churring night call. Let go, and it sleeps.',
+      lead: 'NightJar is a wooden nightjar, carved on a CNC from two halves of beech. Hold the button on its back and it sings its churring night call. Let go, and it sleeps.',
       hold: 'Hold to hear it',
       singing: 'Singing…',
       preorder: 'Pre-order · opening soon',
       how: 'How it works',
       fine: 'Electronics designed and ordered, wood next. The sample is a synthesised churr, not yet the final recording.',
     },
-    birdAria: 'Silhouette of the LELEK nightjar, seen from the side',
+    birdAria: 'Silhouette of the carved nightjar, seen from the side',
     model: {
       aria: 'Interactive 3D model of the carved nightjar. Drag to rotate, scroll or pinch to zoom.',
       noscriptAlt: 'Wireframe of the assembled bird',
@@ -226,7 +230,7 @@ export default {
     school: 'Faculty of Informatics and Information Technologies (FIIT), Slovak University of Technology in Bratislava',
     location: 'Bratislava, Slovakia',
     bio: [
-      'I like seeing how the layers fit together, from hardware up to the user. LELEK is my project for the course Systems Thinking in IT and Digital Fabrication: take one object from idea to a finished piece, and document it as I go instead of at the end.',
+      'I like seeing how the layers fit together, from hardware up to the user. NightJar is my project for the course Systems Thinking in IT and Digital Fabrication: take one object from idea to a finished piece, and document it as I go instead of at the end.',
       'I chose the nightjar because it is a bird you hear far more often than you see. My earlier work is mostly software and infrastructure: CI/CD with Docker and Nginx, Linux administration, and web front ends in Svelte.',
       'Away from the screen: working with wood by hand, hiking, photography, cooking and cats.',
     ],
@@ -263,7 +267,7 @@ export default {
     ['Heard, rarely seen', 'It hunts insects at dusk and through the night, and its bark-coloured plumage hides it against branches and the ground by day.'],
     ['The churr', 'The male’s song is a continuous, dry, mechanical trill that can run for minutes. It is the sound of heathland and forest edges on a warm summer night.'],
     ['Perching lengthwise', 'Unlike most birds, a nightjar often sits along a branch rather than across it. That long, low shape is what the carving follows.'],
-    ['The model', 'A real nightjar is 24 to 28 cm long. LELEK is stylised, not a scan, and about 1.2x life size so the chest can hold a 40 mm speaker with 6 mm of wood around it.'],
+    ['The model', 'A real nightjar is 24 to 28 cm long. NightJar is stylised, not a scan, and about 1.2x life size so the chest can hold a 40 mm speaker with 6 mm of wood around it.'],
   ],
 
   // the three board views (home page tabs and electronics page), same order as `views` in site.js
@@ -275,13 +279,12 @@ export default {
 
   p: {
     home: {
-      title: 'LELEK',
-      glance: 'LELEK at a glance',
+      glance: 'NightJar at a glance',
       tabsLabel: 'Board views',
       enlarge: 'Enlarge: {label}',
       zoomLabel: 'Enlarged image',
       close: 'Close',
-      highlights: { eyebrow: 'Highlights', title: 'One object, one gesture, one sound.', lead: 'Most singing gadgets are plastic, plugged in and forgotten within a month. LELEK is a piece of carved wood that does one thing well, built so it can be repaired and understood.' },
+      highlights: { eyebrow: 'Highlights', title: 'One object, one gesture, one sound.', lead: 'Most singing gadgets are plastic, plugged in and forgotten within a month. NightJar is a piece of carved wood that does one thing well, built so it can be repaired and understood.' },
       how: {
         eyebrow: 'How it sings', title: 'Press, power, sing, sleep.',
         lead: 'There is no microcontroller to boot and no firmware to crash. The button simply connects the battery to a sound module, and that module is happy to start playing the moment it wakes up.',
@@ -305,15 +308,15 @@ export default {
       band: {
         eyebrow: 'Pre-order', title: 'Want one on your shelf?',
         lead: 'Each bird will be made to order. Pre-orders are not open yet: the first prototype has to be carved, and a target price of EUR 89 to 129 has to survive contact with the workshop.',
-        open: 'Pre-order a LELEK', closed: 'See the pre-order page', interested: 'Tell me you are interested',
-        mailSubject: 'LELEK pre-order interest',
+        open: 'Pre-order a NightJar', closed: 'See the pre-order page', interested: 'Tell me you are interested',
+        mailSubject: 'NightJar pre-order interest',
       },
       maker: { eyebrow: 'The maker', title: 'Built by a software student who wanted to hold something.', about: 'About {name}', docs: 'Project documentation (KNIFES)' },
     },
 
     bird: {
       title: 'The Bird',
-      description: 'The LELEK nightjar: a stylised perching bird carved from two beech halves on a 3-axis CNC. Dimensions, wireframes, pockets, machining and wood.',
+      description: 'The NightJar bird: a stylised perching bird carved from two beech halves on a 3-axis CNC. Dimensions, wireframes, pockets, machining and wood.',
       hero: { eyebrow: 'Shape, wood and CNC', title: 'A perching nightjar, <em>carved in two halves.</em>', lead: 'The body is a stylised nightjar: flat-headed, long-tailed, sitting low along its branch. It is split down the middle so that every cavity can be cut from the seam, then glued around the electronics.' },
       specs: { eyebrow: 'Specifications', title: '309 millimetres of beech.', lead: 'The numbers below come straight from the parametric model that generates the CNC files. Change a parameter, rerun the script, and the walls, pockets and fit checks are recomputed.', note: '<b>Prototype.</b> Nothing has been machined yet. These are design figures from the model, not measurements of a finished bird.' },
       model: { eyebrow: '3D model', title: 'Drag it. Spin it. Look for the seam.', lead: 'The button on the back is its own part, in a darker wood.' },
@@ -365,7 +368,7 @@ export default {
 
     electronics: {
       title: 'Electronics',
-      description: 'LELEK electronics, board v7 and v8: a push button in the battery line, a DFPlayer Pro, a small LiPo and a micro-USB charger. Schematic, breadboard, PCB, design choices and verification.',
+      description: 'NightJar electronics, board v7 and v8: a push button in the battery line, a DFPlayer Pro, a small LiPo and a micro-USB charger. Schematic, breadboard, PCB, design choices and verification.',
       hero: { eyebrow: 'Board v7, v8', title: 'A button, a battery, a <em>sound module.</em>', lead: 'Eight board versions got the circuit from 13 parts and a microcontroller down to a button in the power line. Hold it and the bird sings; let go and it stops.' },
       circuit: {
         eyebrow: 'The circuit', title: 'It works because nothing is on when you are not pressing.',
@@ -431,7 +434,7 @@ export default {
 
     parts: {
       title: 'Parts',
-      description: 'Every part inside LELEK: the v7 electronics bill of materials (ordered, EUR 17.60 including VAT), the beech block and the optional v8 thermal fuse, with shops and links.',
+      description: 'Every part inside NightJar: the v7 electronics bill of materials (ordered, EUR 17.60 including VAT), the beech block and the optional v8 thermal fuse, with shops and links.',
       hero: { eyebrow: 'What goes inside', title: 'Nine lines of electronics, <em>one block of beech.</em>', lead: 'The v7 parts have been ordered. Prices were read on {date} in euro including VAT, without shipping, and stock changes, so check the cart.' },
       kit: {
         eyebrow: 'The kit', title: 'Everything for the breadboard, on one table.',
@@ -496,7 +499,7 @@ export default {
 
     roadmap: {
       title: 'Roadmap',
-      description: 'Where the LELEK build stands: electronics designed and ordered, enclosure modelled, wood chosen, CNC carving next. Milestones from October 2026 to January 2027.',
+      description: 'Where the NightJar build stands: electronics designed and ordered, enclosure modelled, wood chosen, CNC carving next. Milestones from October 2026 to January 2027.',
       hero: { eyebrow: 'Where the build stands', title: 'Designed and ordered. <em>Not yet carved.</em>', lead: 'An honest picture, updated as things happen. The plan runs from the project\'s approval on 5 October 2026 to the final presentation in January 2027.' },
       status: { eyebrow: 'Status', title: 'What exists today.', asOf: 'As of {date}.', cols: ['Area', 'State', 'Notes'], note: '<b>Not yet true:</b> there is no physical bird. The first sound from a real breadboard is the target of milestone M3, and no battery life or loudness figures have been measured.' },
       milestones: { eyebrow: 'Milestones', title: 'Eight steps to a singing bird.', docs: 'Full project documentation' },
@@ -504,13 +507,13 @@ export default {
 
     preorder: {
       title: 'Pre-order',
-      description: 'Pre-orders for the LELEK wooden nightjar are not open yet. Target price EUR 89 to 129, made to order; see the planned options and questions.',
-      hero: { eyebrow: 'Opening soon', title: 'Reserve a bird. <em>Not yet.</em>', lead: 'Each LELEK will be made to order. The form below shows how pre-ordering will work; it is switched off until the first prototype has been carved and the price is confirmed.' },
+      description: 'Pre-orders for the NightJar wooden nightjar are not open yet. Target price EUR 89 to 129, made to order; see the planned options and questions.',
+      hero: { eyebrow: 'Opening soon', title: 'Reserve a bird. <em>Not yet.</em>', lead: 'Each NightJar will be made to order. The form below shows how pre-ordering will work; it is switched off until the first prototype has been carved and the price is confirmed.' },
       closedTitle: 'Pre-orders are closed for now.',
       closedText: 'Nothing you type here is sent anywhere. Interested?',
       closedLink: 'Send an email',
       closedAfter: 'and you will be told when it opens.',
-      mailSubject: 'LELEK pre-order interest',
+      mailSubject: 'NightJar pre-order interest',
       legend: 'Pre-order details',
       wood: 'Wood',
       beech: 'Beech', beechNote: 'Hard, fine-grained. The final bird.',
@@ -521,7 +524,7 @@ export default {
       email: 'Email', emailPh: 'you@example.com',
       country: 'Country of delivery', countries: ['Slovakia', 'Czechia', 'Other (ask first)'],
       consent: 'I understand this is a made-to-order project, the price is confirmed before any payment, and I can withdraw at any time.',
-      submitOpen: 'Pre-order a LELEK', submitClosed: 'Pre-orders open soon',
+      submitOpen: 'Pre-order a NightJar', submitClosed: 'Pre-orders open soon',
       price: {
         eyebrow: 'Target price', amount: '89 – 129', per: 'per bird, made to order, hypothesis',
         items: ['About EUR 35 of material', 'EUR 17.60 of electronics (v7)', 'Roughly 4 hours of work, CNC time included'],
@@ -532,8 +535,8 @@ export default {
 
     about: {
       title: 'About',
-      description: 'Ondrej Špánik, software engineering student at FIIT STU in Bratislava, and the maker of LELEK. Background, projects, links and the course behind the project.',
-      hero: { eyebrow: 'The student behind it', title: 'One person, <em>one bird.</em>', lead: 'LELEK is an individual project from the course Systems Thinking in IT and Digital Fabrication at FIIT STU: everything from CAD to the wooden button, and the documentation, by one student.' },
+      description: 'Ondrej Špánik, software engineering student at FIIT STU in Bratislava, and the maker of NightJar. Background, projects, links and the course behind the project.',
+      hero: { eyebrow: 'The student behind it', title: 'One person, <em>one bird.</em>', lead: 'NightJar is an individual project from the course Systems Thinking in IT and Digital Fabrication at FIIT STU: everything from CAD to the wooden button, and the documentation, by one student.' },
       student: { eyebrow: 'Student', email: 'Email', earlier: 'Earlier work', from: 'From {portfolio} and {github}.', github: 'GitHub' },
       course: {
         eyebrow: 'The course',

@@ -7,9 +7,13 @@ export default {
   numLocale: 'sk-SK',
 
   site: {
+    name: 'LeLeK (NightJar.Gift)', // brand in titles and metadata
+    brand: 'LeLeK', // brand in the header, footer and breadcrumbs
+    brandTail: '',
+    brandSub: '(NightJar.Gift)', // small second line under the brand; hidden on phones
     tagline: 'Vták, ktorého začujete skôr, než ho uvidíte.',
     description:
-      'LELEK je drevený lelek lesný vyrezaný na CNC, s tlačidlom na chrbte. Podržte ho a vták zaspieva svoje nočné vrčanie; pustite a zaspí.',
+      'LeLeK (NightJar.Gift) je drevený lelek lesný vyrezaný na CNC, s tlačidlom na chrbte. Podržte ho a vták zaspieva svoje nočné vrčanie; pustite a zaspí.',
     course: 'Systémové myslenie v IT a digitálna fabrikácia (STHDF)',
     updated: '5. októbra 2026',
   },
@@ -18,7 +22,7 @@ export default {
     skip: 'Preskočiť na obsah',
     mainNav: 'Hlavná navigácia',
     sitemap: 'Mapa stránok',
-    homeAria: 'LELEK, domov',
+    homeAria: 'LeLeK (NightJar.Gift), domov',
     searchOpen: 'Hľadať na stránke (Ctrl+K)',
     theme: 'Prepnúť svetlú a tmavú tému',
     toLight: 'Prepnúť na svetlú tému',
@@ -53,14 +57,14 @@ export default {
     hero: {
       eyebrowSuffix: 'lelek lesný',
       title: 'Vták, ktorého začujete <em>skôr</em>, než ho uvidíte.',
-      lead: 'LELEK je drevený lelek, vyrezaný na CNC z dvoch bukových polovíc. Podržte tlačidlo na jeho chrbte a zaspieva svoje nočné vrčanie. Pustite a zaspí.',
+      lead: 'LeLeK (NightJar.Gift) je drevený lelek, vyrezaný na CNC z dvoch bukových polovíc. Podržte tlačidlo na jeho chrbte a zaspieva svoje nočné vrčanie. Pustite a zaspí.',
       hold: 'Podržte a počúvajte',
       singing: 'Spieva…',
       preorder: 'Predobjednávka · čoskoro',
       how: 'Ako to funguje',
       fine: 'Elektronika je navrhnutá a objednaná, drevo je na rade. Ukážka je syntetizované vrčanie, nie konečná nahrávka.',
     },
-    birdAria: 'Silueta lelka LELEK zboku',
+    birdAria: 'Silueta vyrezaného lelka zboku',
     model: {
       aria: 'Interaktívny 3D model vyrezaného lelka. Ťahaním otáčate, kolieskom myši alebo štipnutím približujete.',
       noscriptAlt: 'Drôtený model zloženého vtáka',
@@ -224,7 +228,7 @@ export default {
     school: 'Fakulta informatiky a informačných technológií (FIIT), Slovenská technická univerzita v Bratislave',
     location: 'Bratislava, Slovensko',
     bio: [
-      'Páči sa mi sledovať, ako do seba zapadajú jednotlivé vrstvy, od hardvéru až po používateľa. LELEK je môj projekt z predmetu Systémové myslenie v IT a digitálna fabrikácia: dotiahnuť jeden predmet od nápadu po hotový kus a dokumentovať ho priebežne, nie až na konci.',
+      'Páči sa mi sledovať, ako do seba zapadajú jednotlivé vrstvy, od hardvéru až po používateľa. LeLeK je môj projekt z predmetu Systémové myslenie v IT a digitálna fabrikácia: dotiahnuť jeden predmet od nápadu po hotový kus a dokumentovať ho priebežne, nie až na konci.',
       'Lelka som si vybral, lebo je to vták, ktorého počujete oveľa častejšie, než vidíte. Moja doterajšia práca je najmä softvér a infraštruktúra: CI/CD s Dockerom a Nginxom, administrácia Linuxu a webové rozhrania v Svelte.',
       'Mimo obrazovky: ručná práca s drevom, turistika, fotografovanie, varenie a mačky.',
     ],
@@ -261,7 +265,7 @@ export default {
     ['Počuť, zriedka vidieť', 'Za súmraku a v noci loví hmyz a jeho operenie farby kôry ho cez deň ukrýva na konároch aj na zemi.'],
     ['Vrčanie', 'Spev samca je súvislé, suché, mechanické trilkovanie, ktoré môže trvať minúty. Je to zvuk vresovísk a lesných okrajov za teplej letnej noci.'],
     ['Sedí pozdĺžne', 'Na rozdiel od väčšiny vtákov lelek často sedí pozdĺž konára, nie naprieč. Tento dlhý nízky tvar sleduje aj rezba.'],
-    ['Model', 'Skutočný lelek meria 24 až 28 cm. LELEK je štylizovaný, nie sken, a asi 1,2-krát väčší, aby sa do hrude zmestil 40 mm reproduktor so 6 mm dreva okolo.'],
+    ['Model', 'Skutočný lelek meria 24 až 28 cm. LeLeK je štylizovaný, nie sken, a asi 1,2-krát väčší, aby sa do hrude zmestil 40 mm reproduktor so 6 mm dreva okolo.'],
   ],
 
   views: [
@@ -272,13 +276,12 @@ export default {
 
   p: {
     home: {
-      title: 'LELEK',
-      glance: 'LELEK v skratke',
+      glance: 'LeLeK v skratke',
       tabsLabel: 'Pohľady na dosku',
       enlarge: 'Zväčšiť: {label}',
       zoomLabel: 'Zväčšený obrázok',
       close: 'Zavrieť',
-      highlights: { eyebrow: 'Hlavné body', title: 'Jeden predmet, jeden gest, jeden zvuk.', lead: 'Väčšina spievajúcich hračiek je z plastu, zapojená do siete a do mesiaca zabudnutá. LELEK je kus vyrezaného dreva, ktorý robí jednu vec dobre a je postavený tak, aby sa dal opraviť a pochopiť.' },
+      highlights: { eyebrow: 'Hlavné body', title: 'Jeden predmet, jeden gest, jeden zvuk.', lead: 'Väčšina spievajúcich hračiek je z plastu, zapojená do siete a do mesiaca zabudnutá. LeLeK je kus vyrezaného dreva, ktorý robí jednu vec dobre a je postavený tak, aby sa dal opraviť a pochopiť.' },
       how: {
         eyebrow: 'Ako spieva', title: 'Stlačenie, napájanie, spev, spánok.',
         lead: 'Nie je tu mikrokontrolér, ktorý by sa spúšťal, ani firmvér, ktorý by mohol zlyhať. Tlačidlo jednoducho pripojí batériu k zvukovému modulu a ten začne hrať hneď, ako sa zobudí.',
@@ -302,15 +305,15 @@ export default {
       band: {
         eyebrow: 'Predobjednávka', title: 'Chcete ho na poličke?',
         lead: 'Každý vták sa bude vyrábať na objednávku. Predobjednávky ešte nie sú otvorené: najprv treba vyrezať prvý prototyp a cieľová cena 89 až 129 EUR musí obstáť v dielni.',
-        open: 'Predobjednať LELEK', closed: 'Pozrieť stránku predobjednávky', interested: 'Napíšte, že máte záujem',
-        mailSubject: 'Záujem o predobjednávku LELEK',
+        open: 'Predobjednať LeLeK', closed: 'Pozrieť stránku predobjednávky', interested: 'Napíšte, že máte záujem',
+        mailSubject: 'Záujem o predobjednávku LeLeK',
       },
       maker: { eyebrow: 'Tvorca', title: 'Postavil ho študent softvéru, ktorý chcel niečo držať v rukách.', about: 'O {name}', docs: 'Dokumentácia projektu (KNIFES)' },
     },
 
     bird: {
       title: 'Vták',
-      description: 'Lelek LELEK: štylizovaný sediaci vták vyrezaný z dvoch bukových polovíc na 3-osovom CNC. Rozmery, drôtené modely, kapsy, obrábanie a drevo.',
+      description: 'LeLeK (NightJar.Gift): štylizovaný sediaci vták vyrezaný z dvoch bukových polovíc na 3-osovom CNC. Rozmery, drôtené modely, kapsy, obrábanie a drevo.',
       hero: { eyebrow: 'Tvar, drevo a CNC', title: 'Sediaci lelek, <em>vyrezaný z dvoch polovíc.</em>', lead: 'Telo je štylizovaný lelek: s plochou hlavou, dlhým chvostom, sediaci nízko pozdĺž konára. Je rozdelený v strede, aby sa každá dutina dala vyrezať z deliacej roviny a potom zlepiť okolo elektroniky.' },
       specs: { eyebrow: 'Špecifikácia', title: '309 milimetrov buka.', lead: 'Čísla nižšie pochádzajú priamo z parametrického modelu, ktorý generuje súbory pre CNC. Zmeňte parameter, znova spustite skript a steny, kapsy a kontroly uloženia sa prepočítajú.', note: '<b>Prototyp.</b> Zatiaľ nič nebolo obrobené. Ide o návrhové hodnoty z modelu, nie o merania hotového vtáka.' },
       model: { eyebrow: '3D model', title: 'Ťahajte ho. Otáčajte ho. Hľadajte spoj.', lead: 'Tlačidlo na chrbte je samostatný diel z tmavšieho dreva.' },
@@ -362,7 +365,7 @@ export default {
 
     electronics: {
       title: 'Elektronika',
-      description: 'Elektronika LELEK, doska v7 a v8: tlačidlo v napájaní z batérie, DFPlayer Pro, malý LiPo a nabíjačka micro-USB. Schéma, nepájivé pole, DPS, návrhové rozhodnutia a overenie.',
+      description: 'Elektronika LeLeK (NightJar.Gift), doska v7 a v8: tlačidlo v napájaní z batérie, DFPlayer Pro, malý LiPo a nabíjačka micro-USB. Schéma, nepájivé pole, DPS, návrhové rozhodnutia a overenie.',
       hero: { eyebrow: 'Doska v7, v8', title: 'Tlačidlo, batéria, <em>zvukový modul.</em>', lead: 'Osem verzií dosky zredukovalo obvod z 13 dielov a mikrokontroléra na tlačidlo v napájaní. Podržte ho a vták spieva; pustite a zmĺkne.' },
       circuit: {
         eyebrow: 'Obvod', title: 'Funguje, lebo nič nie je zapnuté, keď netlačíte.',
@@ -428,7 +431,7 @@ export default {
 
     parts: {
       title: 'Diely',
-      description: 'Každý diel vo vnútri LELEK: zoznam materiálu elektroniky v7 (objednaný, 17,60 EUR s DPH), bukový hranol a voliteľná tepelná poistka v8, s obchodmi a odkazmi.',
+      description: 'Každý diel vo vnútri LeLeK: zoznam materiálu elektroniky v7 (objednaný, 17,60 EUR s DPH), bukový hranol a voliteľná tepelná poistka v8, s obchodmi a odkazmi.',
       hero: { eyebrow: 'Čo je vo vnútri', title: 'Deväť riadkov elektroniky, <em>jeden hranol buka.</em>', lead: 'Diely v7 sú objednané. Ceny boli zistené {date} v eurách s DPH, bez dopravy, a sklad sa mení, preto skontrolujte košík.' },
       kit: {
         eyebrow: 'Súprava', title: 'Všetko na nepájivé pole, na jednom stole.',
@@ -492,7 +495,7 @@ export default {
 
     roadmap: {
       title: 'Plán',
-      description: 'Kde stavba LELEK stojí: elektronika navrhnutá a objednaná, puzdro vymodelované, drevo vybrané, nasleduje rezanie na CNC. Míľniky od októbra 2026 do januára 2027.',
+      description: 'Kde stavba LeLeK stojí: elektronika navrhnutá a objednaná, puzdro vymodelované, drevo vybrané, nasleduje rezanie na CNC. Míľniky od októbra 2026 do januára 2027.',
       hero: { eyebrow: 'Kde stavba stojí', title: 'Navrhnuté a objednané. <em>Ešte nie vyrezané.</em>', lead: 'Úprimný obraz, aktualizovaný podľa vývoja. Plán trvá od schválenia projektu 5. októbra 2026 po záverečnú prezentáciu v januári 2027.' },
       status: { eyebrow: 'Stav', title: 'Čo existuje dnes.', asOf: 'K {date}.', cols: ['Oblasť', 'Stav', 'Poznámky'], note: '<b>Zatiaľ neplatí:</b> neexistuje fyzický vták. Prvý zvuk zo skutočného nepájivého poľa je cieľom míľnika M3 a nemerala sa ani výdrž batérie, ani hlasitosť.' },
       milestones: { eyebrow: 'Míľniky', title: 'Osem krokov k spievajúcemu vtákovi.', docs: 'Úplná dokumentácia projektu' },
@@ -500,13 +503,13 @@ export default {
 
     preorder: {
       title: 'Predobjednávka',
-      description: 'Predobjednávky dreveného lelka LELEK zatiaľ nie sú otvorené. Cieľová cena 89 až 129 EUR, na objednávku; pozrite si plánované možnosti a otázky.',
-      hero: { eyebrow: 'Čoskoro otvoríme', title: 'Rezervujte si vtáka. <em>Zatiaľ nie.</em>', lead: 'Každý LELEK sa bude vyrábať na objednávku. Formulár nižšie ukazuje, ako bude predobjednávka fungovať; je vypnutý, kým nie je vyrezaný prvý prototyp a potvrdená cena.' },
+      description: 'Predobjednávky dreveného lelka LeLeK zatiaľ nie sú otvorené. Cieľová cena 89 až 129 EUR, na objednávku; pozrite si plánované možnosti a otázky.',
+      hero: { eyebrow: 'Čoskoro otvoríme', title: 'Rezervujte si vtáka. <em>Zatiaľ nie.</em>', lead: 'Každý LeLeK sa bude vyrábať na objednávku. Formulár nižšie ukazuje, ako bude predobjednávka fungovať; je vypnutý, kým nie je vyrezaný prvý prototyp a potvrdená cena.' },
       closedTitle: 'Predobjednávky sú zatiaľ zatvorené.',
       closedText: 'Nič, čo tu napíšete, sa nikam neodosiela. Máte záujem?',
       closedLink: 'Pošlite e-mail',
       closedAfter: 'a dáme vám vedieť, keď sa otvorí.',
-      mailSubject: 'Záujem o predobjednávku LELEK',
+      mailSubject: 'Záujem o predobjednávku LeLeK',
       legend: 'Podrobnosti predobjednávky',
       wood: 'Drevo',
       beech: 'Buk', beechNote: 'Tvrdý, jemnozrnný. Finálny vták.',
@@ -517,7 +520,7 @@ export default {
       email: 'E-mail', emailPh: 'vy@priklad.sk',
       country: 'Krajina doručenia', countries: ['Slovensko', 'Česko', 'Iná (najprv sa opýtajte)'],
       consent: 'Rozumiem, že ide o projekt vyrábaný na objednávku, cena sa potvrdí pred akoukoľvek platbou a môžem od objednávky kedykoľvek odstúpiť.',
-      submitOpen: 'Predobjednať LELEK', submitClosed: 'Predobjednávky čoskoro otvoríme',
+      submitOpen: 'Predobjednať LeLeK', submitClosed: 'Predobjednávky čoskoro otvoríme',
       price: {
         eyebrow: 'Cieľová cena', amount: '89 – 129', per: 'za vtáka, na objednávku, hypotéza',
         items: ['Asi 35 EUR materiál', '17,60 EUR elektronika (v7)', 'Približne 4 hodiny práce vrátane času na CNC'],
@@ -528,8 +531,8 @@ export default {
 
     about: {
       title: 'O mne',
-      description: 'Ondrej Špánik, študent softvérového inžinierstva na FIIT STU v Bratislave a tvorca LELEK. Pozadie, projekty, odkazy a predmet, v rámci ktorého projekt vznikol.',
-      hero: { eyebrow: 'Študent za projektom', title: 'Jeden človek, <em>jeden vták.</em>', lead: 'LELEK je individuálny projekt z predmetu Systémové myslenie v IT a digitálna fabrikácia na FIIT STU: všetko od CAD po drevené tlačidlo a dokumentáciu urobil jeden študent.' },
+      description: 'Ondrej Špánik, študent softvérového inžinierstva na FIIT STU v Bratislave a tvorca LeLeK. Pozadie, projekty, odkazy a predmet, v rámci ktorého projekt vznikol.',
+      hero: { eyebrow: 'Študent za projektom', title: 'Jeden človek, <em>jeden vták.</em>', lead: 'LeLeK je individuálny projekt z predmetu Systémové myslenie v IT a digitálna fabrikácia na FIIT STU: všetko od CAD po drevené tlačidlo a dokumentáciu urobil jeden študent.' },
       student: { eyebrow: 'Študent', email: 'E-mail', earlier: 'Doterajšia práca', from: 'Z {portfolio} a {github}.', github: 'GitHub' },
       course: {
         eyebrow: 'Predmet',

@@ -12,7 +12,8 @@ function walk(a, b, path) {
   if (typeof a === 'string') {
     if (ph(a) !== ph(b)) problems.push(`${path}: placeholders differ ({${ph(a)}} vs {${ph(b)}})`);
     if (tags(a) !== tags(b)) problems.push(`${path}: HTML tags differ`);
-    if (a.trim() !== '' && b.trim() === '') problems.push(`${path}: empty translation`);
+    const optional = /^dict\.site\.brand(Tail|Sub)$/.test(path); // may be empty in one language
+    if (!optional && a.trim() !== '' && b.trim() === '') problems.push(`${path}: empty translation`);
     return;
   }
   if (Array.isArray(a)) {

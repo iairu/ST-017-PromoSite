@@ -2,12 +2,13 @@
 import Bird from './Bird.astro';
 import { content, getLang, href } from '../i18n/index.js';
 const lang = getLang(Astro);
+const { site } = content(lang);
 const { eyebrow, title, lead, crumb } = Astro.props;
 ---
 <header class="page-hero">
   <div class="sil" aria-hidden="true"><Bird /></div>
   <div class="wrap">
-    <p class="crumbs"><a href={href(lang)}>LELEK</a> / {crumb}</p>
+    <p class="crumbs"><a href={href(lang)}>{site.brand}</a> / {crumb}</p>
     <p class="eyebrow" style="color:#e0c79a">{eyebrow}</p>
     <h1 set:html={title} />
     <p class="lead">{lead}</p>
