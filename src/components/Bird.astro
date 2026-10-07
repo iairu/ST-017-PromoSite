@@ -3,9 +3,11 @@
 import raw from '../assets/nightjar-silhouette.svg?raw';
 const d = raw.match(/ d="([^"]+)"/)[1];
 const [, , W, H] = raw.match(/viewBox="([^"]+)"/)[1].split(' ').map(Number);
+import { content, getLang } from '../i18n/index.js';
 const { class: cls = '', eye = false, wave = false } = Astro.props;
+const label = content(getLang(Astro)).ui.birdAria;
 ---
-<svg class={`bird ${cls}`} viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Silhouette of the LELEK nightjar, seen from the side" preserveAspectRatio="xMidYMax meet">
+<svg class={`bird ${cls}`} viewBox={`0 0 ${W} ${H}`} role="img" aria-label={label} preserveAspectRatio="xMidYMax meet">
   <path d={d} fill="currentColor" />
   {eye && <circle class="eye" cx={W * 0.934} cy={H * 0.215} r="2.1" />}
   {wave && (

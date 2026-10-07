@@ -1,17 +1,19 @@
 ---
 import { url } from '../data/site.js';
+import { content, getLang } from '../i18n/index.js';
+const m = content(getLang(Astro)).ui.model;
 const { height = 'clamp(300px, 46vw, 520px)' } = Astro.props;
 ---
-<div class="viewer" data-viewer data-model={url('/models/nightjar.stl')} data-button={url('/models/nightjar_button.stl')} style={`--h:${height}`}>
-  <canvas aria-label="Interactive 3D model of the carved nightjar. Drag to rotate, scroll or pinch to zoom." role="img"></canvas>
-  <noscript><img src={url('/img/wire-assembled.webp')} alt="Wireframe of the assembled bird" width="1438" height="627" /></noscript>
-  <div class="loading" data-loading><span>Loading the carving…</span></div>
-  <div class="ctl" role="group" aria-label="Model display">
-    <button type="button" class="on" data-mode="wood" aria-pressed="true">Wood</button>
-    <button type="button" data-mode="blueprint" aria-pressed="false">Blueprint</button>
-    <button type="button" data-spin aria-pressed="true">Spin</button>
+<div class="viewer" data-nowebgl={m.noWebgl} data-failed={m.failed} data-viewer data-model={url('/models/nightjar.stl')} data-button={url('/models/nightjar_button.stl')} style={`--h:${height}`}>
+  <canvas aria-label={m.aria} role="img"></canvas>
+  <noscript><img src={url('/img/wire-assembled.webp')} alt={m.noscriptAlt} width="1438" height="627" /></noscript>
+  <div class="loading" data-loading><span>{m.loading}</span></div>
+  <div class="ctl" role="group" aria-label={m.group}>
+    <button type="button" class="on" data-mode="wood" aria-pressed="true">{m.wood}</button>
+    <button type="button" data-mode="blueprint" aria-pressed="false">{m.blueprint}</button>
+    <button type="button" data-spin aria-pressed="true">{m.spin}</button>
   </div>
-  <p class="tip">Drag to turn · scroll to zoom</p>
+  <p class="tip">{m.tip}</p>
 </div>
 
 <script>
@@ -32,7 +34,7 @@ const { height = 'clamp(300px, 46vw, 520px)' } = Astro.props;
     ]);
     const canvas = root.querySelector('canvas')!;
     const loading = root.querySelector('[data-loading]') as HTMLElement;
-    if (!webgl()) { loading.innerHTML = '<span>3D view needs WebGL. See the wireframes below instead.</span>'; return; }
+    if (!webgl()) { loading.textContent = root.dataset.nowebgl!; return; }
 
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -120,7 +122,7 @@ const { height = 'clamp(300px, 46vw, 520px)' } = Astro.props;
 
   // only fetch the 3 MB model once the viewer approaches the viewport
   document.querySelectorAll<HTMLElement>('[data-viewer]').forEach((el) => {
-    const io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { io.disconnect(); boot(el).catch((e) => { console.error(e); (el.querySelector('[data-loading]') as HTMLElement).innerHTML = '<span>Could not load the 3D model.</span>'; }); } }, { rootMargin: '300px' });
+    const io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { io.disconnect(); boot(el).catch((e) => { console.error(e); (el.querySelector('[data-loading]') as HTMLElement).textContent = el.dataset.failed!; }); } }, { rootMargin: '300px' });
     io.observe(el);
   });
 </script>

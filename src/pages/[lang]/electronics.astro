@@ -1,0 +1,130 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Fig from '../../components/Fig.astro';
+import Icon from '../../components/Icon.astro';
+import { url } from '../../data/site.js';
+import { content, getLang, href, fill } from '../../i18n/index.js';
+export const getStaticPaths = () => [{ params: { lang: 'en' } }, { params: { lang: 'sk' } }];
+const lang = getLang(Astro);
+const c = content(lang);
+const { versions, links } = c;
+const t = c.p.electronics;
+---
+<Base title={t.title} description={t.description}>
+  <PageHero crumb={t.title} eyebrow={t.hero.eyebrow} title={t.hero.title} lead={t.hero.lead} />
+
+  <section class="block" id="circuit">
+    <div class="wrap split" style="align-items:start">
+      <div class="reveal">
+        <p class="eyebrow">{t.circuit.eyebrow}</p>
+        <h2>{t.circuit.title}</h2>
+        <div class="prose">
+          <ul>
+            {t.circuit.bullets.map((x) => <li set:html={x} />)}
+          </ul>
+        </div>
+        <p class="note">{t.circuit.note}</p>
+      </div>
+      <Fig src="schematic-v7" w={1800} h={690} alt={t.circuit.figAlt} caption={t.circuit.figCap} />
+    </div>
+  </section>
+
+  <section class="block tint" id="views">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">{t.views.eyebrow}</p>
+        <h2>{t.views.title}</h2>
+        <p>{t.views.lead}</p>
+      </div>
+      <div class="grid g2" style="align-items:start">
+        <Fig src="breadboard-v7" w={1800} h={1790} alt={t.views.bbAlt} caption={t.views.bbCap} />
+        <div style="display:grid;gap:1.4rem">
+          <Fig src="pcb-v7" w={1800} h={556} alt={t.views.pcb7Alt} caption={t.views.pcb7Cap} />
+          <Fig src="pcb-v8" w={1800} h={556} alt={t.views.pcb8Alt} caption={t.views.pcb8Cap} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="choices">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">{t.choices.eyebrow}</p>
+        <h2>{t.choices.title}</h2>
+        <p>{t.choices.lead}</p>
+      </div>
+      <div class="grid g3">
+        {t.choices.cards.map(([h, p]) => <article class="card reveal"><h3>{h}</h3><p>{p}</p></article>)}
+      </div>
+      <div class="table-wrap reveal" style="margin-top:2rem;max-width:640px">
+        <table>
+          <thead><tr><th>{t.choices.cols[0]}</th><th class="num">{t.choices.cols[1]}</th><th>{t.choices.cols[2]}</th></tr></thead>
+          <tbody>
+            {t.choices.rows.map(([r, a, n], i) => (
+              i === 2
+                ? <tr><td><b>{r}</b></td><td class="num"><b>{a}</b></td><td><b>{n}</b></td></tr>
+                : <tr><td>{r}</td><td class="num">{a}</td><td>{n}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="block night" id="evolution">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">{t.evolution.eyebrow}</p>
+        <h2>{t.evolution.title}</h2>
+        <p>{t.evolution.lead}</p>
+      </div>
+      <ol class="vers">
+        {versions.map((v) => (
+          <li class="reveal">
+            <div class="plate"><img src={url(`/img/${v.img}.webp`)} alt={fill(t.evolution.pcbAlt, { v: v.v })} width="1800" height="500" loading="lazy" decoding="async" /></div>
+            <div class="meta"><span class="v">{v.v}</span><span class="mono">{v.date} · {v.size}</span></div>
+            <p>{v.text}</p>
+          </li>
+        ))}
+      </ol>
+      <p class="fine-print">{t.evolution.fine}</p>
+    </div>
+  </section>
+
+  <section class="block" id="safety">
+    <div class="wrap split" style="align-items:start">
+      <div class="reveal">
+        <p class="eyebrow">{t.safety.eyebrow}</p>
+        <h2>{t.safety.title}</h2>
+        <p class="lead">{t.safety.lead}</p>
+      </div>
+      <div class="prose reveal">
+        <ul>
+          {t.safety.bullets.map((x) => <li set:html={x} />)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block tint" id="verification">
+    <div class="wrap">
+      <div class="sec-head reveal"><p class="eyebrow">{t.verification.eyebrow}</p><h2>{t.verification.title}</h2></div>
+      <div class="grid g3">
+        {t.verification.cards.map(([h, p]) => <article class="card reveal"><h3>{h}</h3><p>{p}</p></article>)}
+      </div>
+      <p class="note reveal">{t.verification.note}</p>
+      <p class="reveal"><a class="btn ghost" href={links.pcbRepo} target="_blank" rel="noopener noreferrer">{t.verification.files} <Icon name="ext" size={14} /></a> <a class="btn ghost" href={href(lang, '/parts/')}>{t.verification.parts} <Icon name="arrow" size={16} /></a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .vers { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 1.6rem; }
+  .vers .plate { padding: .6rem; }
+  .vers .meta { display: flex; justify-content: space-between; align-items: baseline; margin: 1rem 0 .3rem; gap: 1rem; }
+  .vers .v { font: 500 1.7rem var(--font-display); color: var(--nt-accent); }
+  .vers .mono { font-size: .74rem; color: var(--nt-dim); letter-spacing: .04em; }
+  .vers p { margin: 0; color: var(--nt); font-size: .98rem; }
+  .fine-print { margin-top: 2rem; font: 400 .8rem/1.7 var(--font-mono); color: var(--nt-dim); max-width: 80ch; }
+</style>

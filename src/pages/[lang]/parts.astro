@@ -1,0 +1,118 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import Fig from '../../components/Fig.astro';
+import PartsSheet from '../../components/PartsSheet.astro';
+import { content, getLang, fill } from '../../i18n/index.js';
+export const getStaticPaths = () => [{ params: { lang: 'en' } }, { params: { lang: 'sk' } }];
+const lang = getLang(Astro);
+const c = content(lang);
+const { bom, fuse, wood, fmt, num } = c;
+const t = c.p.parts;
+---
+<Base title={t.title} description={t.description}>
+  <PageHero crumb={t.title} eyebrow={t.hero.eyebrow} title={t.hero.title} lead={fill(t.hero.lead, { date: bom.date })} />
+
+  <section class="block" id="kit">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">{t.kit.eyebrow}</p>
+        <h2>{t.kit.title}</h2>
+        <p>{t.kit.lead}</p>
+      </div>
+      <Fig src="parts-laid-out" w={1800} h={781} alt={t.kit.laidAlt} caption={t.kit.laidCap} />
+      <div class="reveal" style="margin-top:2rem"><PartsSheet /></div>
+      <div style="margin-top:2rem">
+        <Fig src="parts-unboxed" w={1800} h={1155} alt={t.kit.boxedAlt} caption={t.kit.boxedCap} />
+      </div>
+    </div>
+  </section>
+
+  <section class="block tint" id="electronics-parts">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">{t.electronics.eyebrow} <span class="pill ok" style="margin-left:.6rem">{t.electronics.ordered}</span></p>
+        <h2>{fill(t.electronics.title, { total: fmt(bom.total) })}</h2>
+        <p>{t.electronics.lead}</p>
+      </div>
+      {bom.shops.map((shop) => (
+        <div class="reveal shop">
+          <h3><a href={shop.url} target="_blank" rel="noopener noreferrer">{shop.name} <Icon name="ext" size={14} /></a> <span class="mono sub">{fill(t.electronics.subtotal, { amount: fmt(shop.subtotal) })}</span></h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>{t.electronics.cols[0]}</th><th>{t.electronics.cols[1]}</th><th class="num">{t.electronics.cols[2]}</th><th class="num">{t.electronics.cols[3]}</th><th>{t.electronics.cols[4]}</th></tr></thead>
+              <tbody>
+                {shop.rows.map((r) => (
+                  <tr><td class="ref">{r.ref}</td><td><a href={r.href} target="_blank" rel="noopener noreferrer">{r.part}</a></td><td class="num">{r.qty}</td><td class="num">{num(r.price)}</td><td>{r.note}</td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ))}
+      <div class="total reveal"><span class="mono">{t.electronics.totalLabel}</span><strong>{fmt(bom.total)}</strong></div>
+      <div class="prose reveal">
+        <h3>{t.electronics.knowTitle}</h3>
+        <ul>
+          {t.electronics.know.map((x) => <li>{x}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="wood-parts">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">{t.woodParts.eyebrow}</p>
+        <h2>{t.woodParts.title}</h2>
+        <p>{t.woodParts.lead}</p>
+      </div>
+      <div class="grid g3">
+        {wood.map((w) => (
+          <article class="card reveal">
+            <p><span class:list={['pill', w.planned ? 'ok' : 'todo']}>{w.status}</span></p>
+            <h3>{w.title}</h3>
+            <p class="mono small">{w.shop} · {w.price}</p>
+            <p>{w.text}</p>
+            <p><a href={w.url} target="_blank" rel="noopener noreferrer">{fill(t.woodParts.viewAt, { shop: w.shop })} <Icon name="ext" size={14} /></a></p>
+          </article>
+        ))}
+      </div>
+      <div class="table-wrap reveal" style="margin-top:2rem">
+        <table>
+          <thead><tr><th>{t.woodParts.cols[0]}</th><th class="num">{t.woodParts.cols[1]}</th><th>{t.woodParts.cols[2]}</th></tr></thead>
+          <tbody>
+            {t.woodParts.rows.map(([a, q, n]) => <tr><td>{a}</td><td class="num">{q}</td><td>{n}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <p class="note reveal">{t.woodParts.note}</p>
+    </div>
+  </section>
+
+  <section class="block tint" id="v8-fuse">
+    <div class="wrap split" style="align-items:start">
+      <div class="reveal">
+        <p class="eyebrow">{t.fuse.eyebrow}</p>
+        <h2>{t.fuse.title}</h2>
+        <p>{fill(t.fuse.lead, { ref: fuse.ref, part: t.fuse.partLead, total: fmt(fuse.total) })}</p>
+      </div>
+      <div class="card reveal">
+        <p class="mono small">{fuse.shop}</p>
+        <h3>{fuse.part}</h3>
+        <p>{fill(t.fuse.card, { price: fmt(fuse.price) })}</p>
+        <p><a href={fuse.url} target="_blank" rel="noopener noreferrer">{fill(t.fuse.viewAt, { shop: fuse.shop })} <Icon name="ext" size={14} /></a></p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .shop { margin-bottom: 2.4rem; }
+  .shop h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem 1rem; }
+  .sub { font-size: .78rem; color: var(--bark); }
+  .total { display: flex; justify-content: space-between; align-items: baseline; padding: 1.2rem 1.4rem; border: 2px solid var(--ink); border-radius: 12px; margin-bottom: 2.4rem; }
+  .total strong { font: 600 clamp(1.6rem, 1.2rem + 1.6vw, 2.4rem) var(--font-display); }
+  .small { font-size: .78rem; color: var(--bark); }
+</style>

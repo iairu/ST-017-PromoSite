@@ -1,30 +1,34 @@
 ---
 import Icon from './Icon.astro';
-import { nav, external, url, links, PREORDER_OPEN } from '../data/site.js';
+import { url, PREORDER_OPEN } from '../data/site.js';
+import { content, getLang, href } from '../i18n/index.js';
+const lang = getLang(Astro);
+const { nav, external, links, ui } = content(lang);
+const s = ui.search;
 
 // Static entries so the palette is useful even before a query is typed (and in dev,
 // where the Pagefind full-text index does not exist yet).
 const entries = [];
 for (const n of nav) {
-  entries.push({ kind: 'Page', label: n.label, hint: n.blurb, href: url(n.href), kw: n.sections.map((s) => s[1]).join(' ') });
-  for (const [id, label] of n.sections) entries.push({ kind: 'Section', label, hint: n.label, href: url(n.href) + '#' + id, kw: n.label });
+  entries.push({ kind: 'Page', label: n.label, hint: n.blurb, href: href(lang, n.href), kw: n.sections.map((x) => x[1]).join(' ') });
+  for (const [id, label] of n.sections) entries.push({ kind: 'Section', label, hint: n.label, href: href(lang, n.href) + '#' + id, kw: n.label });
 }
 for (const e of external) entries.push({ kind: 'Link', label: e.label, hint: e.blurb, href: e.href, ext: true, kw: '' });
-entries.push({ kind: 'Link', label: 'GitHub: iairu', hint: 'Student profile', href: links.github, ext: true, kw: 'ondrej spanik student' });
-entries.push({ kind: 'Link', label: 'iairu.com', hint: 'Portfolio', href: links.portfolio, ext: true, kw: 'ondrej spanik student cv' });
-entries.push({ kind: 'Link', label: 'Beech block at knn.sk', hint: 'Planned wood', href: links.beechBlock, ext: true, kw: 'wood buk hranol' });
-const cfg = { base: url('/').replace(/\/$/, ''), entries, preorderOpen: PREORDER_OPEN };
+entries.push({ kind: 'Link', label: s.github.label, hint: s.github.hint, href: links.github, ext: true, kw: 'ondrej spanik student' });
+entries.push({ kind: 'Link', label: s.portfolio.label, hint: s.portfolio.hint, href: links.portfolio, ext: true, kw: 'ondrej spanik student cv' });
+entries.push({ kind: 'Link', label: s.beech.label, hint: s.beech.hint, href: links.beechBlock, ext: true, kw: 'wood buk hranol' });
+const cfg = { base: url('/').replace(/\/$/, ''), lang, entries, preorderOpen: PREORDER_OPEN, t: s };
 ---
-<dialog id="search" class="search" aria-label="Search the site">
+<dialog id="search" class="search" aria-label={s.label}>
   <form method="dialog" class="box" role="search" onsubmit="return false">
     <div class="field">
       <Icon name="search" size={20} />
-      <input id="search-input" type="search" placeholder="Search parts, wiring, wood, milestones…" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="true" aria-controls="search-list" aria-autocomplete="list" />
-      <button class="esc" type="button" data-search-close aria-label="Close search"><span class="kbd">Esc</span></button>
+      <input id="search-input" type="search" placeholder={s.placeholder} autocomplete="off" spellcheck="false" role="combobox" aria-expanded="true" aria-controls="search-list" aria-autocomplete="list" />
+      <button class="esc" type="button" data-search-close aria-label={s.close}><span class="kbd">Esc</span></button>
     </div>
-    <ul id="search-list" role="listbox" aria-label="Results"></ul>
+    <ul id="search-list" role="listbox" aria-label={s.results}></ul>
     <p class="status" id="search-status" aria-live="polite"></p>
-    <div class="foot"><span><span class="kbd">↑</span> <span class="kbd">↓</span> move</span><span><span class="kbd">↵</span> open</span><span><span class="kbd">Esc</span> close</span></div>
+    <div class="foot"><span><span class="kbd">↑</span> <span class="kbd">↓</span> {s.move}</span><span><span class="kbd">↵</span> {s.open}</span><span><span class="kbd">Esc</span> {s.esc}</span></div>
   </form>
 </dialog>
 <script type="application/json" id="search-cfg" set:html={JSON.stringify(cfg)} />
@@ -45,7 +49,7 @@ const cfg = { base: url('/').replace(/\/$/, ''), entries, preorderOpen: PREORDER
     try {
       pf = await import(/* @vite-ignore */ `${cfg.base}/_pagefind/pagefind.js`);
       await pf.options?.({ baseUrl: cfg.base + '/' });
-      await pf.init?.();
+      await pf.init?.(cfg.lang);
     } catch {
       pf = null;
     }
@@ -61,7 +65,7 @@ const cfg = { base: url('/').replace(/\/$/, ''), entries, preorderOpen: PREORDER
     li.setAttribute('role', 'option');
     li.dataset.href = o.href;
     li.innerHTML =
-      `<span class="k">${esc(o.kind)}</span><span class="t"><b>${esc(o.label)}</b>` +
+      `<span class="k">${esc(cfg.t.kinds[o.kind] ?? o.kind)}</span><span class="t"><b>${esc(o.label)}</b>` +
       (o.hint ? `<small>${esc(o.hint)}</small>` : '') +
       (o.excerpt ? `<span class="x">${o.excerpt}</span>` : '') +
       `</span><span class="go">${o.ext ? '↗' : '↵'}</span>`;
@@ -135,16 +139,16 @@ const cfg = { base: url('/').replace(/\/$/, ''), entries, preorderOpen: PREORDER
     const my = ++token;
     const quick = staticMatches(q);
     if (!q) {
-      paint([{ title: 'Go to', items: quick }], '');
+      paint([{ title: cfg.t.goTo, items: quick }], '');
       return;
     }
-    paint([{ title: 'Jump to', items: quick }], '');
-    statusEl!.textContent = 'Searching the full text…';
+    paint([{ title: cfg.t.jumpTo, items: quick }], '');
+    statusEl!.textContent = cfg.t.searching;
     const lib = await loadPagefind();
     if (my !== token) return;
     if (!lib) {
-      paint([{ title: 'Jump to', items: quick }], 'No matches. Full-text search is available on the built site.');
-      if (quick.length) statusEl!.textContent = 'Full-text search is available on the built site (npm run build).';
+      paint([{ title: cfg.t.jumpTo, items: quick }], cfg.t.noMatches);
+      if (quick.length) statusEl!.textContent = cfg.t.builtOnly;
       return;
     }
     const res = await lib.search(q);
@@ -160,10 +164,10 @@ const cfg = { base: url('/').replace(/\/$/, ''), entries, preorderOpen: PREORDER
     const seen = new Set(quick.map((x: any) => x.href));
     paint(
       [
-        { title: 'Jump to', items: quick },
-        { title: 'In the text', items: items.filter((i) => !seen.has(i.href)).slice(0, 8) },
+        { title: cfg.t.jumpTo, items: quick },
+        { title: cfg.t.inText, items: items.filter((i) => !seen.has(i.href)).slice(0, 8) },
       ],
-      `Nothing found for “${q}”.`,
+      cfg.t.nothing.replace('{q}', q),
     );
   }
 

@@ -1,7 +1,11 @@
 ---
 import Bird from './Bird.astro';
 import Icon from './Icon.astro';
-import { site, url } from '../data/site.js';
+import { url } from '../data/site.js';
+import { content, getLang, href } from '../i18n/index.js';
+const lang = getLang(Astro);
+const { site, ui } = content(lang);
+const h = ui.hero;
 
 // deterministic star field (no layout shift, no randomness between builds)
 let s = 17;
@@ -19,17 +23,17 @@ const stars = Array.from({ length: 70 }, () => ({ x: rnd() * 100, y: rnd() * 62,
 
   <div class="wrap content">
     <div class="copy">
-      <p class="eyebrow"><span class="latin">{site.latin}</span> · lelek lesný</p>
-      <h1>The bird you hear <em>before</em> you see.</h1>
-      <p class="lead">LELEK is a wooden nightjar, carved on a CNC from two halves of beech. Hold the button on its back and it sings its churring night call. Let go, and it sleeps.</p>
+      <p class="eyebrow"><span class="latin">{site.latin}</span> · {h.eyebrowSuffix}</p>
+      <h1 set:html={h.title} />
+      <p class="lead">{h.lead}</p>
       <div class="cta">
-        <button class="btn primary sing" type="button" id="sing" aria-pressed="false">
-          <Icon name="sound" size={18} /> <span class="lbl">Hold to hear it</span>
+        <button class="btn primary sing" type="button" id="sing" aria-pressed="false" data-hold={h.hold} data-singing={h.singing}>
+          <Icon name="sound" size={18} /> <span class="lbl">{h.hold}</span>
         </button>
-        <a class="btn ghost" href={url('/preorder/')}>Pre-order · opening soon</a>
-        <a class="btn ghost" href={url('/electronics/')}>How it works <Icon name="arrow" size={16} /></a>
+        <a class="btn ghost" href={href(lang, '/preorder/')}>{h.preorder}</a>
+        <a class="btn ghost" href={href(lang, '/electronics/')}>{h.how} <Icon name="arrow" size={16} /></a>
       </div>
-      <p class="fine"><span class="pill wip">Prototype in progress</span> Electronics designed and ordered, wood next. The sample is a synthesised churr, not yet the final recording.</p>
+      <p class="fine"><span class="pill wip">{ui.pillWip}</span> {h.fine}</p>
     </div>
   </div>
 
@@ -56,7 +60,7 @@ const stars = Array.from({ length: 70 }, () => ({ x: rnd() * 100, y: rnd() * 62,
     on = true;
     hero.dataset.singing = 'true';
     btn.setAttribute('aria-pressed', 'true');
-    lbl.textContent = 'Singing…';
+    lbl.textContent = btn.dataset.singing!;
     audio.currentTime = 0;
     audio.play().catch(() => stop());
   }
@@ -65,7 +69,7 @@ const stars = Array.from({ length: 70 }, () => ({ x: rnd() * 100, y: rnd() * 62,
     on = false;
     hero.dataset.singing = 'false';
     btn.setAttribute('aria-pressed', 'false');
-    lbl.textContent = 'Hold to hear it';
+    lbl.textContent = btn.dataset.hold!;
     audio.pause();
   }
   btn.addEventListener('pointerdown', (e) => { btn.setPointerCapture?.(e.pointerId); start(); });

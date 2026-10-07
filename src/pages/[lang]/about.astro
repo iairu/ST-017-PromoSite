@@ -1,0 +1,83 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import { content, getLang, fill } from '../../i18n/index.js';
+export const getStaticPaths = () => [{ params: { lang: 'en' } }, { params: { lang: 'sk' } }];
+const lang = getLang(Astro);
+const c = content(lang);
+const { student, links, site } = c;
+const t = c.p.about;
+const [gh, web, li, repo, boards, mail] = t.elsewhere.links;
+---
+<Base title={t.title} description={t.description}>
+  <PageHero crumb={t.title} eyebrow={t.hero.eyebrow} title={t.hero.title} lead={t.hero.lead} />
+
+  <section class="block" id="student">
+    <div class="wrap split" style="align-items:start">
+      <div class="reveal">
+        <p class="eyebrow">{t.student.eyebrow}</p>
+        <h2>{student.name}</h2>
+        <p class="role mono">{student.role} · {student.location}</p>
+        {student.bio.map((p) => <p>{p}</p>)}
+        <p class="skills">{student.skills.map((s) => <span class="chip">{s}</span>)}</p>
+        <p class="btns">
+          <a class="btn primary" href={links.github} target="_blank" rel="noopener noreferrer"><Icon name="gh" size={16} /> github.com/iairu</a>
+          <a class="btn ghost" href={links.portfolio} target="_blank" rel="noopener noreferrer"><Icon name="web" size={16} /> iairu.com</a>
+          <a class="btn ghost" href={`mailto:${links.email}`}><Icon name="mail" size={16} /> {t.student.email}</a>
+        </p>
+      </div>
+      <div class="card reveal">
+        <h3>{t.student.earlier}</h3>
+        <ul class="proj">
+          {student.projects.map(([n, d]) => <li><b>{n}</b><span>{d}</span></li>)}
+        </ul>
+        <p class="note" set:html={fill(t.student.from, { portfolio: `<a href="${links.portfolio}" target="_blank" rel="noopener noreferrer">iairu.com</a>`, github: `<a href="${links.github}" target="_blank" rel="noopener noreferrer">${t.student.github}</a>` })} />
+      </div>
+    </div>
+  </section>
+
+  <section class="block tint" id="course">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">{t.course.eyebrow}</p>
+        <h2>{site.course}</h2>
+        <p>{fill(t.course.lead, { school: student.school, year: site.year, id: site.studentId })}</p>
+      </div>
+      <div class="grid g3">
+        <article class="card reveal"><h3>{t.course.wantsTitle}</h3><ul class="prose">{student.wants.map((w) => <li>{w}</li>)}</ul></article>
+        <article class="card reveal"><h3>{t.course.offersTitle}</h3><ul class="prose">{student.offers.map((w) => <li>{w}</li>)}</ul></article>
+        <article class="card reveal"><h3>{t.course.docTitle}</h3><div class="prose"><p>{t.course.docText}</p><p><a href={links.docs} target="_blank" rel="noopener noreferrer">{t.course.docLink} <Icon name="ext" size={14} /></a></p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="elsewhere">
+    <div class="wrap">
+      <div class="sec-head reveal"><p class="eyebrow">{t.elsewhere.eyebrow}</p><h2>{t.elsewhere.title}</h2></div>
+      <ul class="links">
+        <li class="reveal"><a href={links.github} target="_blank" rel="noopener noreferrer"><Icon name="gh" size={22} /><span><b>{gh[0]}</b><small>{gh[1]}</small></span></a></li>
+        <li class="reveal"><a href={links.portfolio} target="_blank" rel="noopener noreferrer"><Icon name="web" size={22} /><span><b>{web[0]}</b><small>{web[1]}</small></span></a></li>
+        <li class="reveal"><a href={links.linkedin} target="_blank" rel="noopener noreferrer"><Icon name="ext" size={22} /><span><b>{li[0]}</b><small>{li[1]}</small></span></a></li>
+        <li class="reveal"><a href={links.repo} target="_blank" rel="noopener noreferrer"><Icon name="book" size={22} /><span><b>{repo[0]}</b><small>{repo[1]}</small></span></a></li>
+        <li class="reveal"><a href={links.pcbRepo} target="_blank" rel="noopener noreferrer"><Icon name="chip" size={22} /><span><b>{boards[0]}</b><small>{boards[1]}</small></span></a></li>
+        <li class="reveal"><a href={`mailto:${links.email}`}><Icon name="mail" size={22} /><span><b>{mail[0]}</b><small>{links.email}</small></span></a></li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .role { font-size: .8rem; color: var(--bark); letter-spacing: .04em; margin-bottom: 1.6rem; }
+  .skills { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.6rem 0; }
+  .chip { font: 500 .74rem var(--font-mono); border: 1px solid var(--rule); border-radius: 999px; padding: .5em .9em; background: var(--paper-2); }
+  .btns { display: flex; flex-wrap: wrap; gap: .7rem; }
+  .proj { list-style: none; margin: 0 0 1rem; padding: 0; display: grid; gap: 1.1rem; }
+  .proj li { display: grid; gap: .15rem; padding-bottom: 1.1rem; border-bottom: 1px solid var(--rule); } .proj li:last-child { border: 0; padding: 0; }
+  .proj span { color: var(--ink-soft); font-size: .98rem; }
+  .links { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 1rem; }
+  .links a { display: flex; gap: 1rem; align-items: center; padding: 1.2rem 1.3rem; border: 1px solid var(--rule); border-radius: 14px; background: var(--paper-2); text-decoration: none; color: var(--ink); transition: transform .2s, box-shadow .2s, border-color .2s; height: 100%; }
+  .links a:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: var(--rust); }
+  .links :global(svg) { color: var(--rust); }
+  .links span { display: grid; } .links small { color: var(--ink-soft); font-size: .9rem; word-break: break-word; }
+</style>

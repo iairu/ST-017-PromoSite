@@ -1,0 +1,102 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import { PREORDER_OPEN } from '../../data/site.js';
+import { content, getLang } from '../../i18n/index.js';
+export const getStaticPaths = () => [{ params: { lang: 'en' } }, { params: { lang: 'sk' } }];
+const lang = getLang(Astro);
+const c = content(lang);
+const { faq, links, ui } = c;
+const t = c.p.preorder;
+const off = !PREORDER_OPEN ? true : undefined;
+---
+<Base title={t.title} description={t.description}>
+  <PageHero crumb={t.title} eyebrow={t.hero.eyebrow} title={t.hero.title} lead={t.hero.lead} />
+
+  <section class="block" id="form">
+    <div class="wrap order">
+      <form class="card" aria-describedby="closed" onsubmit="return false" novalidate>
+        <div class="closed" id="closed" role="status">
+          <Icon name="lock" size={20} />
+          <p><b>{t.closedTitle}</b> {t.closedText} <a href={`mailto:${links.email}?subject=${encodeURIComponent(t.mailSubject)}`}>{t.closedLink}</a> {t.closedAfter}</p>
+        </div>
+        <fieldset disabled={off}>
+          <legend class="sr-only">{t.legend}</legend>
+          <div class="field">
+            <span class="lab" id="wood-l">{t.wood}</span>
+            <div class="choices" role="radiogroup" aria-labelledby="wood-l">
+              <label class="choice"><input type="radio" name="wood" value="beech" checked /><span><b>{t.beech}</b><small>{t.beechNote}</small></span></label>
+              <label class="choice"><input type="radio" name="wood" value="linden" /><span><b>{t.linden}</b><small>{t.lindenNote}</small></span></label>
+            </div>
+          </div>
+          <div class="row">
+            <label class="field"><span class="lab">{t.quantity}</span><input type="number" min="1" max="10" value="1" inputmode="numeric" /></label>
+            <label class="field"><span class="lab">{t.engraving} <i>{t.optional}</i></span><input type="text" maxlength="40" placeholder={t.engravingPh} /></label>
+          </div>
+          <div class="row">
+            <label class="field"><span class="lab">{t.name}</span><input type="text" autocomplete="name" placeholder={t.namePh} /></label>
+            <label class="field"><span class="lab">{t.email}</span><input type="email" autocomplete="email" placeholder={t.emailPh} /></label>
+          </div>
+          <label class="field"><span class="lab">{t.country}</span>
+            <select>{t.countries.map((x) => <option>{x}</option>)}</select></label>
+          <label class="check"><input type="checkbox" /> <span>{t.consent}</span></label>
+          <button class="btn primary" type="submit" disabled aria-disabled="true"><Icon name="lock" size={16} /> {PREORDER_OPEN ? t.submitOpen : t.submitClosed}</button>
+        </fieldset>
+      </form>
+
+      <aside class="price card">
+        <p class="eyebrow">{t.price.eyebrow}</p>
+        <p class="amount"><span>EUR</span> {t.price.amount}</p>
+        <p class="mono small">{t.price.per}</p>
+        <ul>
+          {t.price.items.map((x) => <li>{x}</li>)}
+        </ul>
+        <p class="note">{t.price.note}</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="block tint" id="faq">
+    <div class="wrap narrow">
+      <div class="sec-head reveal"><p class="eyebrow">{t.faq.eyebrow}</p><h2>{t.faq.title}</h2></div>
+      <div class="faq">
+        {faq.map(([q, a]) => (
+          <details class="reveal"><summary>{q}</summary><p>{a}</p></details>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .order { display: grid; gap: clamp(1.4rem, 3vw, 2.4rem); grid-template-columns: 1.6fr 1fr; align-items: start; }
+  @media (max-width: 900px) { .order { grid-template-columns: 1fr; } }
+  .closed { display: flex; gap: .9rem; align-items: flex-start; padding: 1rem 1.1rem; border-radius: 10px; background: color-mix(in srgb, var(--amber) 16%, var(--paper)); border: 1px solid color-mix(in srgb, var(--amber) 55%, transparent); margin-bottom: 1.6rem; }
+  .closed p { margin: 0; font-size: .98rem; } .closed :global(svg) { margin-top: .2rem; color: var(--amber); }
+  fieldset { border: 0; padding: 0; margin: 0; min-width: 0; display: grid; gap: 1.2rem; }
+  fieldset[disabled] { opacity: .62; }
+  .row { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+  .field { display: grid; gap: .4rem; }
+  .lab { font: 500 .72rem var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--bark); }
+  .lab i { text-transform: none; letter-spacing: 0; font-family: var(--font-body); }
+  input[type='text'], input[type='email'], input[type='number'], select { font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--rule); border-radius: 10px; padding: .75rem .9rem; width: 100%; min-height: 46px; }
+  input:disabled, select:disabled { cursor: not-allowed; }
+  .choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: .8rem; }
+  .choice { display: flex; gap: .8rem; align-items: flex-start; border: 1px solid var(--rule); border-radius: 12px; padding: .9rem 1rem; background: var(--paper); cursor: pointer; }
+  .choice:has(input:checked) { border-color: var(--rust); box-shadow: 0 0 0 1px var(--rust) inset; }
+  .choice small { display: block; color: var(--ink-soft); font-size: .88rem; }
+  .check { display: flex; gap: .7rem; align-items: flex-start; font-size: .95rem; color: var(--ink-soft); }
+  .check input { margin-top: .35rem; width: 1.1rem; height: 1.1rem; }
+  .price .amount { font: 500 clamp(2.4rem, 2rem + 2vw, 3.4rem)/1 var(--font-display); letter-spacing: -.02em; margin: 0 0 .3rem; }
+  .price .amount span { font: 500 .9rem var(--font-mono); letter-spacing: .1em; color: var(--bark); }
+  .small { font-size: .76rem; color: var(--bark); }
+  .price ul { padding-left: 1.2rem; } .price li::marker { color: var(--rust); }
+  .faq { display: grid; gap: .8rem; }
+  details { border: 1px solid var(--rule); border-radius: 12px; background: var(--paper); padding: 0 1.2rem; }
+  summary { cursor: pointer; padding: 1.1rem 0; font: 560 1.15rem var(--font-display); list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: '+'; font: 400 1.5rem/1 var(--font-mono); color: var(--rust); transition: transform .2s; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { margin: 0 0 1.2rem; color: var(--ink-soft); }
+</style>

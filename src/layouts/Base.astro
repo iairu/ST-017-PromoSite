@@ -3,15 +3,21 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Search from '../components/Search.astro';
-import { site, url } from '../data/site.js';
+import { url } from '../data/site.js';
+import { content, getLang, langs, switchPath } from '../i18n/index.js';
 
-const { title, description = site.description, image = '/img/og.png', noindex = false } = Astro.props;
+const props = Astro.props;
+const lang = props.lang ?? getLang(Astro);
+const c = content(lang);
+const { site, ui } = c;
+const { title, description = site.description, image = '/img/og.png', noindex = false, alternates = true } = props;
 const full = title === site.name ? `${site.name}: ${site.tagline}` : `${title} · ${site.name}`;
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const alt = alternates ? langs.map((l) => ({ l, href: new URL(switchPath(Astro.url.pathname, l), Astro.site ?? Astro.url).href })) : [];
 const og = Astro.site ? new URL(url(image), Astro.site).href : url(image);
 ---
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang={c.d.htmlLang} data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,9 +26,12 @@ const og = Astro.site ? new URL(url(image), Astro.site).href : url(image);
     <meta name="theme-color" content="#181b29" />
     <meta name="color-scheme" content="light dark" />
     {canonical && <link rel="canonical" href={canonical} />}
+    {alt.map((a) => <link rel="alternate" hreflang={a.l} href={a.href} />)}
+    {alt.length > 0 && <link rel="alternate" hreflang="x-default" href={new URL(url('/'), Astro.site ?? Astro.url).href} />}
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content={c.d.ogLocale} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={full} />
     <meta property="og:description" content={description} />
@@ -41,8 +50,8 @@ const og = Astro.site ? new URL(url(image), Astro.site).href : url(image);
     </script>
   </head>
   <body>
-    <a class="skip" href="#main">Skip to content</a>
-    <Header />
+    <a class="skip" href="#main">{ui.skip}</a>
+    <Header langHome={!alternates} />
     <main id="main" data-pagefind-body={noindex ? undefined : true} data-pagefind-meta={`page:${title}`}>
       <slot />
     </main>
@@ -55,8 +64,9 @@ const og = Astro.site ? new URL(url(image), Astro.site).href : url(image);
       const meta = document.querySelector('meta[name=theme-color]');
       const paint = () => {
         const dark = root.getAttribute('data-theme') === 'dark';
-        tbtn?.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
-        tbtn?.setAttribute('title', dark ? 'Light theme' : 'Dark theme');
+        const ds = tbtn?.dataset ?? {};
+        tbtn?.setAttribute('aria-label', dark ? ds.toLight! : ds.toDark!);
+        tbtn?.setAttribute('title', dark ? ds.lightTitle! : ds.darkTitle!);
         meta?.setAttribute('content', dark ? '#0d0f18' : '#f4eee1');
       };
       paint();
@@ -71,6 +81,11 @@ const og = Astro.site ? new URL(url(image), Astro.site).href : url(image);
         try { saved = localStorage.getItem('lelek-theme'); } catch {}
         if (saved !== 'light' && saved !== 'dark') { root.setAttribute('data-theme', e.matches ? 'dark' : 'light'); paint(); }
       });
+      // language switch: remember the choice (the root page honours it) and keep the #section you are on
+      document.querySelectorAll<HTMLAnchorElement>('[data-lang-switch]').forEach((a) => a.addEventListener('click', () => {
+        try { localStorage.setItem('lelek-lang', a.dataset.langSwitch!); } catch {}
+        a.href = a.href.split('#')[0] + location.hash;
+      }));
       // top banner dismissal (remembered per banner id)
       document.getElementById('banner-close')?.addEventListener('click', () => {
         document.documentElement.classList.add('no-banner');

@@ -1,0 +1,137 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Fig from '../../components/Fig.astro';
+import ModelViewer from '../../components/ModelViewer.astro';
+import Icon from '../../components/Icon.astro';
+import { content, getLang, fill } from '../../i18n/index.js';
+export const getStaticPaths = () => [{ params: { lang: 'en' } }, { params: { lang: 'sk' } }];
+const lang = getLang(Astro);
+const c = content(lang);
+const { specs, pockets, wood } = c;
+const t = c.p.bird;
+---
+<Base title={t.title} description={t.description}>
+  <PageHero crumb={t.title} eyebrow={t.hero.eyebrow} title={t.hero.title} lead={t.hero.lead} />
+
+  <section class="block" id="specs">
+    <div class="wrap split" style="align-items:start">
+      <div class="reveal">
+        <p class="eyebrow">{t.specs.eyebrow}</p>
+        <h2>{t.specs.title}</h2>
+        <p>{t.specs.lead}</p>
+        <p class="note" set:html={t.specs.note} />
+      </div>
+      <div class="table-wrap reveal">
+        <table class="specs"><tbody>
+          {specs.map(([k, v]) => <tr><td>{k}</td><td>{v}</td></tr>)}
+        </tbody></table>
+      </div>
+    </div>
+  </section>
+
+  <section class="block night" id="model">
+    <div class="wrap">
+      <div class="sec-head reveal"><p class="eyebrow">{t.model.eyebrow}</p><h2>{t.model.title}</h2><p>{t.model.lead}</p></div>
+      <div class="reveal"><ModelViewer /></div>
+    </div>
+  </section>
+
+  <section class="block" id="wireframes">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">{t.wire.eyebrow}</p>
+        <h2>{t.wire.title}</h2>
+        <p>{t.wire.lead}</p>
+      </div>
+      <div class="grid g2">
+        <Fig src="wire-assembled" w={1438} h={627} alt={t.wire.assembledAlt} caption={t.wire.assembledCap} />
+        <Fig src="wire-front" w={1138} h={589} alt={t.wire.frontAlt} caption={t.wire.frontCap} />
+      </div>
+      <div style="margin-top:clamp(1rem,2vw,1.6rem)">
+        <Fig src="wire-exploded" w={1453} h={703} alt={t.wire.explodedAlt} caption={t.wire.explodedCap} />
+      </div>
+    </div>
+  </section>
+
+  <section class="block tint" id="pockets">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">{t.pockets.eyebrow}</p>
+        <h2>{t.pockets.title}</h2>
+        <p>{t.pockets.lead}</p>
+      </div>
+      <div class="stack">
+        <Fig src="pockets-left" w={1485} h={413} alt={t.pockets.leftAlt} caption={t.pockets.leftCap} />
+        <Fig src="pockets-right" w={1485} h={398} alt={t.pockets.rightAlt} caption={t.pockets.rightCap} />
+      </div>
+      <div class="table-wrap reveal" style="margin-top:2rem">
+        <table>
+          <thead><tr><th>{t.pockets.cols[0]}</th><th>{t.pockets.cols[1]}</th><th class="num">{t.pockets.cols[2]}</th><th>{t.pockets.cols[3]}</th></tr></thead>
+          <tbody>{pockets.map(([a, b, d, n]) => <tr><td><b>{a}</b></td><td>{b}</td><td class="num">{d}</td><td>{n}</td></tr>)}</tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="machining">
+    <div class="wrap split" style="align-items:start">
+      <div class="reveal">
+        <p class="eyebrow">{t.machining.eyebrow}</p>
+        <h2>{t.machining.title}</h2>
+        <p class="lead">{t.machining.lead}</p>
+      </div>
+      <ol class="steps prose reveal">
+        {t.machining.steps.map((x) => <li set:html={x} />)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="block tint" id="button">
+    <div class="wrap split">
+      <div class="reveal">
+        <p class="eyebrow">{t.button.eyebrow}</p>
+        <h2>{t.button.title}</h2>
+        <p>{t.button.lead}</p>
+        <ul class="prose">
+          {t.button.bullets.map((x) => <li>{x}</li>)}
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3>{t.button.cardTitle}</h3>
+        <p>{t.button.card1}</p>
+        <p>{t.button.card2}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="wood">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">{t.wood.eyebrow}</p>
+        <h2>{t.wood.title}</h2>
+        <p>{t.wood.lead}</p>
+      </div>
+      <div class="grid g3">
+        {wood.map((w) => (
+          <article class="card reveal">
+            <p><span class:list={['pill', w.planned ? 'ok' : 'todo']}>{w.status}</span></p>
+            <h3>{w.title}</h3>
+            <p class="mono small">{w.shop} · {w.price}</p>
+            <p>{w.text}</p>
+            <p><a href={w.url} target="_blank" rel="noopener noreferrer">{fill(t.wood.viewAt, { shop: w.shop })} <Icon name="ext" size={14} /></a></p>
+          </article>
+        ))}
+      </div>
+      <p class="note reveal">{t.wood.note}</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .stack { display: grid; gap: 1.4rem; }
+  .steps { counter-reset: s; list-style: none; padding: 0; display: grid; gap: 1.1rem; max-width: none; }
+  .steps li { counter-increment: s; padding-left: 3.2rem; position: relative; margin: 0; }
+  .steps li::before { content: counter(s); position: absolute; left: 0; top: .1rem; width: 2.2rem; height: 2.2rem; border: 1px solid var(--rust); color: var(--rust); border-radius: 50%; display: grid; place-items: center; font: 500 .8rem var(--font-mono); }
+  .small { font-size: .78rem; color: var(--bark); }
+</style>

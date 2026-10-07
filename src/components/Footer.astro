@@ -1,38 +1,42 @@
 ---
 import Icon from './Icon.astro';
-import { nav, external, links, site, url } from '../data/site.js';
+import { url } from '../data/site.js';
+import { content, getLang, href, fill } from '../i18n/index.js';
+const lang = getLang(Astro);
+const { nav, external, links, site, ui } = content(lang);
+const f = ui.footer;
 const year = new Date().getFullYear();
 ---
 <footer class="ftr" id="footer">
   <div class="wrap">
     <div class="top">
       <div class="about">
-        <a class="brand" href={url('/')}><img src={url('/favicon.svg')} alt="" width="34" height="34" /><span>LELEK</span></a>
+        <a class="brand" href={href(lang)}><img src={url('/favicon.svg')} alt="" width="34" height="34" /><span>LELEK</span></a>
         <p class="latin">{site.latin}</p>
-        <p class="small">A wooden nightjar that sings when you press its back. A student project in digital fabrication at FIIT STU, Bratislava.</p>
-        <p class="small"><span class="pill wip">Prototype in progress</span></p>
-        <button class="btn ghost" type="button" data-search-open><Icon name="search" size={16} /> Search the site <span class="kbd">Ctrl K</span></button>
+        <p class="small">{f.about}</p>
+        <p class="small"><span class="pill wip">{ui.pillWip}</span></p>
+        <button class="btn ghost" type="button" data-search-open><Icon name="search" size={16} /> {f.search} <span class="kbd">Ctrl K</span></button>
       </div>
       <nav class="map" aria-label="Sitemap">
-        <h2 class="sr-only">Sitemap</h2>
+        <h2 class="sr-only">{ui.sitemap}</h2>
         <div class="cols">
           {nav.map((n) => (
             <div class="col">
-              <h3><a href={url(n.href)}>{n.label}</a></h3>
+              <h3><a href={href(lang, n.href)}>{n.label}</a></h3>
               <ul>
                 {n.sections.map(([id, label]) => (
-                  <li><a href={url(n.href) + '#' + id}>{label}</a></li>
+                  <li><a href={href(lang, n.href) + '#' + id}>{label}</a></li>
                 ))}
               </ul>
             </div>
           ))}
           <div class="col">
-            <h3>Elsewhere</h3>
+            <h3>{ui.external}</h3>
             <ul>
               {external.map((e) => (
                 <li><a href={e.href} target="_blank" rel="noopener noreferrer">{e.label} <Icon name="ext" size={12} /></a></li>
               ))}
-              <li><a href={links.github} target="_blank" rel="noopener noreferrer">GitHub: iairu <Icon name="ext" size={12} /></a></li>
+              <li><a href={links.github} target="_blank" rel="noopener noreferrer">{f.github} <Icon name="ext" size={12} /></a></li>
               <li><a href={links.portfolio} target="_blank" rel="noopener noreferrer">iairu.com <Icon name="ext" size={12} /></a></li>
               <li><a href={`mailto:${links.email}`}>{links.email}</a></li>
             </ul>
@@ -41,9 +45,9 @@ const year = new Date().getFullYear();
       </nav>
     </div>
     <div class="bottom">
-      <p>© {year} Ondrej Špánik · {site.studentId} · {site.course}, {site.year}. Text and documentation under {site.licence}.</p>
-      <p>Nothing on this site is an offer for sale. Prices are targets and prices of parts as read on the dates shown. Last updated {site.updated}.</p>
-      <p><a href="#top">Back to top ↑</a></p>
+      <p>{fill(f.legal, { year, id: site.studentId, course: site.course, academicYear: site.year, licence: site.licence })}</p>
+      <p>{fill(f.disclaimer, { updated: site.updated })}</p>
+      <p><a href="#top">{f.top}</a></p>
     </div>
   </div>
 </footer>

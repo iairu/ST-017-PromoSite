@@ -1,22 +1,26 @@
 ---
 import Icon from './Icon.astro';
 import Banner from './Banner.astro';
-import { nav, url, site } from '../data/site.js';
-const path = Astro.url.pathname.replace(url('/').replace(/\/$/, ''), '') || '/';
-const active = (href) => (href === '/' ? path === '/' : path.startsWith(href));
+import { url } from '../data/site.js';
+import { content, getLang, href, langs, switchPath } from '../i18n/index.js';
+const { langHome = false } = Astro.props; // pages without a counterpart (404): the switcher goes to the other home page
+const lang = getLang(Astro);
+const { nav, site, ui } = content(lang);
+const path = Astro.url.pathname.replace(url('/').replace(/\/$/, ''), '').replace(`/${lang}`, '') || '/';
+const active = (h) => (h === '/' ? path === '/' : path.startsWith(h));
 ---
 <header class="hdr" id="top">
   <Banner />
   <div class="wrap bar">
-    <a class="brand" href={url('/')} aria-label={`${site.name}, home`}>
+    <a class="brand" href={href(lang)} aria-label={ui.homeAria}>
       <span class="brand-mark"><img src={url('/favicon.svg')} alt="" width="30" height="30" /></span>
       <span class="brand-name">LELEK</span>
     </a>
-    <nav id="primary-nav" aria-label="Main">
+    <nav id="primary-nav" aria-label={ui.mainNav}>
       <ul>
         {nav.map((n) => (
           <li>
-            <a href={url(n.href)} aria-current={active(n.href) ? 'page' : undefined} class:list={[{ cta: n.pill }]}>
+            <a href={href(lang, n.href)} aria-current={active(n.href) ? 'page' : undefined} class:list={[{ cta: n.pill }]}>
               {n.label}{n.pill && <span class="pill soon">{n.pill}</span>}
             </a>
           </li>
@@ -24,15 +28,20 @@ const active = (href) => (href === '/' ? path === '/' : path.startsWith(href));
       </ul>
     </nav>
     <div class="tools">
-      <button class="icon-btn search-open" type="button" aria-label="Search the site (Ctrl+K)" data-search-open>
+      <button class="icon-btn search-open" type="button" aria-label={ui.searchOpen} data-search-open>
         <Icon name="search" size={20} />
         <span class="hint"><span class="kbd">Ctrl</span><span class="kbd">K</span></span>
       </button>
-      <button class="icon-btn" type="button" id="theme-toggle" aria-label="Toggle light and dark theme">
+      <div class="lang" role="group" aria-label={ui.language}>
+        {langs.map((l) => l === lang
+          ? <span class="cur" lang={l} aria-current="true" title={ui.langName[l]}>{l.toUpperCase()}</span>
+          : <a href={langHome ? href(l) : switchPath(Astro.url.pathname, l)} lang={l} hreflang={l} data-lang-switch={l} title={ui.langName[l]} aria-label={ui.langName[l]}>{l.toUpperCase()}</a>)}
+      </div>
+      <button class="icon-btn" type="button" id="theme-toggle" aria-label={ui.theme} data-to-light={ui.toLight} data-to-dark={ui.toDark} data-light-title={ui.lightTitle} data-dark-title={ui.darkTitle}>
         <span class="ic-sun"><Icon name="sun" size={20} /></span>
         <span class="ic-moon"><Icon name="moon" size={20} /></span>
       </button>
-      <button class="icon-btn menu-btn" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Menu">
+      <button class="icon-btn menu-btn" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label={ui.menu}>
         <span class="ic-open"><Icon name="menu" size={22} /></span>
         <span class="ic-close"><Icon name="close" size={22} /></span>
       </button>
@@ -58,6 +67,11 @@ const active = (href) => (href === '/' ? path === '/' : path.startsWith(href));
   .hint { display: inline-flex; gap: .2rem; }
   .hint :global(.kbd) { background: transparent; color: #cfc6b2; border-color: rgb(241 232 212 / .3); }
   :global(:root[data-theme='dark']) .ic-moon, :global(:root:not([data-theme='dark'])) .ic-sun { display: none; }
+  .lang { display: inline-flex; padding: 3px; border: 1px solid rgb(241 232 212 / .2); border-radius: 999px; margin-inline: .2rem; }
+  .lang a, .lang .cur { font: 500 .7rem/1 var(--font-mono); letter-spacing: .06em; padding: .55em .7em; border-radius: 999px; text-decoration: none; min-width: 2.3rem; text-align: center; }
+  .lang a { color: #d9d0bb; }
+  .lang a:hover { color: #fff; background: rgb(241 232 212 / .12); }
+  .lang .cur { background: rgb(241 232 212 / .2); color: #fff; }
   .menu-btn, .ic-close { display: none; }
   @media (max-width: 1040px) {
     .hint { display: none; }
