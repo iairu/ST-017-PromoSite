@@ -64,7 +64,7 @@ export const nav = [
   },
   {
     href: '/parts/', label: 'Parts', blurb: 'What goes inside',
-    sections: [['electronics-parts', 'Electronics (ordered)'], ['wood-parts', 'Wood and workshop'], ['v8-fuse', 'v8 thermal fuse']],
+    sections: [['kit', 'The kit'], ['electronics-parts', 'Electronics (ordered)'], ['wood-parts', 'Wood and workshop'], ['v8-fuse', 'v8 thermal fuse']],
   },
   {
     href: '/roadmap/', label: 'Roadmap', blurb: 'Where the build stands',

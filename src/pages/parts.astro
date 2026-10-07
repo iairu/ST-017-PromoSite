@@ -2,6 +2,8 @@
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Icon from '../components/Icon.astro';
+import Fig from '../components/Fig.astro';
+import PartsSheet from '../components/PartsSheet.astro';
 import { bom, fuse, wood, url, links } from '../data/site.js';
 const eur = (n) => n.toFixed(2).replace('.', ',');
 const fmt = (n) => new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'EUR' }).format(n);
@@ -9,7 +11,22 @@ const fmt = (n) => new Intl.NumberFormat('en-GB', { style: 'currency', currency:
 <Base title="Parts" description="Every part inside LELEK: the v7 electronics bill of materials (ordered, EUR 17.60 including VAT), the beech block and the optional v8 thermal fuse, with shops and links.">
   <PageHero crumb="Parts" eyebrow="What goes inside" title="Nine lines of electronics, <em>one block of beech.</em>" lead={`The v7 parts have been ordered. Prices were read on ${bom.date} in euro including VAT, without shipping, and stock changes, so check the cart.`} />
 
-  <section class="block" id="electronics-parts">
+  <section class="block" id="kit">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">The kit</p>
+        <h2>Everything for the breadboard, on one table.</h2>
+        <p>The v7 parts as they arrived, followed by a simple drawing of each one. Only the speaker needs a soldering iron: its two leads are tinned and soldered to the board wires.</p>
+      </div>
+      <Fig src="parts-laid-out" w={1800} h={781} alt="All parts laid out on a table: battery, resistor and capacitor bags, speaker, DFPlayer Pro, breadboard, microSD card and jumper wires" caption="<b>Laid out.</b> Battery, resistors and header, speaker, capacitor, DFPlayer Pro, pin headers, breadboard, microSD and jumper wires." />
+      <div class="reveal" style="margin-top:2rem"><PartsSheet /></div>
+      <div style="margin-top:2rem">
+        <Fig src="parts-unboxed" w={1800} h={1155} alt="The two delivery boxes, one with jumper wires and one with bags of components and the DFRobot box, above the breadboard" caption="<b>As delivered.</b> Jumper wires in one box, the bagged components and the DFRobot module in the other, with the breadboard in front." />
+      </div>
+    </div>
+  </section>
+
+  <section class="block tint" id="electronics-parts">
     <div class="wrap">
       <div class="sec-head reveal">
         <p class="eyebrow">Electronics <span class="pill ok" style="margin-left:.6rem">Ordered</span></p>
@@ -44,7 +61,7 @@ const fmt = (n) => new Intl.NumberFormat('en-GB', { style: 'currency', currency:
     </div>
   </section>
 
-  <section class="block tint" id="wood-parts">
+  <section class="block" id="wood-parts">
     <div class="wrap">
       <div class="sec-head reveal">
         <p class="eyebrow">Wood and workshop</p>
