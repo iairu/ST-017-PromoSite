@@ -45,6 +45,10 @@ export const nav = [
   { href: '/about/', sections: ['student', 'course', 'elsewhere'] },
 ];
 
+// KNIFE-007 in the docs: the "L" boards, powered from an ESP32 dev board's 5V (USB VBUS) instead of the cell
+// (sk is the docs' default locale; the en locale adds its own /en prefix in front of the en/ docs folder)
+export const knifeEsp32 = (lang) => `${links.docs}${lang === 'en' ? '/en/en' : '/sk'}/knifes/#knife-007`;
+
 export const external = [{ href: links.docs }, { href: links.repo }, { href: links.pcbRepo }];
 
 export const highlights = [{ icon: 'press' }, { icon: 'wood' }, { icon: 'chip' }, { icon: 'plug' }, { icon: 'euro' }, { icon: 'book' }];

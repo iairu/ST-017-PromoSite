@@ -444,11 +444,13 @@ export default {
         boxedAlt: 'The two delivery boxes, one with jumper wires and one with bags of components and the DFRobot box, above the breadboard',
         boxedCap: '<b>As delivered.</b> Jumper wires in one box, the bagged components and the DFRobot module in the other, with the breadboard in front.',
         drawingAlt: '{name}, simple 3D drawing',
+        temporary: 'temporary', knifeLink: 'Why and what changes: KNIFE-007',
         // order matches PARTS_SHEET in components/PartsSheet.astro
         sheet: [
           ['DFPlayer Pro', 'U2', 'DFR0768 · MP3 player, amplifier, 128 MB flash'],
           ['Speaker', 'LS1', '8 Ω · 0.5 W · 40 mm · leads to solder'],
           ['LiPo cell', 'J1', '500 mAh · 3.7 V · protection PCB · JST-PH'],
+          ['ESP32 dev board', 'J1', 'Stands in for the cell until the charger can be soldered: its 5V pin (USB VBUS) and GND feed J1'],
           ['Capacitor', 'C1', '470 µF · 16 V · 8 x 12 mm'],
           ['Resistors', 'R1, R2', '10 Ω · 1/4 W · taped strip of 10'],
           ['Tact switch', 'SW1', '12 x 12 x 4.3 mm'],

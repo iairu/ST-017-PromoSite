@@ -48,6 +48,23 @@ g += "<path d='M78 38 q-8 -12 4 -22 h20' fill='none' stroke='#c0392b' stroke-wid
 g += "<rect x='104' y='8' width='28' height='22' rx='2' fill='#f1ebdb' stroke='#bfb79f'/><rect x='110' y='14' width='16' height='10' fill='#bfb79f'/>"
 P['battery'] = g
 
+# ESP32 dev board (temporary power for the "L" boards): thin PCB, shielded module with its antenna,
+# micro-USB, two pin rows; red 5V (VBUS) and black GND leads go off to J1
+def tp(u, v):
+    """Point on the board's top face: u along the front edge (0-150), v back into depth (0-1)."""
+    return f"{36+u+40*v:.1f} {98-40*v:.1f}"
+quad = lambda u0, v0, u1, v1, fill: f"<path d='M{tp(u0,v0)} L{tp(u1,v0)} L{tp(u1,v1)} L{tp(u0,v1)}Z' fill='{fill}'/>"
+g = box(36, 98, 150, 7, 40, 40, '#24282f', '#16191e', '#0d0f13')
+g += ''.join(f"<circle cx='{tp(8+i*9.4, v).split()[0]}' cy='{tp(8+i*9.4, v).split()[1]}' r='1.9' fill='#e0a431'/>" for i in range(15) for v in (.1, .9))
+g += quad(40, .25, 112, .78, '#8b929a') + quad(40, .3, 108, .78, 'url(#metal)')
+g += quad(112, .25, 140, .78, '#1d2026')
+g += f"<path d='M{tp(116,.35)} L{tp(116,.68)} L{tp(122,.68)} L{tp(122,.42)} L{tp(128,.42)} L{tp(128,.68)} L{tp(134,.68)} L{tp(134,.35)}' fill='none' stroke='#c9a23a' stroke-width='1.3'/>"
+g += f"<text x='0' y='0' {MONO} font-size='8' font-weight='700' fill='#4a5058' transform='translate({tp(52,.45).replace(' ', ',')}) skewX(-45) scale(1 1)'>ESP32</text>"
+g += "<path d='M22 92 h16 v10 h-16z' fill='url(#metal)'/><rect x='25' y='95' width='10' height='4' rx='1' fill='#2a2e35'/>"
+g += "<path d='M66 105 q-6 22 14 26 h40' fill='none' stroke='#c0392b' stroke-width='2.6' stroke-linecap='round'/><path d='M78 105 q-2 14 14 18 h28' fill='none' stroke='#1d2026' stroke-width='2.6' stroke-linecap='round'/>"
+g += f"<text x='126' y='134' {MONO} font-size='7' fill='#c0392b'>5V VBUS</text><text x='126' y='125' {MONO} font-size='7' fill='#1d2026'>GND</text>"
+P['esp32'] = g
+
 # Electrolytic capacitor
 g = "<path d='M108 128 L106 154 M132 128 L134 154' stroke='#c9ccd0' stroke-width='3' stroke-linecap='round'/>"
 g += "<path d='M86 50 V116 A34 12 0 0 0 154 116 V50Z' fill='url(#can)'/>"
