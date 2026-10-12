@@ -444,6 +444,8 @@ export default {
         boxedAlt: 'The two delivery boxes, one with jumper wires and one with bags of components and the DFRobot box, above the breadboard',
         boxedCap: '<b>As delivered.</b> Jumper wires in one box, the bagged components and the DFRobot module in the other, with the breadboard in front.',
         drawingAlt: '{name}, simple 3D drawing',
+        builtAlt: 'The v7 circuit wired on a breadboard: DFPlayer Pro, capacitor, two resistors and the button, with jumper wires to the speaker; the LiPo cell lies unplugged on the left and the charger board sits in its bag with two small pin headers on the right',
+        builtCap: '<b>v7 on the breadboard.</b> DFPlayer Pro, C1, R1 and R2, the button and the speaker are wired up. The LiPo cell (left) is unplugged: the TP4056 charger (right, still in its bag) first needs pin headers soldered onto its B+ and B- pads, because pressed-in pins flicker its LEDs. Until then the board runs from an ESP32\'s 5 V.',
         notNeeded: 'not needed',
         sdDropped: 'The DFPlayer Pro has 128 MB of flash on board and shows up as a USB drive when plugged into a PC, so the sound file goes straight onto it.',
         temporary: 'temporary', knifeLink: 'Why and what changes: KNIFE-007',

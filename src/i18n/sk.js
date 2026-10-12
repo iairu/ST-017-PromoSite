@@ -441,6 +441,8 @@ export default {
         boxedAlt: 'Dve dodávkové škatule, jedna s prepojovacími vodičmi a druhá s vreckami súčiastok a škatuľkou DFRobot, nad nepájivým poľom',
         boxedCap: '<b>Tak, ako prišlo.</b> Prepojovacie vodiče v jednej škatuli, súčiastky vo vreckách a modul DFRobot v druhej, pred nimi nepájivé pole.',
         drawingAlt: '{name}, jednoduchý 3D nákres',
+        builtAlt: 'Obvod v7 zapojený na nepájivom poli: DFPlayer Pro, kondenzátor, dva rezistory a tlačidlo, s prepojovacími vodičmi k reproduktoru; LiPo článok leží vľavo odpojený a doska nabíjačky je vpravo vo vrecku s dvoma malými kolíkovými lištami',
+        builtCap: '<b>v7 na nepájivom poli.</b> DFPlayer Pro, C1, R1 a R2, tlačidlo a reproduktor sú zapojené. LiPo článok (vľavo) je odpojený: nabíjačka TP4056 (vpravo, ešte vo vrecku) potrebuje najprv prispájkovať kolíkové lišty na plôšky B+ a B-, lebo len zasunuté piny rozblikávajú jej LED. Dovtedy doska beží z 5 V z ESP32.',
         notNeeded: 'netreba',
         sdDropped: 'DFPlayer Pro má priamo na doske 128 MB flash a po pripojení k PC sa ukáže ako USB disk, takže zvukový súbor sa nahrá rovno doň.',
         temporary: 'dočasná', knifeLink: 'Prečo a čo sa mení: KNIFE-007',
