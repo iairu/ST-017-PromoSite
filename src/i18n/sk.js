@@ -441,6 +441,8 @@ export default {
         boxedAlt: 'Dve dodávkové škatule, jedna s prepojovacími vodičmi a druhá s vreckami súčiastok a škatuľkou DFRobot, nad nepájivým poľom',
         boxedCap: '<b>Tak, ako prišlo.</b> Prepojovacie vodiče v jednej škatuli, súčiastky vo vreckách a modul DFRobot v druhej, pred nimi nepájivé pole.',
         drawingAlt: '{name}, jednoduchý 3D nákres',
+        notNeeded: 'netreba',
+        sdDropped: 'DFPlayer Pro má priamo na doske 128 MB flash a po pripojení k PC sa ukáže ako USB disk, takže zvukový súbor sa nahrá rovno doň.',
         temporary: 'dočasná', knifeLink: 'Prečo a čo sa mení: KNIFE-007',
         sheet: [
           ['DFPlayer Pro', 'U2', 'DFR0768 · MP3 prehrávač, zosilňovač, 128 MB flash'],

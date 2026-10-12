@@ -9,14 +9,17 @@ const t = content(lang).p.parts.kit;
 const ids = ['dfplayer', 'speaker', 'battery', 'esp32', 'capacitor', 'resistors', 'button', 'header-f', 'header-m', 'breadboard', 'sd', 'jumper'];
 // parts that only stand in for a while; they get a pill and a link to the KNIFE entry explaining why
 const temporary = { esp32: knifeEsp32(lang) };
-const parts = ids.map((id, i) => ({ id, name: t.sheet[i][0], ref: t.sheet[i][1], note: t.sheet[i][2], knife: temporary[id] }));
+// parts that arrived but are no longer needed; crossed out, with the reason under them
+const dropped = { sd: t.sdDropped };
+const parts = ids.map((id, i) => ({ id, name: t.sheet[i][0], ref: t.sheet[i][1], note: t.sheet[i][2], knife: temporary[id], dropped: dropped[id] }));
 ---
 <div class="parts-sheet">
   {parts.map((p) => (
-    <figure class="part reveal">
+    <figure class={`part reveal${p.dropped ? ' dropped' : ''}`}>
       <img src={url(`/img/parts/${p.id}.svg`)} alt={fill(t.drawingAlt, { name: p.name })} width="240" height="160" loading="lazy" decoding="async" />
       <figcaption>
-        <b>{p.name}</b>{p.ref && <span class="ref"> · {p.ref}</span>}{p.knife && <span class="temp">{t.temporary}</span>}<br />{p.note}
+        <span class="what"><b>{p.name}</b>{p.ref && <span class="ref"> · {p.ref}</span>}</span>{p.knife && <span class="temp">{t.temporary}</span>}{p.dropped && <span class="temp gone">{t.notNeeded}</span>}<br /><span class="what">{p.note}</span>
+        {p.dropped && <><br /><span class="why">{p.dropped}</span></>}
         {p.knife && <><br /><a href={p.knife} target="_blank" rel="noopener noreferrer">{t.knifeLink}</a></>}
       </figcaption>
     </figure>
@@ -32,4 +35,8 @@ const parts = ids.map((id, i) => ({ id, name: t.sheet[i][0], ref: t.sheet[i][1],
   .ref { color: #9c4f2a; }
   .temp { margin-left: .5rem; padding: .05rem .45rem; border: 1px solid #c98a2b; border-radius: 999px; color: #8a5a12; font-size: .78em; white-space: nowrap; }
   .part figcaption a { color: #9c4f2a; }
+  .dropped img { opacity: .45; filter: grayscale(1); }
+  .dropped .what { text-decoration: line-through; text-decoration-thickness: 1.5px; opacity: .7; }
+  .gone { border-color: #9c4f2a; color: #9c4f2a; }
+  .why { color: #2b2118; }
 </style>

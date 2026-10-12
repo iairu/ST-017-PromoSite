@@ -444,6 +444,8 @@ export default {
         boxedAlt: 'The two delivery boxes, one with jumper wires and one with bags of components and the DFRobot box, above the breadboard',
         boxedCap: '<b>As delivered.</b> Jumper wires in one box, the bagged components and the DFRobot module in the other, with the breadboard in front.',
         drawingAlt: '{name}, simple 3D drawing',
+        notNeeded: 'not needed',
+        sdDropped: 'The DFPlayer Pro has 128 MB of flash on board and shows up as a USB drive when plugged into a PC, so the sound file goes straight onto it.',
         temporary: 'temporary', knifeLink: 'Why and what changes: KNIFE-007',
         // order matches PARTS_SHEET in components/PartsSheet.astro
         sheet: [
