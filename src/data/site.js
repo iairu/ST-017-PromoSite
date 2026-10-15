@@ -3,7 +3,7 @@
 // with this file by content(lang) in src/i18n/index.js, so a price is only ever stored once.
 //
 // Sources
-//   - ST-017-MOTHERBOARD/docs/v7_parts.md, v8_parts.md   (parts, prices read 2026-10-03/05)
+//   - ST-017-MOTHERBOARD/docs/v7_parts.md, v14_parts.md  (parts, prices read 2026-10-03 and 2026-10-15)
 //   - ST-017-MOTHERBOARD/enclosure/NIGHTJAR_V2_GUIDE.md  (Nightjar v2 model, wood, pockets, machining)
 //   - ST-017-MOTHERBOARD/enclosure/stl_v2/               (STL files; public/models and the wireframes come from them)
 //   - ST-017-OndrejSpanik/content/docs/sk/sthdf/...      (project summary, pitch, milestones)
@@ -39,15 +39,15 @@ export const nav = [
   { href: '/', sections: ['highlights', 'how', 'model', 'gallery', 'field-notes'] },
   { href: '/bird/', sections: ['specs', 'wireframes', 'pockets', 'machining', 'button', 'wood'] },
   { href: '/electronics/', sections: ['circuit', 'views', 'choices', 'evolution', 'safety', 'verification'] },
-  { href: '/parts/', sections: ['kit', 'electronics-parts', 'wood-parts', 'v8-fuse'] },
+  { href: '/parts/', sections: ['kit', 'electronics-parts', 'wood-parts', 'v14-parts'] },
   { href: '/roadmap/', sections: ['status', 'milestones'] },
   { href: '/preorder/', pill: true, sections: ['form', 'faq'] },
   { href: '/about/', sections: ['student', 'course', 'elsewhere'] },
 ];
 
-// KNIFE-007 in the docs: the "L" boards, powered from an ESP32 dev board's 5V (USB VBUS) instead of the cell
-// (sk is the docs' default locale; the en locale adds its own /en prefix in front of the en/ docs folder)
-export const knifeEsp32 = (lang) => `${links.docs}${lang === 'en' ? '/en/en' : '/sk'}/knifes/#knife-007`;
+// One KNIFE post in the docs; each post is its own page (sk is the docs' default locale; the en
+// locale adds its own /en prefix in front of the en/ docs folder)
+export const knifePost = (lang, n) => `${links.docs}${lang === 'en' ? '/en/en' : '/sk'}/knifes/knife-${String(n).padStart(3, '0')}/`;
 
 export const external = [{ href: links.docs }, { href: links.repo }, { href: links.pcbRepo }];
 
@@ -82,9 +82,36 @@ export const bom = {
   total: 17.60,
 };
 
-export const fuse = {
-  ref: 'F1', price: 0.82, total: 18.42,
-  url: 'https://www.hestore.eu/en/prod_10023779.html', shop: 'HESTORE',
+// Board v14: what it needs on top of the v7 parts (docs/v14_parts.md, KNIFE-015). Prices incl. VAT,
+// read 2026-10-15; Hadex's CZK 12 is shown as about EUR 0.50. rows: [quantity, unit price, link].
+export const bom14 = {
+  shops: [
+    {
+      name: 'techfun.sk', url: 'https://techfun.sk', subtotal: 12.00,
+      rows: [
+        [1, 1.95, 'https://techfun.sk/produkt/irlb4030pbf-n-channel-mosfet-100v-180a-logic-level/'],
+        [1, 0.25, 'https://techfun.sk/produkt/rezistor-rozne-hodnoty-1-4w-10-kusov/'],
+        [1, 9.65, 'https://techfun.sk/produkt/esp32-s3-n8r2-wifi-a-bluetooth-5-0-vyvojova-doska/'],
+        [1, 0.15, 'https://techfun.sk/produkt/piny-40-kusov-male-2-54-mm-1-riadok/'],
+      ],
+    },
+    {
+      name: 'LaskaKit', url: 'https://www.laskakit.cz/en/', subtotal: 6.81,
+      rows: [
+        [1, 2.38, 'https://www.laskakit.cz/en/laskakit-xc6220-modul-stabilizatoru-s-low-iq-3-4-6v-3-3v-1a/'],
+        [1, 4.43, 'https://www.laskakit.cz/en/max9814-cma-4544pf-w-modul-mikrofonu-s-zesilovacem-max9814/'],
+      ],
+    },
+    {
+      name: 'Hadex', url: 'https://www.hadex.cz', subtotal: 0.50,
+      rows: [
+        [1, 0.50, 'https://www.hadex.cz/p/k368-tepelna-pojistka-84-c-axialni-nevratna-10a-250v-ce'],
+      ],
+    },
+  ],
+  total: 19.30,
+  totalL: 16.78,          // v14L: no fuse, no regulator, two more resistors (R6, R7)
+  all: 36.90,             // v7 parts + v14 additions: the whole v14 board with its ESP32-S3
 };
 
 // Wood options; title, price text and blurb are in the language file.
@@ -111,11 +138,12 @@ export const statusStates = ['done', 'done', 'wip', 'wip', 'todo', 'todo', 'todo
 export const versions = [
   { v: 'v1', img: 'pcb-v1' }, { v: 'v3', img: 'pcb-v3' }, { v: 'v4', img: 'pcb-v4' },
   { v: 'v5', img: 'pcb-v5' }, { v: 'v7', img: 'pcb-v7' }, { v: 'v8', img: 'pcb-v8' },
+  { v: 'v9', img: 'pcb-v9' }, { v: 'v14', img: 'pcb-v14' },
 ];
 
 // Photos and drawings that carry text (dimensions only; alt text and captions are per language)
 export const views = [
-  { id: 'bb', src: 'breadboard-v7', w: 1800, h: 1790 },
-  { id: 'sch', src: 'schematic-v7', w: 1800, h: 690 },
-  { id: 'pcb', src: 'pcb-v7', w: 1800, h: 556 },
+  { id: 'bb', src: 'breadboard-v14', w: 1800, h: 1038 },
+  { id: 'sch', src: 'schematic-v14', w: 1800, h: 1713 },
+  { id: 'pcb', src: 'pcb-v14', w: 1800, h: 558 },
 ];

@@ -62,7 +62,7 @@ export default {
       singing: 'Spieva…',
       preorder: 'Predobjednávka · čoskoro',
       how: 'Ako to funguje',
-      fine: 'Elektronika je navrhnutá a objednaná, drevo je na rade. Ukážka je syntetizované vrčanie, nie konečná nahrávka.',
+      fine: 'Doska v14 je navrhnutá a simulovaná; základné diely sú objednané, diely na pískanie sú na rade. Ukážka je syntetizované vrčanie, nie konečná nahrávka.',
     },
     birdAria: 'Silueta vyrezaného lelka zboku',
     model: {
@@ -102,8 +102,8 @@ export default {
   nav: [
     { label: 'Domov', blurb: 'Zoznámte sa s vtákom', sections: ['Hlavné body', 'Ako spieva', 'Otočte ho', 'Nepájivé pole, schéma, DPS', 'Terénne poznámky'] },
     { label: 'Vták', blurb: 'Tvar, drevo a CNC', sections: ['Špecifikácia', 'Drôtené modely', 'Kapsy a hĺbky', 'Obrábanie', 'Drevené tlačidlo', 'Drevo'] },
-    { label: 'Elektronika', blurb: 'Doska v7, v8', sections: ['Obvod', 'Schéma, nepájivé pole, DPS', 'Návrhové rozhodnutia', 'Osem verzií dosky', 'Bezpečnosť', 'Overenie'] },
-    { label: 'Diely', blurb: 'Čo je vo vnútri', sections: ['Súprava', 'Elektronika (objednaná)', 'Drevo a dielňa', 'Tepelná poistka v8'] },
+    { label: 'Elektronika', blurb: 'Doska v14', sections: ['Obvod', 'Schéma, nepájivé pole, DPS', 'Návrhové rozhodnutia', 'Štrnásť verzií dosky', 'Bezpečnosť', 'Overenie'] },
+    { label: 'Diely', blurb: 'Čo je vo vnútri', sections: ['Súprava', 'Elektronika (objednaná)', 'Drevo a dielňa', 'Doplnky v14'] },
     { label: 'Plán', blurb: 'Kde stavba stojí', sections: ['Stav', 'Míľniky'] },
     { label: 'Predobjednávka', blurb: 'Čoskoro otvoríme', pill: 'Čoskoro', sections: ['Formulár predobjednávky', 'Otázky'] },
     { label: 'O mne', blurb: 'Študent za projektom', sections: ['Ondrej Špánik', 'Predmet', 'Inde'] },
@@ -116,26 +116,26 @@ export default {
   ],
 
   highlights: [
-    { title: 'Podržte a spieva, pustite a spí', text: 'Tlačidlo je zapojené v napájaní z batérie. Kým ho držíte, zvukový modul je napájaný a hrá; po pustení nič neodoberá prúd. Nie je tu vypínač, na ktorý by ste mohli zabudnúť.' },
+    { title: 'Podržte, zapískajte a spieva', text: 'Tlačidlo je zapojené v napájaní z batérie. Kým ho držíte, vták počúva a na zapískanie zaspieva; po pustení nič neodoberá prúd. Nie je tu vypínač, na ktorý by ste mohli zabudnúť.' },
     { title: 'Dve polovice vyrezaného smreka', text: 'Štylizovaný lelek, dlhý 313 mm, vyrezaný na 3-osovom CNC z hobľovaného smrekového hranola ako dve zrkadlové polovice a spojený skrytými bukovými kolíkmi. Spoj sa dá na servis opatrne rozpáčiť.' },
-    { title: 'Žiadny mikrokontrolér, žiadny firmvér', text: 'Verzia 6 odstránila ATtiny85, MOSFET aj LED. DFPlayer Pro začne hrať hneď po pripojení napájania, takže celý obvod tvorí tlačidlo, kondenzátor, dva rezistory a modul.' },
+    { title: 'Odpovedá na zapískanie', text: 'Od verzie 9 počúva ESP32-S3 cez malý mikrofón. Keď počuje stály tón pískania, zapne zvukový modul; kým vták spieva, mikrofón je vypnutý, takže nikdy neodpovedá sám sebe.' },
     { title: 'Nabíja sa cez chvost', text: 'LiPo článok 500 mAh s vlastnou ochrannou doskou, nabíjaný cez micro-USB kanálom pod chvostom. Nabíjací prúd je znížený na 0,36 A, aby sa drevo vo vnútri málo zahrievalo.' },
-    { title: 'Elektronika pod 18 EUR', text: 'Doska v7 vymenila diely z TME za slovenské a české obchody: asi 17,60 EUR s DPH oproti približne 31,50 USD pri v6, s rovnakým správaním a rovnakým puzdrom.' },
-    { title: 'Zdokumentované verejne', text: 'Osem verzií dosky, každá slepá ulička aj oprava je zapísaná, spolu so schémami, zapojeniami na nepájivom poli, DPS a parametrickým CAD modelom, ktorý si môžete zostaviť zo skriptu.' },
+    { title: 'Diely zo slovenských a českých obchodov', text: 'Doska v14 používa len diely predávané na Slovensku a v Česku: už objednané diely v7 za 17,60 EUR a asi 19,30 EUR navyše na pískanie (vrátane dosky ESP32-S3).' },
+    { title: 'Zdokumentované verejne', text: 'Štrnásť verzií dosky, každá slepá ulička aj oprava je zapísaná, spolu so schémami, zapojeniami na nepájivom poli, DPS a parametrickým CAD modelom, ktorý si môžete zostaviť zo skriptu.' },
   ],
 
   stats: [
     { value: '313', unit: 'mm', label: 'dĺžka, asi 1,2-násobok skutočnej veľkosti' },
     { value: '2', unit: 'polovice', label: 'vyrezané na CNC, skryté kolíky' },
-    { value: '0', unit: 'firmvér', label: 'tlačidlo v napájaní' },
-    { value: '17,60', unit: 'EUR', label: 'elektronika, v7, s DPH' },
+    { value: '14', unit: 'dosiek', label: 'verzií, všetky zdokumentované' },
+    { value: '36,90', unit: 'EUR', label: 'elektronika, v14, s DPH' },
   ],
 
   flow: [
-    { title: 'Stlačenie', text: 'Sústružené drevené tlačidlo na chrbte pritlačí svoj driek na tlačidlo 12 x 12 mm v strede dosky.' },
-    { title: 'Napájanie', text: 'Spínač zopne napájanie z batérie. DFPlayer Pro dostane asi 3,7 V, naštartuje a prehrá vrčanie zo svojej pamäte.' },
-    { title: 'Spev', text: 'Zosilňovač poháňa reproduktor 8 ohmov, 0,5 W v hrudi cez sériový odpor 5 ohmov. Zvuk vychádza štrbinami v spoji.' },
-    { title: 'Spánok', text: 'Po pustení je modul opäť bez napájania. Medzi stlačeniami uniká len pár mikroampérov cez ochranu článku a nabíjačku.' },
+    { title: 'Stlačenie', text: 'Drevené tlačidlo na chrbte zopne spínač 12 x 12 mm v napájaní z batérie. Regulátor, ESP32-S3 a jeho mikrofón sa zobudia a asi do pol sekundy počúvajú.' },
+    { title: 'Zapískanie', text: 'ESP32-S3 hľadá stály tón medzi 0,9 a 3,5 kHz trvajúci štvrť sekundy. Reč, tlieskanie ani hluk sa nerátajú.' },
+    { title: 'Spev', text: 'Vypne mikrofón a zapne zvukový modul. DFPlayer Pro naštartuje a prehrá vrčanie cez reproduktor 8 ohmov za mriežkou v boku.' },
+    { title: 'Spánok', text: 'Po pustení je všetko do zlomku milisekundy bez napájania. Medzi stlačeniami uniká len pár mikroampérov cez ochranu článku a nabíjačku.' },
   ],
 
   bom: {
@@ -157,7 +157,24 @@ export default {
     ],
   },
 
-  fuse: { part: 'Tepelná poistka Proffuse TZ-D-077, 77 °C' },
+  bom14: {
+    date: '15. októbra 2026',
+    shops: [
+      { rows: [
+        ['Q1', 'N-kanálový MOSFET IRLB4030PbF, logická úroveň, TO-220', 'Spína zem prehrávača pre ESP32-S3.'],
+        ['R5', 'Rezistor 1/4 W, vyberte 100K (balenie 20 ks)', 'Drží Q1 vypnutý, kým ESP32-S3 štartuje.'],
+        ['J2', 'Vývojová doska ESP32-S3 N8R2', 'Počúva pískanie.'],
+        ['(U3)', 'Kolíková lišta 1x40, 2,54 mm', 'Kúsok so 6 pinmi zasunie modul XC6220 do nepájivého poľa.'],
+      ] },
+      { rows: [
+        ['U3', 'Modul LDO LaskaKit XC6220, 3,4–6 V na 3,3 V, 1 A', '3,3 V pre ESP32-S3 z článku. Nahrádza MCP1700 a jeho kondenzátor.'],
+        ['J3', 'Mikrofónový modul MAX9814 (CMA-4544PF-W)', 'Ucho, napájané z pinu ESP32-S3.'],
+      ] },
+      { rows: [
+        ['F1', 'Tepelná poistka 84 °C, axiálna, jednorazová, 10 A 250 V (K368)', '12 Kč. Poistka 77 °C nie je na Slovensku ani v Česku skladom celé mesiace.'],
+      ] },
+    ],
+  },
 
   wood: [
     { status: 'Plánované', title: 'Smrekový hranol KVH Si 60 x 120 mm, hobľovaný, 2,5 m', price: '19,69 EUR za hranol (č. 7886156)', text: 'Vybrané drevo: komorovo sušené, hobľované zo všetkých štyroch strán, pohľadová kvalita. Dá sedem polotovarov po 333 mm, polovice pre tri vtáky a jednu navyše, asi 6,56 EUR na vtáka. Veľkosť vtáka je prispôsobená hranolu.' },
@@ -176,14 +193,14 @@ export default {
   ],
 
   status: [
-    ['Návrh elektroniky', 'Doska v8 navrhnutá, simulovaná, Gerbery skontrolované (6 z 6 sietí)'],
-    ['Diely elektroniky', 'Diely v7 objednané'],
+    ['Návrh elektroniky', 'Doska v14 navrhnutá a simulovaná, DPS skontrolovaná (12 z 12 sietí); zatiaľ nepostavená'],
+    ['Diely elektroniky', 'Diely v7 objednané; doplnky v14 (ESP32-S3, mikrofón, MOSFET, regulátor, poistka) sú na rade'],
     ['3D model a puzdro', 'Nightjar v2 prispôsobený smrekovému hranolu, súbory STL, návod na stavbu, konzultácia s obsluhou CNC'],
     ['Drevo', 'Smrekový hranol 60 x 120 mm vybraný (Hornbach); zatiaľ nekúpený'],
     ['CNC rezanie', 'Nezačaté'],
     ['Zloženie a povrchová úprava', 'Nezačaté'],
     ['Drevené tlačidlo', 'Nezačaté'],
-    ['Dokumentácia', 'Stránka Docusaurus, zapísaných osem verzií dosky'],
+    ['Dokumentácia', 'Stránka Docusaurus, zapísaných štrnásť verzií dosky'],
   ],
 
   versions: [
@@ -193,6 +210,8 @@ export default {
     { date: '28. sep', size: '89,4 x 27,9 mm', text: 'Holý ATtiny85 a diely z TME, so SPICE modelmi pre simulátor.' },
     { date: '3. okt', size: '89,4 x 27,9 mm', text: 'Bez mikrokontroléra. Slovenské a české obchody. Podržte tlačidlo a vták spieva.' },
     { date: '5. okt', size: '89,4 x 27,9 mm', text: 'v7 plus tepelná poistka 77 °C v napájaní z batérie.' },
+    { date: '12. okt', size: '89,4 x 27,9 mm', text: 'ESP32 a mikrofón: podržte tlačidlo a zapískajte, až potom vták zaspieva.' },
+    { date: '15. okt', size: '89,4 x 27,9 mm', text: 'v13 s dielmi predávanými na Slovensku a v Česku: modul regulátora XC6220 a poistka 84 °C.' },
   ],
 
   specs: [
@@ -269,9 +288,9 @@ export default {
   ],
 
   views: [
-    { label: 'Nepájivé pole', alt: 'Pohľad na zapojenie obvodu v7 na nepájivom poli: DFPlayer Pro, kondenzátor 470 mikrofarad, dva rezistory 10 ohmov, tlačidlo, LiPo článok, nabíjačka TP4056 a reproduktor', cap: '<b>Nepájivé pole.</b> Celý obvod na polovičnom nepájivom poli vo Fritzingu, simulovaný so stlačeným tlačidlom. Oranžový vodič vedie výstup zosilňovača k rezistorom; reproduktor visí na fialových vodičoch.' },
-    { label: 'Schéma', alt: 'Schéma dosky v7: batéria cez tlačidlo k DFPlayer Pro, kondenzátor 470 mikrofarad cez batériu, dva rezistory 10 ohmov paralelne v sérii s reproduktorom', cap: '<b>Schéma.</b> Tlačidlo je jediné, čo stojí medzi batériou a prehrávačom. Dva rezistory 10 Ω paralelne obmedzujú prúd do reproduktora.' },
-    { label: 'DPS', alt: 'Rozloženie dosky plošných spojov v7, 89,4 x 27,9 milimetra, dve vrstvy', cap: '<b>DPS v7.</b> 89,4 x 27,9 mm, dve vrstvy, ručne skontrolované Gerbery: všetkých 6 zo 6 sietí zodpovedá schéme, minimálna medzera medzi meďou 14,3 mil.' },
+    { label: 'Nepájivé pole', alt: 'Zapojenie dosky v14 na 60-stĺpcovom nepájivom poli: DFPlayer Pro, modul regulátora XC6220, MOSFET IRLB4030, tlačidlo, kondenzátor a rezistory, LiPo, mikrofón a vývojová doska ESP32-S3 pripojené zospodu', cap: '<b>Nepájivé pole.</b> Doska v14 na 60-stĺpcovom nepájivom poli, ktoré používame, simulovaná s podržaným tlačidlom a počutým zapískaním. ESP32-S3, mikrofón a batéria visia pod poľom, reproduktor nad ním.' },
+    { label: 'Schéma', alt: 'Schéma dosky v14: batéria cez tepelnú poistku a tlačidlo k regulátoru a DFPlayer Pro, ESP32-S3 s mikrofónom a MOSFET v zemi prehrávača', cap: '<b>Schéma.</b> Tlačidlo stále všetko odpája. Za ním ESP32-S3 rozhoduje, kedy prehrávač dostane zem.' },
+    { label: 'DPS', alt: 'Rozloženie dosky plošných spojov v14, 89,4 x 27,9 milimetra, dve vrstvy', cap: '<b>DPS v14.</b> 89,4 x 27,9 mm, dve vrstvy, rovnaký obrys od v4. Meď skontrolovaná voči schéme: 12 z 12 sietí, minimálna medzera 14,1 mil.' },
   ],
 
   p: {
@@ -283,10 +302,10 @@ export default {
       close: 'Zavrieť',
       highlights: { eyebrow: 'Hlavné body', title: 'Jeden predmet, jeden gest, jeden zvuk.', lead: 'Väčšina spievajúcich hračiek je z plastu, zapojená do siete a do mesiaca zabudnutá. LeLeK je kus vyrezaného dreva, ktorý robí jednu vec dobre a je postavený tak, aby sa dal opraviť a pochopiť.' },
       how: {
-        eyebrow: 'Ako spieva', title: 'Stlačenie, napájanie, spev, spánok.',
-        lead: 'Nie je tu mikrokontrolér, ktorý by sa spúšťal, ani firmvér, ktorý by mohol zlyhať. Tlačidlo jednoducho pripojí batériu k zvukovému modulu a ten začne hrať hneď, ako sa zobudí.',
-        figAlt: 'Schéma dosky v7',
-        figCap: '<b>Doska v7 na jednom obrázku.</b> Batéria, tlačidlo, prehrávač, reproduktor. Kondenzátor a rezistory len chránia malý článok a malý reproduktor.',
+        eyebrow: 'Ako spieva', title: 'Stlačenie, zapískanie, spev, spánok.',
+        lead: 'Tlačidlo stále odpája napájanie, takže medzi stlačeniami nič nebeží. Kým ho držíte, ESP32-S3 počúva cez mikrofón; zapískajte a nechá zvukový modul zaspievať.',
+        figAlt: 'Schéma dosky v14',
+        figCap: '<b>Doska v14 na jednom obrázku.</b> Batéria, poistka, tlačidlo, za nimi regulátor a ESP32-S3 s mikrofónom a prehrávač, ktorý zapína cez MOSFET.',
         more: 'Pozrieť elektroniku',
       },
       model: {
@@ -295,11 +314,11 @@ export default {
         fine: 'Štylizované, nie sken. Asi 1,2-krát väčšie než skutočný lelek, aby sa do hrude zmestil 40 mm reproduktor. Prepnutím na Výkres uvidíte hrany.',
         link: 'Rozmery, kapsy a obrábanie →',
       },
-      gallery: { eyebrow: 'Nepájivé pole, schéma, DPS', title: 'Ten istý obvod, tri pohľady.', lead: 'Verzia 7 dosky, ako je nakreslená vo Fritzingu. Každý diel má simulačný model, takže zapojenie na nepájivom poli beží v simulátore vrátane zvuku reproduktora.', more: 'Pozrieť všetkých osem verzií dosky' },
+      gallery: { eyebrow: 'Nepájivé pole, schéma, DPS', title: 'Ten istý obvod, tri pohľady.', lead: 'Verzia 14 dosky, ako je nakreslená vo Fritzingu. Každý diel má simulačný model, takže zapojenie na nepájivom poli beží v simulátore vrátane zvuku reproduktora.', more: 'Pozrieť všetky verzie dosky' },
       notes: { eyebrow: 'Terénne poznámky', title: 'Vták známy podľa hlasu.' },
       timeline: {
         eyebrow: 'Plán', title: 'Úprimný stav: navrhnuté a objednané, ešte nie vyrezané.',
-        lead: 'Splnených {done} z {total} míľnikov. Elektronika je navrhnutá, simulovaná a objednaná; drevo je vybrané; prvé rezy sú na rade.',
+        lead: 'Splnených {done} z {total} míľnikov. Elektronika je navrhnutá a simulovaná a základné diely objednané; drevo je vybrané; prvé rezy sú na rade.',
         more: 'Celý stav',
       },
       band: {
@@ -365,33 +384,37 @@ export default {
 
     electronics: {
       title: 'Elektronika',
-      description: 'Elektronika LeLeK (NightJar.Gift), doska v7 a v8: tlačidlo v napájaní z batérie, DFPlayer Pro, malý LiPo a nabíjačka micro-USB. Schéma, nepájivé pole, DPS, návrhové rozhodnutia a overenie.',
-      hero: { eyebrow: 'Doska v7, v8', title: 'Tlačidlo, batéria, <em>zvukový modul.</em>', lead: 'Osem verzií dosky zredukovalo obvod z 13 dielov a mikrokontroléra na tlačidlo v napájaní. Podržte ho a vták spieva; pustite a zmĺkne.' },
+      description: 'Elektronika LeLeK (NightJar.Gift), doska v14: tlačidlo v napájaní z batérie, ESP32-S3, ktoré počúva pískanie, DFPlayer Pro, malý LiPo a nabíjačka micro-USB. Schéma, nepájivé pole, DPS, návrhové rozhodnutia a overenie.',
+      hero: { eyebrow: 'Doska v14', title: 'Tlačidlo, zapískanie, <em>zvukový modul.</em>', lead: 'Štrnásť verzií dosky. Tlačidlo stále odpája napájanie, takže medzi stlačeniami nič nebeží; od v9 počúva ESP32-S3 cez mikrofón a nechá vtáka zaspievať, len keď zapískate. v14 používa diely predávané na Slovensku a v Česku.' },
       circuit: {
-        eyebrow: 'Obvod', title: 'Funguje, lebo nič nie je zapnuté, keď netlačíte.',
+        eyebrow: 'Obvod', title: 'Nič nie je zapnuté, kým netlačíte, a nič nespieva, kým nezapískate.',
         bullets: [
-          'Tlačidlo je v napájaní z batérie. Kým ho držíte, LiPo (cez výstup nabíjacieho modulu) napája DFPlayer Pro, ktorý začne hrať hneď po pripojení napájania.',
-          'Po pustení tlačidla je modul bez napájania, takže medzi stlačeniami nič nevybíja článok.',
-          '<b>C1</b>, 470 µF, je zapojený cez batériu pred tlačidlom a dodáva špičky prúdu zosilňovača.',
-          'Reproduktor je pripojený na výstup zosilňovača L+ a L− modulu cez <b>R1 ∥ R2</b>, spolu 5 Ω.',
+          'Tlačidlo je v napájaní z batérie, za tepelnou poistkou 84 °C <b>F1</b>. Kým ho držíte, všetko za ním má napájanie; po pustení nič.',
+          '<b>U3</b>, modul LaskaKit XC6220 s nízkym úbytkom, mení 3,4 až 4,2 V článku na stálych 3,3 V pre vývojovú dosku ESP32-S3.',
+          'ESP32-S3 napája mikrofón MAX9814 z jedného zo svojich pinov (GPIO6) a počúva stály tón 0,9 až 3,5 kHz trvajúci štvrť sekundy.',
+          'Na zapískanie vypne mikrofón a zapne <b>Q1</b>, MOSFET IRLB4030 v zemi DFPlayer Pro: prehrávač dostane napájanie a prehrá 6-sekundové vrčanie. Potom sa prehrávač odpojí a mikrofón sa znova zapne. <b>R5</b> drží Q1 vypnutý, kým ESP32-S3 štartuje.',
+          '<b>C1</b>, 470 µF cez batériu, pokrýva špičky prúdu zosilňovača; <b>R1 ∥ R2</b>, 5 Ω, držia reproduktor 0,5 W v jeho limite.',
         ],
-        note: 'Doska 89,4 x 27,9 mm, dve vrstvy. Rovnaký obrys od v4 po v8, takže puzdro sa nikdy nemuselo meniť.',
-        figAlt: 'Schéma dosky v7', figCap: '<b>Schéma, v7.</b> Batéria, tlačidlo, DFPlayer Pro, dvojica rezistorov 5 Ω a reproduktor.',
+        note: 'Doska 89,4 x 27,9 mm, dve vrstvy, rovnaký obrys od v4. v14L je ten istý nápad napájaný z USB dosky ESP32-S3: bez článku, bez regulátora a tlačidlo po pustení drží ESP32-S3 v resete.',
+        figAlt: 'Schéma dosky v14', figCap: '<b>Schéma, v14.</b> Batéria a poistka, tlačidlo, regulátor, ESP32-S3 a mikrofón, MOSFET v zemi prehrávača, dvojica rezistorov 5 Ω a reproduktor.',
       },
       views: {
-        eyebrow: 'Schéma, nepájivé pole, DPS', title: 'Tri pohľady na verziu 7.',
-        lead: 'Dosky generujú skripty a kontrolujú ich nezávislé skripty, nie sú kreslené ručne. Zapojenie na nepájivom poli a schéma sa porovnávajú sieť po sieti (po 6 sietí) a exportované Gerbery sa porovnávajú so zoznamom sietí zo schémy.',
-        bbAlt: 'Pohľad na zapojenie obvodu v7 na polovičnom nepájivom poli', bbCap: '<b>Nepájivé pole.</b> Každý diel má model SPICE, takže funguje Simulovať: pri stlačenom tlačidle dostane prehrávač 3,69 V, na rezistoroch klesne 0,5 V a na reproduktore 0,8 V.',
-        pcb7Alt: 'Rozloženie DPS v7, 89,4 x 27,9 milimetra', pcb7Cap: '<b>DPS, v7.</b> Batéria J1, C1, tlačidlo 12 x 12 mm v strede, DFPlayer Pro na konci hrude s R1 a R2 pod ním.',
-        pcb8Alt: 'Rozloženie DPS v8 s pridanou tepelnou poistkou v napájaní z batérie', pcb8Cap: '<b>DPS, v8.</b> Rovnaká doska s tepelnou poistkou 77 °C pod radom J1 / C1.',
+        eyebrow: 'Schéma, nepájivé pole, DPS', title: 'Tri pohľady na verziu 14.',
+        lead: 'Dosky generujú skripty a kontrolujú ich nezávislé skripty, nie sú kreslené ručne. Zapojenie na nepájivom poli a schéma sa porovnávajú sieť po sieti a meď DPS sa porovnáva so zoznamom sietí zo schémy (12 z 12 sietí).',
+        bbAlt: 'Zapojenie dosky v14 na 60-stĺpcovom nepájivom poli', bbCap: '<b>Nepájivé pole.</b> 60-stĺpcové nepájivé pole, ktoré používame, lišty len dole. Simulované s podržaným tlačidlom a počutým zapískaním: 3,68 V na spínanej vetve, 3,30 V pre ESP32-S3, prehrávač zapnutý.',
+        pcbAlt: 'Rozloženie DPS v14, 89,4 x 27,9 milimetra', pcbCap: '<b>DPS, v14.</b> Batéria J1, F1, C1, tlačidlo v strede, Q1 naležato vedľa DFPlayer Pro a plôšky na vodiče pre ESP32-S3 (J2), mikrofón (J3) a modul regulátora (U3).',
+        pcbLAlt: 'Rozloženie DPS v14L, napájanej z dosky ESP32-S3', pcbLCap: '<b>DPS, v14L.</b> Dvojča napájané z USB: J1 berie šesť vodičov z dosky ESP32-S3 a R6 / R7 držia jej reset nízko, kým tlačidlo nie je stlačené.',
       },
       choices: {
-        eyebrow: 'Návrhové rozhodnutia', title: 'Tri malé doplnky urobili lacnejšie diely bezpečnými.',
-        lead: 'Prechod z TME na slovenské a české obchody znížil cenu, ale lacnejší článok a reproduktor potrebovali pomoc.',
+        eyebrow: 'Návrhové rozhodnutia', title: 'Šesť malých rozhodnutí za doskou v14.',
+        lead: 'Tri držia lacnejšie diely v ich limitoch. Tri umožnili pridať mikrokontrolér bez toho, aby sa zmenilo správanie vtáka, keď ho nikto nedrží.',
         cards: [
           ['C1: 470 µF cez batériu', 'Článok 503035 je dimenzovaný na maximálny výboj 0,25 A, čo je menej, než môže prehrávač so zosilňovačom odobrať pri hlasných špičkách. C1 tieto špičky pokrýva, takže napätie článku neklesá. Je na strane batérie pred tlačidlom, aby stlačenie nikdy nevybilo nabitý kondenzátor cez kontakty spínača.'],
           ['R1 ∥ R2: 5 Ω k reproduktoru', 'Výkon zosilňovača nie je zverejnený. Mostový zosilňovač na plnom článku by mohol dodať asi 1 W do 8 Ω (odhad), čo je dvojnásobok menovitých 0,5 W reproduktora. Dva rezistory 10 Ω paralelne obmedzia najhorší prípad na približne 0,38 W za cenu asi 4 dB hlasitosti. Ak je vták príliš tichý, jeden rezistor sa dá premostiť.'],
           ['Nabíjačka: rezistor PROG 3,3 kΩ', 'Moduly TP4056 sa dodávajú nastavené na 1 A, čo je dvojnásobok limitu 1C pre článok 500 mAh a asi 1,3 W tepla v uzavretej drevenej kapse. Výmena modulového rezistora 1,2 kΩ za 3,3 kΩ nastaví 0,36 A: asi 0,7C, plné nabitie za približne 1,5 až 2 hodiny.'],
+          ['Q1: spínač v zemi prehrávača', 'Pin mikrokontroléra dodá niekoľko desiatok miliampérov; prehrávač potrebuje 0,1 až 0,15 A. DFPlayer Pro začne hrať hneď, ako dostane napájanie, takže MOSFET v jeho zemi je spôsob, ako ESP32-S3 povie „hraj“. V zemi ho 3,3 V na hradle úplne zopne pri akomkoľvek napätí batérie.'],
+          ['U3: regulátor s nízkym úbytkom', 'ESP32-S3 potrebuje 3,0 až 3,6 V a plný článok dáva 4,2 V. Vlastný regulátor vývojovej dosky je za diódou a pri vybíjaní článku by čipu nedal dosť; XC6220 drží 3,3 V až do článku s asi 3,4 V.'],
+          ['Mikrofón beží z pinu', 'Modul MAX9814 nemá vypínač, ale berie len asi 3 mA, takže ho napája pin ESP32-S3. Kým hrá vrčanie, mikrofón je vypnutý, vták teda nepočuje sám seba, a jeho regulácia zosilnenia po zapnutí začne odznova.'],
         ],
         cols: ['R_PROG', 'Nabíjací prúd', 'Pre článok 500 mAh'],
         rows: [
@@ -401,10 +424,10 @@ export default {
         ],
       },
       evolution: {
-        eyebrow: 'Osem verzií dosky', title: 'Od 84 x 62 mm po pásik, ktorý sa zmestí do bruška.',
-        lead: 'Zásoby dielov spôsobili tri zo štyroch skorých prekreslení. Automatické trasovanie a nezávislá kontrola Gerberov zachytili to, čo vizuálna kontrola nie.',
+        eyebrow: 'Štrnásť verzií dosky', title: 'Od 84 x 62 mm po pásik, ktorý sa zmestí do bruška.',
+        lead: 'Zásoby dielov spôsobili tri zo štyroch skorých prekreslení. Automatické trasovanie a nezávislá kontrola medi zachytili to, čo vizuálna kontrola nie. Obrys sa od v4 nezmenil.',
         pcbAlt: 'DPS {v}',
-        fine: 'Existujú aj verzie dosky v2 a v6; sú to medzikroky a tu sú vynechané. Cena klesla z asi 34 USD plus programátor (v5) cez 31,50 USD (v6) na 17,60 EUR (v7).',
+        fine: 'Verzie v2, v6 a v10 až v13 sú medzikroky a tu sú vynechané. Cena klesla z asi 34 USD plus programátor (v5) cez 31,50 USD (v6) na 17,60 EUR (v7); pískanie pridáva asi 19,30 EUR (v14, vrátane dosky ESP32-S3).',
       },
       safety: {
         eyebrow: 'Bezpečnosť', title: 'Lítiový článok v dreve si zaslúži viac vrstiev.',
@@ -412,7 +435,8 @@ export default {
         bullets: [
           '<b>Dva ochranné obvody.</b> DPS samotného článku odpája pri 3,0 V; DW01A nabíjačky pri asi 2,4 V.',
           '<b>Šetrné nabíjanie.</b> 0,36 A obmedzuje zahrievanie v kapse.',
-          '<b>v8: tepelná poistka.</b> Jednorazová poistka 77 °C (Proffuse TZ-D-077) v napájaní z batérie sa trvalo preruší, ak sa doska prehreje. Reaguje na teplotu, nie na prúd, a nenahrádza ochranu pred skratom.',
+          '<b>Tepelná poistka.</b> Jednorazová poistka 84 °C (Hadex K368, od v14; v8 až v13 mali 77 °C) v napájaní z batérie sa trvalo preruší, ak sa doska prehreje. Reaguje na teplotu, nie na prúd, a nenahrádza ochranu pred skratom.',
+          '<b>Medzi stlačeniami nič nebeží.</b> Regulátor, ESP32-S3, mikrofón aj prehrávač sú za tlačidlom; v simulácii je všetko vypnuté do 0,2 ms po pustení.',
           '<b>Plánované:</b> nehorľavá výstelka dutiny (sľuda alebo keramický papier) a silikónové vodiče. <b>Stále otvorené:</b> nabíjanie vo vnútri uzavretého dreveného tela je v dokumentácii projektu vedené ako otvorená požiadavka na zmenu.',
           'Napuchnutý, horúci alebo hlboko vybitý článok treba recyklovať, nikdy znova nabíjať a nikdy nenabíjať bez dozoru.',
         ],
@@ -420,22 +444,22 @@ export default {
       verification: {
         eyebrow: 'Overenie', title: 'Skontrolované niečím iným, než čo ho nakreslilo.',
         cards: [
-          ['6 zo 6 sietí', 'Gerbery exportované z Fritzingu boli skontrolované nezávisle: každá medená sieť zodpovedá schéme.'],
-          ['14,3 mil', 'Minimálna medzera medzi meďou, pričom meď je 19,5 mil od okraja dosky.'],
-          ['Simulované, so zvukom', 'Upravený simulátor Fritzing prehrá zvukový súbor modulu vždy, keď je reproduktor budený, keďže simulátor obvodov nevie dekódovať MP3.'],
+          ['12 z 12 sietí', 'Meď DPS v14 aj v14L bola nezávisle skontrolovaná voči schéme a zapojenie na nepájivom poli voči schéme, sieť po sieti.'],
+          ['14,1 mil', 'Minimálna medzera medzi meďou pri v14, pričom meď je 20 mil od okraja dosky.'],
+          ['Simulované vo všetkých stavoch', 'Tlačidlo podržané alebo pustené, počúva alebo hrá: prehrávač spieva len pri podržanom tlačidle a počutom zapískaní. Upravený simulátor Fritzing prehráva vrčanie, kým je reproduktor budený.'],
         ],
-        note: 'Zatiaľ nepostavené. Gerbery boli exportované vo Fritzingu 1.0.1; plán je otvoriť ich vo verzii 1.0.8, spustiť kontrolu návrhových pravidiel a pred objednaním dosky ich znova exportovať. Zvuk sa spustí po štarte modulu (oneskorenie zatiaľ nezmerané).',
+        note: 'Zatiaľ nepostavené. Pre v14 zatiaľ nie sú exportované Gerbery: plán je otvoriť súbor vo Fritzingu 1.0.8, spustiť kontrolu návrhových pravidiel a pred objednaním dosky ich exportovať. Firmvér na pískanie zatiaľ nebol skompilovaný ani spustený na hardvéri; časy štartu sú odhady.',
         files: 'Súbory dosky a puzdra', parts: 'Zoznam dielov',
       },
     },
 
     parts: {
       title: 'Diely',
-      description: 'Každý diel vo vnútri LeLeK: zoznam materiálu elektroniky v7 (objednaný, 17,60 EUR s DPH), smrekový hranol a voliteľná tepelná poistka v8, s obchodmi a odkazmi.',
-      hero: { eyebrow: 'Čo je vo vnútri', title: 'Deväť riadkov elektroniky, <em>jeden smrekový hranol.</em>', lead: 'Diely v7 sú objednané. Ceny boli zistené {date} v eurách s DPH, bez dopravy, a sklad sa mení, preto skontrolujte košík.' },
+      description: 'Každý diel vo vnútri LeLeK: už objednaná elektronika v7 (17,60 EUR s DPH), čo doska v14 pridáva na pískanie (asi 19,30 EUR) a smrekový hranol, s obchodmi a odkazmi.',
+      hero: { eyebrow: 'Čo je vo vnútri', title: 'Šestnásť riadkov elektroniky, <em>jeden smrekový hranol.</em>', lead: 'Diely v7 sú objednané (ceny zistené {date}); doska v14 pridáva ďalších sedem na pískanie (zistené 15. októbra 2026). V eurách s DPH, bez dopravy, a sklad sa mení, preto skontrolujte košík.' },
       kit: {
         eyebrow: 'Súprava', title: 'Všetko na nepájivé pole, na jednom stole.',
-        lead: 'Diely v7 tak, ako prišli, a za nimi jednoduchý nákres každého z nich. Spájkovačku potrebuje len reproduktor: jeho dva vodiče sa pocínujú a prispájkujú k vodičom dosky.',
+        lead: 'Diely v7 tak, ako prišli, a za nimi jednoduchý nákres každého dielu dosky v14; tie, ktoré pridáva v14, sú označené. Na nepájivom poli potrebuje spájkovačku len reproduktor: jeho dva vodiče sa pocínujú a prispájkujú k vodičom dosky.',
         laidAlt: 'Všetky diely rozložené na stole: batéria, vrecká s rezistormi a kondenzátorom, reproduktor, DFPlayer Pro, nepájivé pole, karta microSD a prepojovacie vodiče',
         laidCap: '<b>Rozložené.</b> Batéria, rezistory a lišta, reproduktor, kondenzátor, DFPlayer Pro, kolíkové lišty, nepájivé pole, microSD a prepojovacie vodiče.',
         boxedAlt: 'Dve dodávkové škatule, jedna s prepojovacími vodičmi a druhá s vreckami súčiastok a škatuľkou DFRobot, nad nepájivým poľom',
@@ -445,12 +469,16 @@ export default {
         builtCap: '<b>v7 na nepájivom poli.</b> DFPlayer Pro, C1, R1 a R2, tlačidlo a reproduktor sú zapojené. LiPo článok (vľavo) je odpojený: nabíjačka TP4056 (vpravo, ešte vo vrecku) potrebuje najprv prispájkovať kolíkové lišty na plôšky B+ a B-, lebo len zasunuté piny rozblikávajú jej LED. Dovtedy doska beží z 5 V z ESP32.',
         notNeeded: 'netreba',
         sdDropped: 'DFPlayer Pro má priamo na doske 128 MB flash a po pripojení k PC sa ukáže ako USB disk, takže zvukový súbor sa nahrá rovno doň.',
-        temporary: 'dočasná', knifeLink: 'Prečo a čo sa mení: KNIFE-007',
+        temporary: 'v14', knifeLink: 'Na čo slúži a kde ho kúpiť: KNIFE-015',
         sheet: [
           ['DFPlayer Pro', 'U2', 'DFR0768 · MP3 prehrávač, zosilňovač, 128 MB flash'],
           ['Reproduktor', 'LS1', '8 Ω · 0,5 W · 40 mm · vodiče na prispájkovanie'],
           ['LiPo článok', 'J1', '500 mAh · 3,7 V · ochranná DPS · JST-PH'],
-          ['Vývojová doska ESP32', 'J1', 'Nahrádza článok, kým sa nabíjačka neprispájkuje: jej pin 5V (USB VBUS) a GND napájajú J1'],
+          ['Vývojová doska ESP32-S3', 'J2', 'Počúva pískanie a spína prehrávač; N8R2, 2 MB PSRAM'],
+          ['Mikrofón', 'J3', 'Modul MAX9814 · automatická regulácia zosilnenia · napájaný z GPIO6'],
+          ['MOSFET', 'Q1', 'IRLB4030 · logická úroveň · spína zem prehrávača'],
+          ['Modul regulátora', 'U3', 'LaskaKit XC6220 · 3,3 V z článku · nízky úbytok'],
+          ['Tepelná poistka', 'F1', '84 °C · jednorazová · 10 A 250 V'],
           ['Kondenzátor', 'C1', '470 µF · 16 V · 8 x 12 mm'],
           ['Rezistory', 'R1, R2', '10 Ω · 1/4 W · pás s 10 kusmi na páske'],
           ['Tlačidlo tact', 'SW1', '12 x 12 x 4,3 mm'],
@@ -463,8 +491,8 @@ export default {
       },
       electronics: {
         eyebrow: 'Elektronika', ordered: 'Objednané',
-        title: 'Doska v7: {total} plus doprava.',
-        lead: 'Dva obchody, deväť riadkov. Žiadny mikrokontrolér, MOSFET, LED ani firmvér. Oproti približne 31,50 USD bez DPH pri v6 v TME.',
+        title: 'Diely v7: {total} plus doprava.',
+        lead: 'Dva obchody, deväť riadkov: diely, ktoré používa každá doska od v7. Oproti približne 31,50 USD bez DPH pri v6 v TME.',
         cols: ['Ozn.', 'Diel', 'Ks', 'Cena', 'Prečo'],
         subtotal: 'medzisúčet {amount}',
         totalLabel: 'Spolu, oba obchody',
@@ -490,12 +518,18 @@ export default {
         note: 'Ceny dreva boli zistené 14. októbra 2026, zahŕňajú DPH a neobsahujú dopravu. Hranol vám v predajni môžu narezať na dĺžku; overte si túto službu vo svojej predajni.',
         viewAt: 'Zobraziť na {shop}',
       },
-      fuse: {
-        eyebrow: 'Doska v8', title: 'Ešte jeden diel: tepelná poistka.',
-        lead: 'Verzia 8 pridáva {ref}, jednorazovú {part}, v napájaní z batérie. Elektronika tým vyjde asi na {total}.',
-        card: '{price} za kus. 10 A, 250 V, telo 11,5 x 4,2 mm. Nepredáva ju techfun.sk ani LaskaKit, takže je to tretia malá objednávka.',
-        viewAt: 'Zobraziť na {shop}',
-        partLead: 'tepelnú poistku 77 °C',
+      v14: {
+        eyebrow: 'Doska v14', toOrder: 'Na objednanie',
+        title: 'Na pískanie: asi o {total} viac.',
+        lead: 'Všetko, čo doska v14 potrebuje navyše k dielom v7, z troch obchodov na Slovensku a v Česku. Sklad zistený 15. októbra 2026.',
+        totalLabel: 'Spolu, tri obchody',
+        knowTitle: 'Dobré vedieť',
+        know: [
+          'Dva obchody namiesto troch: nechajte si náhradnú poistku na vyššiu teplotu a Hadex vynechajte.',
+          'Modul XC6220 sa dodáva bez pinov. Kúsok kolíkovej lišty so 6 pinmi ho zasunie do nepájivého poľa; na DPS sa pripojí vodičmi k trom plôškam.',
+          'Celá doska v14 vrátane ESP32-S3 vyjde asi na {all}.',
+          'v14L (napájaná z USB dosky ESP32-S3) nepotrebuje poistku ani regulátor, ale dva ďalšie rezistory, 680 Ω a 1 kΩ: asi {totalL} navyše k dielom v7.',
+        ],
       },
     },
 

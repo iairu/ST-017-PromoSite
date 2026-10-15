@@ -2,7 +2,7 @@
 import en from './en.js';
 import sk from './sk.js';
 import {
-  site, links, nav, external, highlights, flow, bom, fuse, wood, milestones, statusStates, versions, views, url, BASE,
+  site, links, nav, external, highlights, flow, bom, bom14, wood, milestones, statusStates, versions, views, url, BASE,
 } from '../data/site.js';
 
 export const langs = ['en', 'sk'];
@@ -70,7 +70,17 @@ export function content(lang) {
         }),
       })),
     },
-    fuse: { ...fuse, ...d.fuse },
+    bom14: {
+      date: d.bom14.date,
+      total: bom14.total, totalL: bom14.totalL, all: bom14.all,
+      shops: bom14.shops.map((s, i) => ({
+        ...s,
+        rows: s.rows.map(([qty, price, href], k) => {
+          const [ref, part, note] = d.bom14.shops[i].rows[k];
+          return { ref, part, qty, price, href, note };
+        }),
+      })),
+    },
     wood: zip(wood, d.wood),
     milestones: zip(milestones, d.milestones),
     status: d.status.map(([area, note], i) => ({ area, note, state: statusStates[i] })),

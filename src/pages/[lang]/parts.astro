@@ -8,7 +8,7 @@ import { content, getLang, fill } from '../../i18n/index.js';
 export const getStaticPaths = () => [{ params: { lang: 'en' } }, { params: { lang: 'sk' } }];
 const lang = getLang(Astro);
 const c = content(lang);
-const { bom, fuse, wood, fmt, num } = c;
+const { bom, bom14, wood, fmt, num } = c;
 const t = c.p.parts;
 ---
 <Base title={t.title} description={t.description}>
@@ -94,18 +94,34 @@ const t = c.p.parts;
     </div>
   </section>
 
-  <section class="block tint" id="v8-fuse">
-    <div class="wrap split" style="align-items:start">
-      <div class="reveal">
-        <p class="eyebrow">{t.fuse.eyebrow}</p>
-        <h2>{t.fuse.title}</h2>
-        <p>{fill(t.fuse.lead, { ref: fuse.ref, part: t.fuse.partLead, total: fmt(fuse.total) })}</p>
+  <section class="block tint" id="v14-parts">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">{t.v14.eyebrow} <span class="pill wip" style="margin-left:.6rem">{t.v14.toOrder}</span></p>
+        <h2>{fill(t.v14.title, { total: fmt(bom14.total) })}</h2>
+        <p>{t.v14.lead}</p>
       </div>
-      <div class="card reveal">
-        <p class="mono small">{fuse.shop}</p>
-        <h3>{fuse.part}</h3>
-        <p>{fill(t.fuse.card, { price: fmt(fuse.price) })}</p>
-        <p><a href={fuse.url} target="_blank" rel="noopener noreferrer">{fill(t.fuse.viewAt, { shop: fuse.shop })} <Icon name="ext" size={14} /></a></p>
+      {bom14.shops.map((shop) => (
+        <div class="reveal shop">
+          <h3><a href={shop.url} target="_blank" rel="noopener noreferrer">{shop.name} <Icon name="ext" size={14} /></a> <span class="mono sub">{fill(t.electronics.subtotal, { amount: fmt(shop.subtotal) })}</span></h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>{t.electronics.cols[0]}</th><th>{t.electronics.cols[1]}</th><th class="num">{t.electronics.cols[2]}</th><th class="num">{t.electronics.cols[3]}</th><th>{t.electronics.cols[4]}</th></tr></thead>
+              <tbody>
+                {shop.rows.map((r) => (
+                  <tr><td class="ref">{r.ref}</td><td><a href={r.href} target="_blank" rel="noopener noreferrer">{r.part}</a></td><td class="num">{r.qty}</td><td class="num">{num(r.price)}</td><td>{r.note}</td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ))}
+      <div class="total reveal"><span class="mono">{t.v14.totalLabel}</span><strong>{fmt(bom14.total)}</strong></div>
+      <div class="prose reveal">
+        <h3>{t.v14.knowTitle}</h3>
+        <ul>
+          {t.v14.know.map((x) => <li set:html={fill(x, { totalL: fmt(bom14.totalL), all: fmt(bom14.all) })} />)}
+        </ul>
       </div>
     </div>
   </section>

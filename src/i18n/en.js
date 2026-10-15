@@ -63,7 +63,7 @@ export default {
       singing: 'Singing…',
       preorder: 'Pre-order · opening soon',
       how: 'How it works',
-      fine: 'Electronics designed and ordered, wood next. The sample is a synthesised churr, not yet the final recording.',
+      fine: 'Board v14 designed and simulated; the base parts are ordered, the whistle parts are next. The sample is a synthesised churr, not yet the final recording.',
     },
     birdAria: 'Silhouette of the carved nightjar, seen from the side',
     model: {
@@ -103,8 +103,8 @@ export default {
   nav: [
     { label: 'Home', blurb: 'Meet the bird', sections: ['Highlights', 'How it sings', 'Turn it around', 'Breadboard, schematic, PCB', 'Field notes'] },
     { label: 'The Bird', blurb: 'Shape, wood and CNC', sections: ['Specifications', 'Wireframes', 'Pockets and depths', 'Machining', 'The wooden button', 'Wood'] },
-    { label: 'Electronics', blurb: 'Board v7, v8', sections: ['The circuit', 'Schematic, breadboard, PCB', 'Design choices', 'Eight board versions', 'Safety', 'Verification'] },
-    { label: 'Parts', blurb: 'What goes inside', sections: ['The kit', 'Electronics (ordered)', 'Wood and workshop', 'v8 thermal fuse'] },
+    { label: 'Electronics', blurb: 'Board v14', sections: ['The circuit', 'Schematic, breadboard, PCB', 'Design choices', 'Fourteen board versions', 'Safety', 'Verification'] },
+    { label: 'Parts', blurb: 'What goes inside', sections: ['The kit', 'Electronics (ordered)', 'Wood and workshop', 'v14 additions'] },
     { label: 'Roadmap', blurb: 'Where the build stands', sections: ['Status', 'Milestones'] },
     { label: 'Pre-order', blurb: 'Opening soon', pill: 'Soon', sections: ['Pre-order form', 'Questions'] },
     { label: 'About', blurb: 'The student behind it', sections: ['Ondrej Špánik', 'The course', 'Elsewhere'] },
@@ -117,26 +117,26 @@ export default {
   ],
 
   highlights: [
-    { title: 'Hold to sing, let go to sleep', text: 'The button sits in the battery line. While it is held the sound module is powered and plays; release it and nothing draws current. There is no power switch to forget.' },
+    { title: 'Hold, whistle, and it sings', text: 'The button sits in the battery line. While it is held the bird listens, and a whistle makes it sing; release it and nothing draws current. There is no power switch to forget.' },
     { title: 'Two halves of carved spruce', text: 'A stylised nightjar, 313 mm long, carved on a 3-axis CNC from a planed spruce beam as two mirrored halves and joined with hidden beech dowels. The seam can be pried open for service.' },
-    { title: 'No microcontroller, no firmware', text: 'Version 6 removed the ATtiny85, MOSFET and LED. The DFPlayer Pro starts playing as soon as it gets power, so the whole circuit is a button, a capacitor, two resistors and the module.' },
+    { title: 'It answers a whistle', text: 'Since version 9 an ESP32-S3 listens through a small microphone. When it hears a steady whistle it switches the sound module on; the microphone is off while the bird sings, so it never answers itself.' },
     { title: 'Charges through the tail', text: 'A 500 mAh LiPo with its own protection board, charged over micro-USB through a channel under the tail. The charge current is cut to 0.36 A to keep heat inside the wood low.' },
-    { title: 'Electronics under EUR 18', text: 'Board v7 swapped TME parts for Slovak and Czech shops: about EUR 17.60 with VAT against roughly USD 31.50 for v6, with the same behaviour and the same enclosure.' },
-    { title: 'Documented in the open', text: 'Eight board versions, every dead end and every fix is written down, with schematics, breadboards, PCBs and a parametric CAD model you can rebuild from a script.' },
+    { title: 'Parts from Slovak and Czech shops', text: 'Board v14 uses only parts sold in Slovakia and Czechia: the EUR 17.60 of v7 parts already ordered, plus about EUR 19.30 for the whistle (ESP32-S3 board included).' },
+    { title: 'Documented in the open', text: 'Fourteen board versions, every dead end and every fix is written down, with schematics, breadboards, PCBs and a parametric CAD model you can rebuild from a script.' },
   ],
 
   stats: [
     { value: '313', unit: 'mm', label: 'long, about 1.2x life size' },
     { value: '2', unit: 'halves', label: 'CNC-carved, hidden dowels' },
-    { value: '0', unit: 'firmware', label: 'button in the power line' },
-    { value: '17.60', unit: 'EUR', label: 'electronics, v7, incl. VAT' },
+    { value: '14', unit: 'boards', label: 'versions, all documented' },
+    { value: '36.90', unit: 'EUR', label: 'electronics, v14, incl. VAT' },
   ],
 
   flow: [
-    { title: 'Press', text: 'A turned wooden button on the back pushes its stem onto a 12 x 12 mm tact switch in the centre of the board.' },
-    { title: 'Power', text: 'The switch closes the battery line. The DFPlayer Pro gets about 3.7 V, boots and plays the churr from its own memory.' },
-    { title: 'Sing', text: 'The amplifier drives an 8 ohm, 0.5 W speaker in the chest through 5 ohm of series resistance. Sound leaves through slots in the seam.' },
-    { title: 'Sleep', text: 'Let go and the module is unpowered again. Between presses only the cell protection and the charger leak a few microamps.' },
+    { title: 'Press', text: 'The wooden button on the back closes a 12 x 12 mm switch in the battery line. A regulator, the ESP32-S3 and its microphone wake up and listen within about half a second.' },
+    { title: 'Whistle', text: 'The ESP32-S3 looks for a steady tone between 0.9 and 3.5 kHz lasting a quarter of a second. Speech, claps and noise do not count.' },
+    { title: 'Sing', text: 'It switches the microphone off and the sound module on. The DFPlayer Pro boots and plays the churr through an 8 ohm speaker behind a grille in the flank.' },
+    { title: 'Sleep', text: 'Let go and everything is unpowered within a fraction of a millisecond. Between presses only the cell protection and the charger leak a few microamps.' },
   ],
 
   bom: {
@@ -159,7 +159,25 @@ export default {
     ],
   },
 
-  fuse: { part: 'Proffuse TZ-D-077 thermal fuse, 77 °C' },
+  bom14: {
+    date: '15 October 2026',
+    // per shop, per row: [ref, part, note]
+    shops: [
+      { rows: [
+        ['Q1', 'IRLB4030PbF N-channel MOSFET, logic level, TO-220', 'Switches the player\'s ground for the ESP32-S3.'],
+        ['R5', 'Resistor 1/4 W, pick 100K (pack of 20)', 'Holds Q1 off while the ESP32-S3 boots.'],
+        ['J2', 'ESP32-S3 N8R2 dev board', 'Listens for the whistle.'],
+        ['(U3)', 'Male pin header 1x40, 2.54 mm', 'A 6-pin piece plugs the XC6220 module into the breadboard.'],
+      ] },
+      { rows: [
+        ['U3', 'LaskaKit XC6220 LDO module, 3.4–6 V to 3.3 V, 1 A', '3.3 V for the ESP32-S3 from the cell. Replaces the MCP1700 and its capacitor.'],
+        ['J3', 'MAX9814 microphone module (CMA-4544PF-W)', 'The ear, powered from an ESP32-S3 pin.'],
+      ] },
+      { rows: [
+        ['F1', 'Thermal fuse 84 °C, axial, one-shot, 10 A 250 V (K368)', 'CZK 12. The 77 °C one is out of stock in Slovakia and Czechia for months.'],
+      ] },
+    ],
+  },
 
   wood: [
     { status: 'Planned', title: 'Spruce beam KVH Si 60 x 120 mm, planed, 2.5 m', price: '19.69 EUR per beam (item 7886156)', text: 'The chosen wood: kiln-dried, planed on all four sides, visible grade. It gives seven 333 mm blanks, the halves for three birds and a spare, about 6.56 EUR per bird. The bird is sized to the beam.' },
@@ -178,14 +196,14 @@ export default {
   ],
 
   status: [
-    ['Electronics design', 'Board v8 designed, simulated, Gerbers checked (6 of 6 nets)'],
-    ['Electronics parts', 'v7 parts ordered'],
+    ['Electronics design', 'Board v14 designed and simulated, PCB checked (12 of 12 nets); not built yet'],
+    ['Electronics parts', 'v7 parts ordered; the v14 additions (ESP32-S3, microphone, MOSFET, regulator, fuse) are next'],
     ['3D model and enclosure', 'Nightjar v2 fitted to a spruce beam, STL files, build guide, CNC operator consulted'],
     ['Wood', 'Spruce beam 60 x 120 mm chosen (Hornbach); not bought yet'],
     ['CNC carving', 'Not started'],
     ['Assembly and finishing', 'Not started'],
     ['Wooden button', 'Not started'],
-    ['Documentation', 'Docusaurus site, eight board versions logged'],
+    ['Documentation', 'Docusaurus site, fourteen board versions logged'],
   ],
 
   versions: [
@@ -195,6 +213,8 @@ export default {
     { date: '28 Sep', size: '89.4 x 27.9 mm', text: 'Bare ATtiny85 and TME parts, with SPICE models for the simulator.' },
     { date: '3 Oct', size: '89.4 x 27.9 mm', text: 'No microcontroller. Slovak and Czech shops. Hold the button and the bird sings.' },
     { date: '5 Oct', size: '89.4 x 27.9 mm', text: 'v7 plus a 77 °C thermal fuse in the battery line.' },
+    { date: '12 Oct', size: '89.4 x 27.9 mm', text: 'An ESP32 and a microphone: hold the button and whistle, and only then does the bird sing.' },
+    { date: '15 Oct', size: '89.4 x 27.9 mm', text: 'v13 with parts sold in Slovakia and Czechia: an XC6220 regulator module and an 84 °C fuse.' },
   ],
 
   specs: [
@@ -272,9 +292,9 @@ export default {
 
   // the three board views (home page tabs and electronics page), same order as `views` in site.js
   views: [
-    { label: 'Breadboard', alt: 'Breadboard view of the v7 circuit: DFPlayer Pro, 470 microfarad capacitor, two 10 ohm resistors, push button, LiPo cell, TP4056 charger and speaker', cap: '<b>Breadboard.</b> The whole circuit on a half breadboard in Fritzing, simulated with the button pressed. The orange wire takes the amplifier output to the resistors; the speaker hangs off the purple wires.' },
-    { label: 'Schematic', alt: 'Schematic of board v7: battery through the push button to the DFPlayer Pro, 470 microfarad capacitor across the battery, two 10 ohm resistors in parallel in series with the speaker', cap: '<b>Schematic.</b> The button is the only thing between the battery and the player. Two 10 Ω resistors in parallel limit the speaker current.' },
-    { label: 'PCB', alt: 'Printed circuit board layout of v7, 89.4 by 27.9 millimetres, two layers', cap: '<b>PCB v7.</b> 89.4 x 27.9 mm, two layers, hand-checked Gerbers: all 6 of 6 nets match the schematic, minimum copper gap 14.3 mil.' },
+    { label: 'Breadboard', alt: 'Breadboard view of board v14 on a 60-column breadboard: DFPlayer Pro, XC6220 regulator module, IRLB4030 MOSFET, button, capacitor and resistors, with the LiPo, microphone and ESP32-S3 dev board wired from below', cap: '<b>Breadboard.</b> Board v14 on the 60-column breadboard we use, simulated with the button held and a whistle heard. The ESP32-S3, the microphone and the battery hang below the board, the speaker above it.' },
+    { label: 'Schematic', alt: 'Schematic of board v14: battery through the thermal fuse and the push button to the regulator and the DFPlayer Pro, the ESP32-S3 and microphone, and the MOSFET in the player\'s ground', cap: '<b>Schematic.</b> The button still cuts everything off. Behind it, the ESP32-S3 decides when the player gets its ground.' },
+    { label: 'PCB', alt: 'Printed circuit board layout of v14, 89.4 by 27.9 millimetres, two layers', cap: '<b>PCB v14.</b> 89.4 x 27.9 mm, two layers, the same outline since v4. Copper checked against the schematic: 12 of 12 nets, minimum gap 14.1 mil.' },
   ],
 
   p: {
@@ -286,10 +306,10 @@ export default {
       close: 'Close',
       highlights: { eyebrow: 'Highlights', title: 'One object, one gesture, one sound.', lead: 'Most singing gadgets are plastic, plugged in and forgotten within a month. NightJar is a piece of carved wood that does one thing well, built so it can be repaired and understood.' },
       how: {
-        eyebrow: 'How it sings', title: 'Press, power, sing, sleep.',
-        lead: 'There is no microcontroller to boot and no firmware to crash. The button simply connects the battery to a sound module, and that module is happy to start playing the moment it wakes up.',
-        figAlt: 'Schematic of board v7',
-        figCap: '<b>Board v7 in one picture.</b> Battery, button, player, speaker. The capacitor and resistors only protect the small cell and the small speaker.',
+        eyebrow: 'How it sings', title: 'Press, whistle, sing, sleep.',
+        lead: 'The button still cuts the power, so nothing runs between presses. While you hold it, an ESP32-S3 listens through a microphone; whistle, and it lets the sound module sing.',
+        figAlt: 'Schematic of board v14',
+        figCap: '<b>Board v14 in one picture.</b> Battery, fuse, button, then the regulator and the ESP32-S3 with its microphone, and the player it switches on with a MOSFET.',
         more: 'See the electronics',
       },
       model: {
@@ -298,11 +318,11 @@ export default {
         fine: 'Stylised, not a scan. About 1.2x the size of a real nightjar so the chest can hold a 40 mm speaker. Switch to Blueprint to see the edges.',
         link: 'Dimensions, pockets and machining →',
       },
-      gallery: { eyebrow: 'Breadboard, schematic, PCB', title: 'The same circuit, three ways.', lead: 'Version 7 of the board, as drawn in Fritzing. Every part carries a simulation model, so the breadboard runs in the simulator, speaker sound included.', more: 'See all eight board versions' },
+      gallery: { eyebrow: 'Breadboard, schematic, PCB', title: 'The same circuit, three ways.', lead: 'Version 14 of the board, as drawn in Fritzing. Every part carries a simulation model, so the breadboard runs in the simulator, speaker sound included.', more: 'See all the board versions' },
       notes: { eyebrow: 'Field notes', title: 'A bird known by its voice.' },
       timeline: {
         eyebrow: 'Roadmap', title: 'Honest status: designed and ordered, not yet carved.',
-        lead: '{done} of {total} milestones reached. The electronics are designed, simulated and ordered; the wood is chosen; the first cuts come next.',
+        lead: '{done} of {total} milestones reached. The electronics are designed and simulated and the base parts ordered; the wood is chosen; the first cuts come next.',
         more: 'Full status',
       },
       band: {
@@ -368,33 +388,37 @@ export default {
 
     electronics: {
       title: 'Electronics',
-      description: 'NightJar electronics, board v7 and v8: a push button in the battery line, a DFPlayer Pro, a small LiPo and a micro-USB charger. Schematic, breadboard, PCB, design choices and verification.',
-      hero: { eyebrow: 'Board v7, v8', title: 'A button, a battery, a <em>sound module.</em>', lead: 'Eight board versions got the circuit from 13 parts and a microcontroller down to a button in the power line. Hold it and the bird sings; let go and it stops.' },
+      description: 'NightJar electronics, board v14: a push button in the battery line, an ESP32-S3 that listens for a whistle, a DFPlayer Pro, a small LiPo and a micro-USB charger. Schematic, breadboard, PCB, design choices and verification.',
+      hero: { eyebrow: 'Board v14', title: 'A button, a whistle, a <em>sound module.</em>', lead: 'Fourteen board versions. The button still cuts the power, so nothing runs between presses; since v9 an ESP32-S3 listens through a microphone and lets the bird sing only when you whistle. v14 uses parts sold in Slovakia and Czechia.' },
       circuit: {
-        eyebrow: 'The circuit', title: 'It works because nothing is on when you are not pressing.',
+        eyebrow: 'The circuit', title: 'Nothing is on until you press, and nothing sings until you whistle.',
         bullets: [
-          'The button sits in the battery line. While it is held, the LiPo (through the charger module\'s output) powers the DFPlayer Pro, which starts playing as soon as it gets power.',
-          'When the button is released the module has no power, so nothing drains the cell between presses.',
-          '<b>C1</b>, 470 µF, sits across the battery, before the button, and supplies the amplifier\'s current peaks.',
-          'The speaker sits on the module\'s L+ and L− amplifier output through <b>R1 ∥ R2</b>, 5 Ω in total.',
+          'The button sits in the battery line, after the 84 °C thermal fuse <b>F1</b>. While it is held, everything behind it has power; released, nothing does.',
+          '<b>U3</b>, a LaskaKit XC6220 low-dropout module, turns the cell\'s 3.4 to 4.2 V into a steady 3.3 V for the ESP32-S3 dev board.',
+          'The ESP32-S3 powers the MAX9814 microphone from one of its pins (GPIO6) and listens for a steady tone of 0.9 to 3.5 kHz lasting a quarter of a second.',
+          'On a whistle it switches the microphone off and turns on <b>Q1</b>, an IRLB4030 MOSFET in the DFPlayer Pro\'s ground: the player gets power and plays the 6-second churr. Afterwards the player is cut and the microphone comes back on. <b>R5</b> holds Q1 off while the ESP32-S3 boots.',
+          '<b>C1</b>, 470 µF across the battery, covers the amplifier\'s current peaks; <b>R1 ∥ R2</b>, 5 Ω, keep the 0.5 W speaker within its rating.',
         ],
-        note: 'Board 89.4 x 27.9 mm, two layers. Same outline from v4 to v8, so the enclosure never had to change.',
-        figAlt: 'Schematic of board v7', figCap: '<b>Schematic, v7.</b> Battery, button, DFPlayer Pro, the 5 Ω resistor pair and the speaker.',
+        note: 'Board 89.4 x 27.9 mm, two layers, the same outline since v4. v14L is the same idea powered from the ESP32-S3 board\'s USB: no cell, no regulator, and the button holds the ESP32-S3 in reset when released.',
+        figAlt: 'Schematic of board v14', figCap: '<b>Schematic, v14.</b> Battery and fuse, button, regulator, ESP32-S3 and microphone, the MOSFET in the player\'s ground, the 5 Ω resistor pair and the speaker.',
       },
       views: {
-        eyebrow: 'Schematic, breadboard, PCB', title: 'Three views of version 7.',
-        lead: 'The boards are generated by scripts and checked by independent ones, not drawn by hand. The breadboard and the schematic are compared net by net (6 nets each), and the exported Gerbers are compared against the schematic netlist.',
-        bbAlt: 'Breadboard view of the v7 circuit on a half breadboard', bbCap: '<b>Breadboard.</b> Every part has a SPICE model, so Simulate works: with the button pressed the player gets 3.69 V, 0.5 V falls across the resistors and 0.8 V across the speaker.',
-        pcb7Alt: 'PCB layout of v7, 89.4 by 27.9 millimetres', pcb7Cap: '<b>PCB, v7.</b> J1 battery, C1, the 12 x 12 mm button in the centre, the DFPlayer Pro at the chest end with R1 and R2 under it.',
-        pcb8Alt: 'PCB layout of v8, with a thermal fuse added in the battery line', pcb8Cap: '<b>PCB, v8.</b> The same board with a 77 °C thermal fuse below the J1 / C1 row.',
+        eyebrow: 'Schematic, breadboard, PCB', title: 'Three views of version 14.',
+        lead: 'The boards are generated by scripts and checked by independent ones, not drawn by hand. The breadboard and the schematic are compared net by net, and the PCB copper is compared against the schematic netlist (12 of 12 nets).',
+        bbAlt: 'Breadboard view of board v14 on a 60-column breadboard', bbCap: '<b>Breadboard.</b> The 60-column breadboard we use, rails only at the bottom. Simulated with the button held and a whistle heard: 3.68 V on the switched line, 3.30 V for the ESP32-S3, the player on.',
+        pcbAlt: 'PCB layout of v14, 89.4 by 27.9 millimetres', pcbCap: '<b>PCB, v14.</b> J1 battery, F1, C1, the button in the centre, Q1 laid flat beside the DFPlayer Pro, and wire pads for the ESP32-S3 (J2), the microphone (J3) and the regulator module (U3).',
+        pcbLAlt: 'PCB layout of v14L, powered from the ESP32-S3 board', pcbLCap: '<b>PCB, v14L.</b> The USB-powered twin: J1 takes six wires from the ESP32-S3 board, and R6 / R7 hold its reset pin low while the button is up.',
       },
       choices: {
-        eyebrow: 'Design choices', title: 'Three small additions made cheaper parts safe.',
-        lead: 'Moving from TME to Slovak and Czech shops cut the price, but the cheaper cell and speaker needed help.',
+        eyebrow: 'Design choices', title: 'Six small decisions behind board v14.',
+        lead: 'Three keep cheaper parts within their limits. Three let a microcontroller join without changing how the bird behaves when nobody presses it.',
         cards: [
           ['C1: 470 µF across the battery', 'The 503035 cell is rated for 0.25 A maximum discharge, less than the player and amplifier can draw on loud peaks. C1 supplies those peaks so the cell voltage does not dip. It sits on the battery side of the button so a press never dumps a charged capacitor through the switch contacts.'],
           ['R1 ∥ R2: 5 Ω to the speaker', 'The amplifier\'s power is not published. A bridged amplifier on a full cell could put about 1 W into 8 Ω (an estimate), twice the speaker\'s 0.5 W rating. Two 10 Ω resistors in parallel cap the worst case near 0.38 W, at a cost of about 4 dB of loudness. If the bird is too quiet, one resistor can be bridged.'],
           ['Charger: 3.3 kΩ PROG resistor', 'TP4056 modules ship set to 1 A, twice the 500 mAh cell\'s 1C limit and about 1.3 W of heat inside a closed wooden pocket. Swapping the module\'s 1.2 kΩ resistor for 3.3 kΩ sets 0.36 A: about 0.7C, a full charge in roughly 1.5 to 2 hours.'],
+          ['Q1: a switch in the player\'s ground', 'A microcontroller pin can supply a few tens of milliamps; the player needs 0.1 to 0.15 A. The DFPlayer Pro starts playing as soon as it has power, so a MOSFET in its ground is how the ESP32-S3 says play now. In the ground, 3.3 V on the gate turns it fully on at any battery voltage.'],
+          ['U3: a low-dropout regulator', 'The ESP32-S3 needs 3.0 to 3.6 V and a full cell gives 4.2 V. The dev board\'s own regulator sits behind a diode and would starve the chip as the cell runs down; the XC6220 holds 3.3 V down to about 3.4 V.'],
+          ['The microphone runs from a pin', 'The MAX9814 module has no off switch, but it draws only about 3 mA, so an ESP32-S3 pin powers it. While the churr plays the microphone is off, so the bird does not hear itself, and its gain control starts fresh when it comes back.'],
         ],
         cols: ['R_PROG', 'Charge current', 'For the 500 mAh cell'],
         rows: [
@@ -404,10 +428,10 @@ export default {
         ],
       },
       evolution: {
-        eyebrow: 'Eight board versions', title: 'From 84 x 62 mm to a strip that fits the belly.',
-        lead: 'Part stock drove three of the four early redesigns. Automated routing plus an independent Gerber check caught what visual review did not.',
+        eyebrow: 'Fourteen board versions', title: 'From 84 x 62 mm to a strip that fits the belly.',
+        lead: 'Part stock drove three of the four early redesigns. Automated routing plus an independent copper check caught what visual review did not. The outline has not changed since v4.',
         pcbAlt: 'PCB {v}',
-        fine: 'Board versions v2 and v6 exist too; they are intermediate steps and omitted here. The price fell from about USD 34 plus a programmer (v5), through USD 31.50 (v6), to EUR 17.60 (v7).',
+        fine: 'Versions v2, v6 and v10 to v13 are intermediate steps and omitted here. The price fell from about USD 34 plus a programmer (v5), through USD 31.50 (v6), to EUR 17.60 (v7); the whistle adds about EUR 19.30 (v14, ESP32-S3 board included).',
       },
       safety: {
         eyebrow: 'Safety', title: 'A lithium cell inside wood deserves layers.',
@@ -415,7 +439,8 @@ export default {
         bullets: [
           '<b>Two protection circuits.</b> The cell\'s own PCB cuts off at 3.0 V; the charger\'s DW01A at about 2.4 V.',
           '<b>Gentle charging.</b> 0.36 A limits heat inside the pocket.',
-          '<b>v8: thermal fuse.</b> A one-shot 77 °C fuse (Proffuse TZ-D-077) in the battery line opens permanently if the board gets too hot. It reacts to temperature, not current, and does not replace short-circuit protection.',
+          '<b>Thermal fuse.</b> A one-shot 84 °C fuse (Hadex K368, since v14; v8 to v13 used 77 °C) in the battery line opens permanently if the board gets too hot. It reacts to temperature, not current, and does not replace short-circuit protection.',
+          '<b>Nothing runs between presses.</b> The regulator, the ESP32-S3, the microphone and the player all sit after the button; in the simulation everything is off within 0.2 ms of letting go.',
           '<b>Planned:</b> a non-flammable cavity lining (mica or ceramic paper) and silicone wiring. <b>Still open:</b> charging inside the closed wooden body is tracked as an open change request in the project documentation.',
           'A swollen, hot or deeply discharged cell should be recycled, never recharged, and never charged unattended.',
         ],
@@ -423,22 +448,22 @@ export default {
       verification: {
         eyebrow: 'Verification', title: 'Checked by something other than the thing that drew it.',
         cards: [
-          ['6 of 6 nets', 'Fritzing\'s exported Gerbers were checked independently: every copper net matches the schematic.'],
-          ['14.3 mil', 'Minimum copper gap, with copper kept 19.5 mil from the board edge.'],
-          ['Simulated, with sound', 'A patched Fritzing simulator plays the module\'s sound file whenever the speaker is driven, since the circuit simulator cannot decode MP3.'],
+          ['12 of 12 nets', 'The PCB copper of v14 and v14L was checked independently against the schematic, and the breadboard against the schematic, net by net.'],
+          ['14.1 mil', 'Minimum copper gap on v14, with copper kept 20 mil from the board edge.'],
+          ['Simulated, in every state', 'Button held or released, listening or playing: the player only sings with the button held and a whistle heard. A patched Fritzing simulator plays the churr while the speaker is driven.'],
         ],
-        note: 'Not yet built. The Gerbers were exported with Fritzing 1.0.1; the plan is to open them in 1.0.8, run the design-rule check and re-export before ordering a board. The sound starts after the module boots (delay not yet measured).',
+        note: 'Not yet built. No Gerbers are exported for v14 yet: the plan is to open the file in Fritzing 1.0.8, run the design-rule check and export them before ordering a board. The whistle firmware has not been compiled or run on hardware; boot times are estimates.',
         files: 'Board and enclosure files', parts: 'Parts list',
       },
     },
 
     parts: {
       title: 'Parts',
-      description: 'Every part inside NightJar: the v7 electronics bill of materials (ordered, EUR 17.60 including VAT), the spruce beam and the optional v8 thermal fuse, with shops and links.',
-      hero: { eyebrow: 'What goes inside', title: 'Nine lines of electronics, <em>one spruce beam.</em>', lead: 'The v7 parts have been ordered. Prices were read on {date} in euro including VAT, without shipping, and stock changes, so check the cart.' },
+      description: 'Every part inside NightJar: the v7 electronics already ordered (EUR 17.60 including VAT), what board v14 adds for the whistle (about EUR 19.30) and the spruce beam, with shops and links.',
+      hero: { eyebrow: 'What goes inside', title: 'Sixteen lines of electronics, <em>one spruce beam.</em>', lead: 'The v7 parts have been ordered (prices read on {date}); board v14 adds seven more for the whistle (read on 15 October 2026). Euro including VAT, without shipping, and stock changes, so check the cart.' },
       kit: {
         eyebrow: 'The kit', title: 'Everything for the breadboard, on one table.',
-        lead: 'The v7 parts as they arrived, followed by a simple drawing of each one. Only the speaker needs a soldering iron: its two leads are tinned and soldered to the board wires.',
+        lead: 'The v7 parts as they arrived, followed by a simple drawing of each part of board v14; the ones v14 adds are tagged. Only the speaker needs a soldering iron on the breadboard: its two leads are tinned and soldered to the board wires.',
         laidAlt: 'All parts laid out on a table: battery, resistor and capacitor bags, speaker, DFPlayer Pro, breadboard, microSD card and jumper wires',
         laidCap: '<b>Laid out.</b> Battery, resistors and header, speaker, capacitor, DFPlayer Pro, pin headers, breadboard, microSD and jumper wires.',
         boxedAlt: 'The two delivery boxes, one with jumper wires and one with bags of components and the DFRobot box, above the breadboard',
@@ -448,13 +473,17 @@ export default {
         builtCap: '<b>v7 on the breadboard.</b> DFPlayer Pro, C1, R1 and R2, the button and the speaker are wired up. The LiPo cell (left) is unplugged: the TP4056 charger (right, still in its bag) first needs pin headers soldered onto its B+ and B- pads, because pressed-in pins flicker its LEDs. Until then the board runs from an ESP32\'s 5 V.',
         notNeeded: 'not needed',
         sdDropped: 'The DFPlayer Pro has 128 MB of flash on board and shows up as a USB drive when plugged into a PC, so the sound file goes straight onto it.',
-        temporary: 'temporary', knifeLink: 'Why and what changes: KNIFE-007',
+        temporary: 'v14', knifeLink: 'What it does and where to buy it: KNIFE-015',
         // order matches PARTS_SHEET in components/PartsSheet.astro
         sheet: [
           ['DFPlayer Pro', 'U2', 'DFR0768 · MP3 player, amplifier, 128 MB flash'],
           ['Speaker', 'LS1', '8 Ω · 0.5 W · 40 mm · leads to solder'],
           ['LiPo cell', 'J1', '500 mAh · 3.7 V · protection PCB · JST-PH'],
-          ['ESP32 dev board', 'J1', 'Stands in for the cell until the charger can be soldered: its 5V pin (USB VBUS) and GND feed J1'],
+          ['ESP32-S3 dev board', 'J2', 'Listens for the whistle and switches the player; N8R2, 2 MB PSRAM'],
+          ['Microphone', 'J3', 'MAX9814 module · automatic gain control · powered from GPIO6'],
+          ['MOSFET', 'Q1', 'IRLB4030 · logic level · switches the player\'s ground'],
+          ['Regulator module', 'U3', 'LaskaKit XC6220 · 3.3 V from the cell · low dropout'],
+          ['Thermal fuse', 'F1', '84 °C · one-shot · 10 A 250 V'],
           ['Capacitor', 'C1', '470 µF · 16 V · 8 x 12 mm'],
           ['Resistors', 'R1, R2', '10 Ω · 1/4 W · taped strip of 10'],
           ['Tact switch', 'SW1', '12 x 12 x 4.3 mm'],
@@ -467,8 +496,8 @@ export default {
       },
       electronics: {
         eyebrow: 'Electronics', ordered: 'Ordered',
-        title: 'Board v7: {total} plus shipping.',
-        lead: 'Two shops, nine lines. No microcontroller, no MOSFET, no LED, no firmware. Against roughly USD 31.50 net for v6 at TME.',
+        title: 'The v7 parts: {total} plus shipping.',
+        lead: 'Two shops, nine lines: the parts every board since v7 uses. Against roughly USD 31.50 net for v6 at TME.',
         cols: ['Ref', 'Part', 'Qty', 'Price', 'Why'],
         subtotal: 'subtotal {amount}',
         totalLabel: 'Total, both shops',
@@ -494,12 +523,18 @@ export default {
         note: 'Wood prices were read on 14 October 2026, include VAT and exclude shipping. The stores can cut the beam to length; check that service in your store.',
         viewAt: 'View at {shop}',
       },
-      fuse: {
-        eyebrow: 'Board v8', title: 'One more part: a thermal fuse.',
-        lead: 'Version 8 adds {ref}, a one-shot {part}, in the battery line. It brings the electronics to about {total}.',
-        card: '{price} for one piece. 10 A, 250 V, body 11.5 x 4.2 mm. Not sold by techfun.sk or LaskaKit, so it is a third small order.',
-        viewAt: 'View at {shop}',
-        partLead: 'thermal fuse, 77 °C',
+      v14: {
+        eyebrow: 'Board v14', toOrder: 'To order',
+        title: 'For the whistle: about {total} more.',
+        lead: 'Everything board v14 needs on top of the v7 parts, from three shops in Slovakia and Czechia. Stock was read on 15 October 2026.',
+        totalLabel: 'Total, three shops',
+        knowTitle: 'Worth knowing',
+        know: [
+          'Two shops instead of three: keep a higher-temperature placeholder fuse and skip Hadex.',
+          'The XC6220 module ships without pins. A 6-pin piece of the male header plugs it into the breadboard; on the PCB it is wired to three pads.',
+          'The whole v14 board, ESP32-S3 included, comes to about {all}.',
+          'v14L (powered from the ESP32-S3 board\'s USB) needs no fuse and no regulator, but two more resistors, 680 Ω and 1 kΩ: about {totalL} on top of the v7 parts.',
+        ],
       },
     },
 

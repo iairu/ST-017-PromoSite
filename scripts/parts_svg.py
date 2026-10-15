@@ -48,8 +48,8 @@ g += "<path d='M78 38 q-8 -12 4 -22 h20' fill='none' stroke='#c0392b' stroke-wid
 g += "<rect x='104' y='8' width='28' height='22' rx='2' fill='#f1ebdb' stroke='#bfb79f'/><rect x='110' y='14' width='16' height='10' fill='#bfb79f'/>"
 P['battery'] = g
 
-# ESP32 dev board (temporary power for the "L" boards): thin PCB, shielded module with its antenna,
-# micro-USB, two pin rows; red 5V (VBUS) and black GND leads go off to J1
+# ESP32-S3 dev board (J2, v9+): thin PCB, shielded module with its antenna, USB, two pin rows;
+# red 3V3 and black GND leads (v14 feeds it 3.3 V from U3)
 def tp(u, v):
     """Point on the board's top face: u along the front edge (0-150), v back into depth (0-1)."""
     return f"{36+u+40*v:.1f} {98-40*v:.1f}"
@@ -59,11 +59,42 @@ g += ''.join(f"<circle cx='{tp(8+i*9.4, v).split()[0]}' cy='{tp(8+i*9.4, v).spli
 g += quad(40, .25, 112, .78, '#8b929a') + quad(40, .3, 108, .78, 'url(#metal)')
 g += quad(112, .25, 140, .78, '#1d2026')
 g += f"<path d='M{tp(116,.35)} L{tp(116,.68)} L{tp(122,.68)} L{tp(122,.42)} L{tp(128,.42)} L{tp(128,.68)} L{tp(134,.68)} L{tp(134,.35)}' fill='none' stroke='#c9a23a' stroke-width='1.3'/>"
-g += f"<text x='0' y='0' {MONO} font-size='8' font-weight='700' fill='#4a5058' transform='translate({tp(52,.45).replace(' ', ',')}) skewX(-45) scale(1 1)'>ESP32</text>"
+g += f"<text x='0' y='0' {MONO} font-size='7' font-weight='700' fill='#4a5058' transform='translate({tp(50,.45).replace(' ', ',')}) skewX(-45) scale(1 1)'>ESP32-S3</text>"
 g += "<path d='M22 92 h16 v10 h-16z' fill='url(#metal)'/><rect x='25' y='95' width='10' height='4' rx='1' fill='#2a2e35'/>"
 g += "<path d='M66 105 q-6 22 14 26 h40' fill='none' stroke='#c0392b' stroke-width='2.6' stroke-linecap='round'/><path d='M78 105 q-2 14 14 18 h28' fill='none' stroke='#1d2026' stroke-width='2.6' stroke-linecap='round'/>"
-g += f"<text x='126' y='134' {MONO} font-size='7' fill='#c0392b'>5V VBUS</text><text x='126' y='125' {MONO} font-size='7' fill='#1d2026'>GND</text>"
+g += f"<text x='126' y='134' {MONO} font-size='7' fill='#c0392b'>3V3</text><text x='126' y='125' {MONO} font-size='7' fill='#1d2026'>GND</text>"
 P['esp32'] = g
+
+# IRLB4030 MOSFET (Q1, v9+): TO-220, metal tab with a hole, black body, three legs
+g = box(78, 70, 84, 46, 14, 10, '#26292f', '#16181c', '#0d0f12')
+g += "<path d='M84 70 L98 60 H176 L162 70Z' fill='url(#metal)'/><path d='M84 70 V36 L98 26 H176 L176 60 Z' fill='url(#metal)' opacity='.95'/>"
+g += "<ellipse cx='131' cy='44' rx='10' ry='7' fill='#2a2e35'/>"
+g += f"<text x='92' y='96' {MONO} font-size='8' fill='#c9ccd0'>IRLB4030</text>"
+g += ''.join(f"<path d='M{x} 116 V146' stroke='#c9ccd0' stroke-width='4' stroke-linecap='round'/>" for x in (98, 120, 142))
+g += ''.join(f"<text x='{x-3}' y='158' {MONO} font-size='7' fill='#5b4c3c'>{t}</text>" for x, t in ((98, 'G'), (120, 'D'), (142, 'S')))
+P['mosfet'] = g
+
+# LaskaKit XC6220 3.3 V LDO module (U3, v14): red board, the regulator, a 6-pin row
+g = box(66, 64, 110, 58, 30, 26, '#d9342b', '#a8241d', '#7d1a15')
+g += "<path d='M108 50 L116 43 H140 L132 50Z' fill='#1b1d22'/><rect x='108' y='50' width='24' height='6' fill='#111'/>"
+g += f"<text x='84' y='88' {MONO} font-size='9' font-weight='700' fill='#fff'>XC6220</text><text x='84' y='101' {MONO} font-size='7' fill='#ffd9d4'>3.3V LDO</text>"
+g += ''.join(f"<rect x='{72+i*17}' y='112' width='5' height='5' fill='#e0a431'/>" for i in range(6))
+g += ''.join(f"<path d='M{74.5+i*17} 122 V142' stroke='#c9ccd0' stroke-width='3' stroke-linecap='round'/>" for i in (0, 1, 2, 4, 5))
+P['xc6220'] = g
+
+# MAX9814 microphone module (J3, v9+): blue-green board, electret capsule, pin row
+g = box(56, 70, 128, 40, 26, 22, '#2d6a35', '#1f4b25', '#153419')
+g += "<ellipse cx='100' cy='58' rx='24' ry='10' fill='#0f1115'/><path d='M76 58 V48 A24 10 0 0 1 124 48 V58 A24 10 0 0 1 76 58Z' fill='#2a2d33'/><ellipse cx='100' cy='48' rx='24' ry='10' fill='#3a3e46'/>"
+g += ''.join(f"<circle cx='{92+i*8}' cy='48' r='1.6' fill='#0f1115'/>" for i in range(3))
+g += f"<text x='132' y='86' {MONO} font-size='8' font-weight='700' fill='#e8f2e8'>MAX9814</text><text x='132' y='98' {MONO} font-size='6.5' fill='#bcd8be'>mic + AGC</text>"
+g += ''.join(f"<path d='M{70+i*14} 110 V134' stroke='#c9ccd0' stroke-width='3' stroke-linecap='round'/>" for i in range(5))
+P['max9814'] = g
+
+# Thermal fuse (F1): axial, light metal body, long leads
+g = "<path d='M18 92 H84 M156 92 H222' stroke='#c9ccd0' stroke-width='3.5' stroke-linecap='round'/>"
+g += "<rect x='84' y='78' width='72' height='28' rx='12' fill='url(#metal)' stroke='#8b929a'/>"
+g += f"<text x='96' y='96' {MONO} font-size='9' font-weight='700' fill='#4a5058'>84 °C</text>"
+P['fuse'] = g
 
 # Electrolytic capacitor
 g = "<path d='M108 128 L106 154 M132 128 L134 154' stroke='#c9ccd0' stroke-width='3' stroke-linecap='round'/>"
