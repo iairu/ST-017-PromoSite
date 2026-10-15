@@ -6,7 +6,7 @@ const { height = 'clamp(300px, 46vw, 520px)' } = Astro.props;
 ---
 <div class="viewer" data-nowebgl={m.noWebgl} data-failed={m.failed} data-viewer data-model={url('/models/nightjar.stl')} data-button={url('/models/nightjar_button.stl')} style={`--h:${height}`}>
   <canvas aria-label={m.aria} role="img"></canvas>
-  <noscript><img src={url('/img/wire-assembled.webp')} alt={m.noscriptAlt} width="1438" height="627" /></noscript>
+  <noscript><img src={url('/img/wire-assembled.webp')} alt={m.noscriptAlt} width="1424" height="664" /></noscript>
   <div class="loading" data-loading><span>{m.loading}</span></div>
   <div class="ctl" role="group" aria-label={m.group}>
     <button type="button" class="on" data-mode="wood" aria-pressed="true">{m.wood}</button>

@@ -4,8 +4,8 @@
 //
 // Sources
 //   - ST-017-MOTHERBOARD/docs/v7_parts.md, v8_parts.md   (parts, prices read 2026-10-03/05)
-//   - ST-017-MOTHERBOARD/enclosure/                      (Nightjar CNC model, build guide)
-//   - ST-017-MOTHERBOARD/wood-selection/                 (wood research)
+//   - ST-017-MOTHERBOARD/enclosure/NIGHTJAR_V2_GUIDE.md  (Nightjar v2 model, wood, pockets, machining)
+//   - ST-017-MOTHERBOARD/enclosure/stl_v2/               (STL files; public/models and the wireframes come from them)
 //   - ST-017-OndrejSpanik/content/docs/sk/sthdf/...      (project summary, pitch, milestones)
 //   - github.com/iairu, iairu.com                         (student info)
 
@@ -31,7 +31,7 @@ export const links = {
   repo: 'https://github.com/iairu/ST-016-SMVIT',
   pcbRepo: 'https://github.com/iairu/ST-016-MOTHERBOARD',
   fiit: 'https://www.fiit.stuba.sk',
-  beechBlock: 'https://www.knn.sk/hranol-buk-a-b--800-80-80-priebezna/',
+  woodBeam: 'https://www.hornbach.sk/p/dreveny-hranol-konstrukcny-kvh-si-60-x-120-x-2500-mm-smrek-hoblovany/7886156/',
 };
 
 // Header + footer menu: path and section ids. Labels come from the language file (same order).
@@ -89,9 +89,8 @@ export const fuse = {
 
 // Wood options; title, price text and blurb are in the language file.
 export const wood = [
-  { id: 'beech-block', planned: true, shop: 'knn.sk', url: links.beechBlock },
-  { id: 'linden', planned: false, shop: 'drevoma.sk', url: 'https://www.drevoma.sk/produkt/stolarske-rezivo-lipa-hr-50mm-i-ii-tr' },
-  { id: 'beech-board', planned: false, shop: 'drevoma.sk', url: 'https://www.drevoma.sk/produkt/stolarske-rezivo-buk-hr-50mm-i-ii-tr' },
+  { id: 'spruce-2500', planned: true, shop: 'hornbach.sk', url: links.woodBeam },
+  { id: 'spruce-4000', planned: false, shop: 'hornbach.sk', url: 'https://www.hornbach.sk/p/dreveny-hranol-konstrukcny-kvh-si-60-x-120-x-4000-mm-smrek-hoblovany/7886160/' },
 ];
 
 export const milestones = [
