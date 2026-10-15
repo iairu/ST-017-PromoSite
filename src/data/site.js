@@ -3,7 +3,7 @@
 // with this file by content(lang) in src/i18n/index.js, so a price is only ever stored once.
 //
 // Sources
-//   - ST-017-MOTHERBOARD/docs/v7_parts.md, v14_parts.md  (parts, prices read 2026-10-03 and 2026-10-15)
+//   - ST-017-MOTHERBOARD/docs/v7_parts.md, v14_parts.md, v15FULL_parts.md  (parts, prices read 2026-10-03 and 2026-10-15)
 //   - ST-017-MOTHERBOARD/enclosure/NIGHTJAR_V2_GUIDE.md  (Nightjar v2 model, wood, pockets, machining)
 //   - ST-017-MOTHERBOARD/enclosure/stl_v2/               (STL files; public/models and the wireframes come from them)
 //   - ST-017-OndrejSpanik/content/docs/sk/sthdf/...      (project summary, pitch, milestones)
@@ -82,17 +82,21 @@ export const bom = {
   total: 17.60,
 };
 
-// Board v14: what it needs on top of the v7 parts (docs/v14_parts.md, KNIFE-015). Prices incl. VAT,
+// Board v15 (v15FULL): what it needs on top of the v7 parts (docs/v14_parts.md + v15FULL_parts.md,
+// KNIFE-015 / 016). Prices incl. VAT,
 // read 2026-10-15; Hadex's CZK 12 is shown as about EUR 0.50. rows: [quantity, unit price, link].
 export const bom14 = {
   shops: [
     {
-      name: 'techfun.sk', url: 'https://techfun.sk', subtotal: 12.00,
+      name: 'techfun.sk', url: 'https://techfun.sk', subtotal: 13.25,
       rows: [
         [1, 1.95, 'https://techfun.sk/produkt/irlb4030pbf-n-channel-mosfet-100v-180a-logic-level/'],
         [1, 0.25, 'https://techfun.sk/produkt/rezistor-rozne-hodnoty-1-4w-10-kusov/'],
         [1, 9.65, 'https://techfun.sk/produkt/esp32-s3-n8r2-wifi-a-bluetooth-5-0-vyvojova-doska/'],
         [1, 0.15, 'https://techfun.sk/produkt/piny-40-kusov-male-2-54-mm-1-riadok/'],
+        [1, 0.80, 'https://techfun.sk/produkt/p-channel-mosfet-logic-level-ndp6020p/'],
+        [1, 0.20, 'https://techfun.sk/produkt/dioda-1n5819-10-kusov/'],
+        [1, 0.25, 'https://techfun.sk/produkt/rezistor-rozne-hodnoty-1-4w-10-kusov/'],
       ],
     },
     {
@@ -109,9 +113,9 @@ export const bom14 = {
       ],
     },
   ],
-  total: 19.30,
+  total: 20.55,
   totalL: 16.78,          // v14L: no fuse, no regulator, two more resistors (R6, R7)
-  all: 36.90,             // v7 parts + v14 additions: the whole v14 board with its ESP32-S3
+  all: 38.15,             // v7 parts + v15 additions: the whole v15 board with its ESP32-S3
 };
 
 // Wood options; title, price text and blurb are in the language file.
@@ -138,12 +142,12 @@ export const statusStates = ['done', 'done', 'wip', 'wip', 'todo', 'todo', 'todo
 export const versions = [
   { v: 'v1', img: 'pcb-v1' }, { v: 'v3', img: 'pcb-v3' }, { v: 'v4', img: 'pcb-v4' },
   { v: 'v5', img: 'pcb-v5' }, { v: 'v7', img: 'pcb-v7' }, { v: 'v8', img: 'pcb-v8' },
-  { v: 'v9', img: 'pcb-v9' }, { v: 'v14', img: 'pcb-v14' },
+  { v: 'v9', img: 'pcb-v9' }, { v: 'v14', img: 'pcb-v14' }, { v: 'v15', img: 'pcb-v15' },
 ];
 
 // Photos and drawings that carry text (dimensions only; alt text and captions are per language)
 export const views = [
-  { id: 'bb', src: 'breadboard-v14', w: 1800, h: 1038 },
-  { id: 'sch', src: 'schematic-v14', w: 1800, h: 1713 },
-  { id: 'pcb', src: 'pcb-v14', w: 1800, h: 558 },
+  { id: 'bb', src: 'breadboard-v15', w: 1800, h: 905 },
+  { id: 'sch', src: 'schematic-v15', w: 1800, h: 1076 },
+  { id: 'pcb', src: 'pcb-v15', w: 1800, h: 558 },
 ];
