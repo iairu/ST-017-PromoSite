@@ -31,7 +31,8 @@ right = trimesh.intersections.slice_mesh_plane(body, plane_normal=[0, -1, 0], pl
 left.apply_translation([0, gap, 0]); right.apply_translation([0, -gap, 0])
 b2 = btn.copy(); b2.apply_translation([0, 0, lift])
 colors = {'board': GREEN, 'DFPlayer_Pro': BLUE, 'LiPo': RED, 'TP4056': GREEN, 'speaker': '#7b3fa0',
-          'ESP32-S3': '#1f3a5f', 'MAX9814': '#2e8b57', 'C1': GREY, 'Q1': '#333333', 'SW1': ORANGE, 'U3': '#333333'}
+          'ESP32-S3': '#1f3a5f', 'MAX9814': '#2e8b57', 'C1': GREY, 'Q1': '#333333', 'SW1': ORANGE, 'U3': '#333333',
+          'U3_module': '#d42020', 'Q2': '#333333'}
 items = [dict(mesh=left, color=BLUE), dict(mesh=right, color=BLUE), dict(mesh=b2, color=ORANGE, step=1.5)]
 for f in sorted(glob.glob(os.path.join(STL, 'parts', 'part_*.stl'))):
     name = os.path.basename(f)[5:-4]
