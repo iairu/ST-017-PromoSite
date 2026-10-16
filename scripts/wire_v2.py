@@ -32,7 +32,8 @@ left.apply_translation([0, gap, 0]); right.apply_translation([0, -gap, 0])
 b2 = btn.copy(); b2.apply_translation([0, 0, lift])
 colors = {'board': GREEN, 'DFPlayer_Pro': BLUE, 'LiPo': RED, 'TP4056': GREEN, 'speaker': '#7b3fa0',
           'ESP32-S3': '#1f3a5f', 'MAX9814': '#2e8b57', 'C1': GREY, 'Q1': '#333333', 'SW1': ORANGE, 'U3': '#333333',
-          'U3_module': '#d42020', 'Q2': '#333333'}
+          'U3_module': '#d42020', 'Q2': '#333333', 'XIAO_ESP32-S3': '#1f5f9f', 'XIAO_USB-C': GREY,
+          'MAX98357A': '#6a2c91', 'amplifier_header': '#333333', 'INMP441': '#1f3f8f', 'F1': GREY}
 items = [dict(mesh=left, color=BLUE), dict(mesh=right, color=BLUE), dict(mesh=b2, color=ORANGE, step=1.5)]
 for f in sorted(glob.glob(os.path.join(STL, 'parts', 'part_*.stl'))):
     name = os.path.basename(f)[5:-4]
