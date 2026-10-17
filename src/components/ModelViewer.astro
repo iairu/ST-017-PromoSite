@@ -4,7 +4,7 @@ import { content, getLang } from '../i18n/index.js';
 const m = content(getLang(Astro)).ui.model;
 const { height = 'clamp(300px, 46vw, 520px)' } = Astro.props;
 ---
-<div class="viewer" data-nowebgl={m.noWebgl} data-failed={m.failed} data-viewer data-model={url('/models/nightjar.stl')} data-button={url('/models/nightjar_button.stl')} style={`--h:${height}`}>
+<div class="viewer" data-nowebgl={m.noWebgl} data-failed={m.failed} data-viewer data-model={url('/models/nightjar.stl')} data-button={url('/models/nightjar_button.stl')} data-internals={url('/models/nightjar_internals.stl')} style={`--h:${height}`}>
   <canvas aria-label={m.aria} role="img"></canvas>
   <noscript><img src={url('/img/wire-assembled.webp')} alt={m.noscriptAlt} width="1424" height="664" /></noscript>
   <div class="loading" data-loading><span>{m.loading}</span></div>
@@ -53,7 +53,7 @@ const { height = 'clamp(300px, 46vw, 520px)' } = Astro.props;
     controls.autoRotate = !reduce; controls.autoRotateSpeed = 1.1;
 
     const loader = new STLLoader();
-    const [g1, g2] = await Promise.all([loader.loadAsync(root.dataset.model!), loader.loadAsync(root.dataset.button!)]);
+    const [g1, g2, g3] = await Promise.all([root.dataset.model!, root.dataset.button!, root.dataset.internals!].map((u) => loader.loadAsync(u)));
     const prep = (g: import('three').BufferGeometry) => {
       g.deleteAttribute('normal');
       const m = mergeVertices(g, 0.05);
@@ -62,23 +62,26 @@ const { height = 'clamp(300px, 46vw, 520px)' } = Astro.props;
       m.rotateX(-Math.PI / 2);
       return m;
     };
-    const body = prep(g1), btn = prep(g2);
+    const body = prep(g1), btn = prep(g2), inner = prep(g3);
     body.computeBoundingBox();
     const c = new THREE.Vector3(); body.boundingBox!.getCenter(c);
     const group = new THREE.Group();
 
     const woodMat = new THREE.MeshStandardMaterial({ color: 0xc9a074, roughness: 0.62, metalness: 0.0 });
     const btnMat = new THREE.MeshStandardMaterial({ color: 0x8a5a32, roughness: 0.5 });
-    const bpMat = new THREE.MeshBasicMaterial({ color: 0x1e4a82, transparent: true, opacity: 0.55, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 });
-    const edgeMat = new THREE.LineBasicMaterial({ color: 0xa9d0ff, transparent: true, opacity: 0.85 });
-    const btnEdgeMat = new THREE.LineBasicMaterial({ color: 0xffb066 });
+    // blueprint: the shell is a plain see-through blue fill (no edges, no depth writes) so the
+    // electronics drawn first stay visible through it from every angle
+    const bpMat = new THREE.MeshBasicMaterial({ color: 0x6fa8ec, transparent: true, opacity: 0.22, depthWrite: false });
+    const innerMat = new THREE.MeshBasicMaterial({ color: 0xffb066, transparent: true, opacity: 0.35 });
+    const innerEdgeMat = new THREE.LineBasicMaterial({ color: 0xffd2a3 });
 
     const bodyMesh = new THREE.Mesh(body, woodMat);
     const btnMesh = new THREE.Mesh(btn, btnMat);
-    const bodyEdges = new THREE.LineSegments(new THREE.EdgesGeometry(body, 22), edgeMat);
-    const btnEdges = new THREE.LineSegments(new THREE.EdgesGeometry(btn, 22), btnEdgeMat);
-    bodyEdges.visible = btnEdges.visible = false;
-    group.add(bodyMesh, btnMesh, bodyEdges, btnEdges);
+    const innerMesh = new THREE.Mesh(inner, innerMat);
+    const innerEdges = new THREE.LineSegments(new THREE.EdgesGeometry(inner, 30), innerEdgeMat);
+    innerMesh.renderOrder = innerEdges.renderOrder = 0; bodyMesh.renderOrder = btnMesh.renderOrder = 1;
+    innerMesh.visible = innerEdges.visible = false;
+    group.add(innerMesh, innerEdges, bodyMesh, btnMesh);
     group.position.sub(c);
     scene.add(group);
 
@@ -110,7 +113,7 @@ const { height = 'clamp(300px, 46vw, 520px)' } = Astro.props;
       const bp = b.dataset.mode === 'blueprint';
       root.classList.toggle('blueprint', bp);
       bodyMesh.material = bp ? bpMat : woodMat; btnMesh.material = bp ? bpMat : btnMat;
-      bodyEdges.visible = btnEdges.visible = bp;
+      innerMesh.visible = innerEdges.visible = bp;
       modes.forEach((m) => { const on = m === b; m.classList.toggle('on', on); m.setAttribute('aria-pressed', String(on)); });
     }));
     const spin = root.querySelector<HTMLButtonElement>('[data-spin]')!;

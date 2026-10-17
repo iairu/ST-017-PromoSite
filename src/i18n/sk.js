@@ -314,7 +314,7 @@ export default {
       model: {
         eyebrow: 'Otočte ho', title: 'Rezba z modelu, ktorý riadi CNC.',
         lead: 'Toto je skutočný model puzdra: sochársky model vtáka, ktorý skript prispôsobil smrekovému hranolu 60 x 120 mm a rozdelil na dve zrkadlové polovice. Kapsy pre dosku, batériu, reproduktor a mikrofón so vzduchom okolo každého dielu a port USB-C cez ľavý bok sú vyrezané z deliacej roviny a vonkajšok nemá podrezania, aby sa k nemu dostala guľová fréza.',
-        fine: 'Štylizované, nie sken. Asi 1,2-krát väčšie než skutočný lelek, aby sa do hrude zmestil 40 mm reproduktor. Prepnutím na Výkres uvidíte hrany.',
+        fine: 'Štylizované, nie sken. Asi 1,2-krát väčšie než skutočný lelek, aby sa do hrude zmestil 40 mm reproduktor. Prepnutím na Výkres uvidíte elektroniku vo vnútri.',
         link: 'Rozmery, kapsy a obrábanie →',
       },
       gallery: { eyebrow: 'Nepájivé pole, schéma, DPS', title: 'Ten istý obvod, tri pohľady.', lead: 'Verzia 14 dosky, ako je nakreslená vo Fritzingu. Každý diel má simulačný model, takže zapojenie na nepájivom poli beží v simulátore vrátane zvuku reproduktora.', more: 'Pozrieť všetky verzie dosky' },

@@ -36,7 +36,7 @@ Needs Node 20+. Deployed at <https://nightjar.gift>; documentation (KNIFES) live
 | Search palette | `src/components/Search.astro` |
 | 3D viewer | `src/components/ModelViewer.astro` (lazy-loaded) |
 | Images | `public/img/*.webp` (breadboard, schematic, PCBs from `ST-017-MOTHERBOARD/docs`; wireframes cropped from `enclosure/Nightjar_build_guide.pdf`) |
-| 3D model | `public/models/*.stl`, decimated from `enclosure/stl` by `scripts/decimate_stl.py` |
+| 3D model | `public/models/*.stl`: `nightjar.stl` decimated from `enclosure/stl_v2/nightjar_v2_assembled.stl` by `scripts/decimate_stl.py` (cell 1.8 mm); `nightjar_button.stl` and `nightjar_internals.stl` (shown in Blueprint) copied as is |
 | Bird silhouette | `src/assets/nightjar-silhouette.svg`, traced from the model by `scripts/silhouette.py` |
 | Sound | `public/audio/lelek_churr.mp3` (synthesised placeholder from the board repo) |
 

@@ -318,7 +318,7 @@ export default {
       model: {
         eyebrow: 'Turn it around', title: 'The carving, from the model that drives the CNC.',
         lead: 'This is the actual enclosure model: a sculpted bird, fitted to a 60 x 120 mm spruce beam by a script and split into two mirrored halves. Pockets for the board, battery, speaker and microphone are cut from the seam, with air round every part, a USB-C port goes out through the left flank, and the outside has no undercuts, so a ball-nose cutter can reach all of it.',
-        fine: 'Stylised, not a scan. About 1.2x the size of a real nightjar so the chest can hold a 40 mm speaker. Switch to Blueprint to see the edges.',
+        fine: 'Stylised, not a scan. About 1.2x the size of a real nightjar so the chest can hold a 40 mm speaker. Switch to Blueprint to see the electronics inside.',
         link: 'Dimensions, pockets and machining →',
       },
       gallery: { eyebrow: 'Breadboard, schematic, PCB', title: 'The same circuit, three ways.', lead: 'Version 14 of the board, as drawn in Fritzing. Every part carries a simulation model, so the breadboard runs in the simulator, speaker sound included.', more: 'See all the board versions' },
